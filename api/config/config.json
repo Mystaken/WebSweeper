@@ -15,24 +15,24 @@
   "middleware": {
 
     "router": {
-        "route": "/api",
-        "module": {
-            "arguments": [{ "directory": "path:./controllers" }]
-        }
+      "route": "/api",
+      "module": {
+        "arguments": [{ "directory": "path:./controllers" }]
+      }
     },
     "appsec": {
-        "priority": 110,
-        "module": {
-            "name": "lusca",
-            "arguments": [
-                {
-                    "csrf": false,
-                    "xframe": "SAMEORIGIN",
-                    "p3p": false,
-                    "csp": false
-                }
-            ]
-        }
+      "priority": 110,
+      "module": {
+        "name": "lusca",
+        "arguments": [
+          {
+            "csrf": false,
+            "xframe": "SAMEORIGIN",
+            "p3p": false,
+            "csp": false
+          }
+        ]
+      }
     },
     "multipart": {
       "enabled": true,
