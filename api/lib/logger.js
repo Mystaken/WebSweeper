@@ -47,6 +47,6 @@ module.exports = {
 
   setup: function(opt){
     log = opt.log || DEFAULT_LOG;
-    mask = mask || DEFAULT_MASK;
+    mask = opt.mask || DEFAULT_MASK;
   }
 }
