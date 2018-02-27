@@ -1,0 +1,55 @@
+{
+  "app": {
+    "name": "WebSweeper API",
+    "PORT": 3000,
+    "APP_DIR": "../dist"
+  }, 
+  "mongo" : {
+    "server": "mongodb://localhost/websweeper",
+    "opt": {
+      "useMongoClient": true
+    }
+  }, 
+
+  "specialization": {},
+  "middleware": {
+
+    "router": {
+        "route": "/api",
+        "module": {
+            "arguments": [{ "directory": "path:./controllers" }]
+        }
+    },
+    "appsec": {
+        "priority": 110,
+        "module": {
+            "name": "lusca",
+            "arguments": [
+                {
+                    "csrf": false,
+                    "xframe": "SAMEORIGIN",
+                    "p3p": false,
+                    "csp": false
+                }
+            ]
+        }
+    },
+    "multipart": {
+      "enabled": true,
+      "module": {
+        "name": "kraken-js/middleware/multipart",
+        "arguments": [
+          {
+            "uploadDir": "/upload",
+            "keepExtensions": true,
+            "hash": "sha1",
+            "multiples": true
+          }
+        ]
+      }
+    },
+    "logger": {
+      "enabled": false
+    }
+  }
+}

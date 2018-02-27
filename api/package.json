@@ -1,0 +1,21 @@
+{
+  "name": "api",
+  "version": "0.1.0",
+  "description": "The API for the WebSweeper APP",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.2",
+    "colors": "^1.1.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "kraken-js": "^2.2.0",
+    "moment": "^2.20.1",
+    "mongoose": "^5.0.7"
+  }
+}
