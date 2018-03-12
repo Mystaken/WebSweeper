@@ -2,13 +2,15 @@
 
 const mongoose = require('mongoose'),
   userStatus   = require('../../config/status.json').users,
+  config = require('../../config/config.json'),
   utils  = require('../../lib/utils'),
   pug    = require('../../lib/pug'),
   mail   = require('../../lib/mail'),
   bcrypt = require('bcryptjs'),
   path   = require('path'),
   SALT_LEN   = 10,
-  EMAIL_PATH = path.join(__dirname, '../../templates/users/verification.pug');
+  EMAIL_PATH = path.join(__dirname, '../../templates/users/verification.pug'),
+  VERIFICATION_ROUTE = `${config.app.DOMAIN}/api/auth/verification`;
 
 const userSchema = mongoose.Schema({
   username: {
@@ -51,9 +53,7 @@ module.exports = {
    *  - the result password is a salted hash.
    *  - username and email must not be in database
    */
-  signUpUser: function(opt) {
-    var newUser;
-
+  createUser: function(opt) {
     return bcrypt(opt.password, SALT_LEN).then(function(hashPass) {
       // create pending user
       return new User({
@@ -63,20 +63,26 @@ module.exports = {
         last_login: new Date(),
         status: userStatus.PENDING
       }).save();
-    }).then(function(user) {
-      // send verification link
-      var htmlContent = pug.renderFile(EMAIL_PATH, {
-        username: opt.username,
-        verifyLink: user._id
-      });
-      newUser = user;
-      return mail.promiseSendMail({
-        to: opt.email,
-        subject: 'Web Sweeper Sign-up',
-        html: htmlContent
-      });
-    }).then(function() {
-      return newUser;
+    });
+  },
+
+  /**
+   * Sends a verification email for the user.
+   * @param opt.username {String} the username of the user
+   * @param opt.password {String} the password of the user
+   * @param opt.email {String} the email of the user
+   *
+   * @return {Promise} a promise with the newly created user.
+   */
+  sendVerification: function(opt) {
+    var htmlContent = pug.renderFile(EMAIL_PATH, {
+      username: opt.username,
+      verifyLink: `${VERIFICATION_ROUTE}/${opt.id}`
+    });
+    return mail.promiseSendMail({
+      to: opt.email,
+      subject: 'Web Sweeper Sign-up',
+      html: htmlContent
     });
   },
 
@@ -119,6 +125,6 @@ module.exports = {
    * @return {Promise} a promise with the user info.
    */
   setInActive: function(id) {
-
+    return User.findByIdAndUpdate(id, { $set: { status:status.INACTIVE } }, { new: true }).exec();
   }
 }
