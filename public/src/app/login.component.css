@@ -1,0 +1,7 @@
+.hang-down {
+  transform: translateY(10vh);
+}
+
+.center {
+  text-align: center;
+}
