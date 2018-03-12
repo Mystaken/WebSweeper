@@ -1,3 +1,4 @@
+// jshint esversion: 6
 'use strict';
 
 const mongoose = require('mongoose'),
@@ -35,7 +36,7 @@ const userSchema = mongoose.Schema({
 });
 
 /* The model to create new user. */
-const User = mongoose.model('users', userSchema)
+const User = mongoose.model('users', userSchema);
 
 module.exports = {
   /**
@@ -111,7 +112,7 @@ module.exports = {
    */
   deleteUser(id) {
     return User.findByIdAndRemove(id).exec();
-  }
+  },
 
   /**
    * Set a user to be 'INACTIVE'.
@@ -122,4 +123,4 @@ module.exports = {
   setInActive: function(id) {
     return User.findByIdAndUpdate(id, { $set: { status: status.INACTIVE } }, { new: true }).exec();
   }
-}
+};

@@ -1,6 +1,6 @@
 'use strict';
 
-var userModel = require('../../model/users/userModel'),
+var userModel = require('../../models/users/userModel'),
   config  = require('../../config/config.json');
 
 /**

@@ -21,7 +21,7 @@ app.use(bodyParser.json())
 spec.configure({}).then(function() {
     return app.listen(config.app.PORT, function() {
       logger.info(config.app.name + ' started at PORT: ' + config.app.PORT);
-    });    
+    });
   }).catch(function(err) {
     logger.fatal(err);
   });
