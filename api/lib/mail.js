@@ -12,7 +12,7 @@ module.exports = {
    * @param opt.subject {String}  The subject of email
    * @param opt.text {String}     The contents of this email
    * @param opt.html {String}     The html to be sent as the body.
-   * 
+   *
    * @return {Promise} A promise with the response of the mail
    */
   promiseSendMail: function(opt) {

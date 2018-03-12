@@ -5,7 +5,7 @@ const mongoose = require('mongoose'),
   status   = require('../../config/status.json'),
   config = require('../../config/config.json'),
   utils  = require('../../lib/utils'),
-  pug    = require('../../lib/pug'),
+  pug    = require('pug'),
   mail   = require('../../lib/mail'),
   bcrypt = require('bcryptjs'),
   path   = require('path'),
@@ -46,7 +46,7 @@ module.exports = {
    * @param opt.email {String} the email of the user
    *
    * @return {Promise} a promise with the newly created user.
-   * NOTE: 
+   * NOTE:
    *  - the result password is a salted hash.
    *  - username and email must not be in database
    */

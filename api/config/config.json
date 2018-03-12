@@ -4,13 +4,11 @@
     "PORT": 3000,
     "APP_DIR": "../dist",
     "DOMAIN": "localhost:3000"
-  }, 
+  },
   "mongo" : {
     "server": "mongodb://localhost/websweeper",
-    "opt": {
-      "useMongoClient": true
-    }
-  }, 
+    "opt": {}
+  },
 
   "specialization": {},
   "middleware": {
