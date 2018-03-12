@@ -27,10 +27,6 @@ const userSchema = mongoose.Schema({
     required: true,
     unique: true
   },
-  last_login: {
-    type: String,
-    required: true
-  },
   status: {
     type: String,
     enum: utils.objValues(userStatus),
@@ -60,7 +56,6 @@ module.exports = {
         username: opt.username,
         password: hashPass,
         email: opt.email,
-        last_login: new Date(),
         status: userStatus.PENDING
       }).save();
     });

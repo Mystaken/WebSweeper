@@ -1,0 +1,5 @@
+Required dependencies
+- gulp
+- apidoc
+- npm
+- node

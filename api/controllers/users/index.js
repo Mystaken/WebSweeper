@@ -1,33 +1,29 @@
 'use strict';
 
-var userModel = require('../../model/users/userModel');
-
+var userModel = require('../../model/users/userModel'),
+  config  = require('../../config/config.json');
 module.exports = function (router) {
   /**
-   * @api {post} /user/:id Request User information
-   * @apiName GetUser
+   * @api {POST} /user/:id Create User
+   * @apiName PostUser
    * @apiGroup User
+   * @apiPermission none
    *
-   * @apiParam {Number} id Users unique ID.
-   *
-   * @apiSuccess {String} firstname Firstname of the User.
-   * @apiSuccess {String} lastname  Lastname of the User.
-   *
-   * @apiSuccessExample Success-Response:
-   *     HTTP/1.1 200 OK
+   * @apiParam {String} username Username of the new user.
+   * @apiParam {String} email Email of the new user.
+   * @apiParam {String} password Password of the new user.
+   *  
+   * @apiSuccess {String}  username Username of the user.
+   * @apiSuccess {String}  email Email of the user
+   * @apiSuccess {Date} create_at  The date this user was created.
+   * @apiSuccess {Date} updated_at  The date this user was last updated.
+   * @apiParamExample {json} Request-Example:
    *     {
-   *       "firstname": "John",
-   *       "lastname": "Doe"
+   *       "username": "websweeper",
+   *       "email": "example@mail.com",
+   *       "password": "superpassword"
    *     }
-   *
-   * @apiError UserNotFound The id of the User was not found.
-   *
-   * @apiErrorExample Error-Response:
-   *     HTTP/1.1 404 Not Found
-   *     {
-   *       "error": "UserNotFound"
-   *     }
-   */
+  */
   router.post('/', function(req, res, next) {
 
   });
