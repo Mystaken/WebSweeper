@@ -1,3 +1,4 @@
+// jshint esversion: 6
 'use strict';
 
 const config = require('../config/mailgun.json'),
@@ -14,8 +15,8 @@ module.exports = {
    * 
    * @return {Promise} A promise with the response of the mail
    */
-  promiseSendMail: function(data) {
+  promiseSendMail: function(opt) {
     opt.form = opt.form || config.from;
-    return mailgun.messages().send(data);
+    return mailgun.messages().send(opt);
   }
 };

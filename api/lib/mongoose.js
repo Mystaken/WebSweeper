@@ -21,7 +21,6 @@ module.exports = {
   configure: function (app, opt) {
     mongoose.Promise = Promise;
     mongoose.validID = validID;
-    return Promise.resolve();
     return mongoose.connect(config.mongo.server, config.mongo.opt);
   }
 };

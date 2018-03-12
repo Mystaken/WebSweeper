@@ -1,3 +1,6 @@
+// jshint esversion: 6
+'use strict';
+
 const moment   = require('moment'),
   colors       = require('colors'),
   DEFAULT_MASK = 5,
@@ -11,8 +14,8 @@ function getDate() {
   return `[${date}]`;
 }
 
-log = DEFAULT_LOG;
-mask = DEFAULT_MASK;
+var log = DEFAULT_LOG,
+  mask = DEFAULT_MASK;
 
 module.exports = {
   fatal: function(str) {
@@ -49,4 +52,4 @@ module.exports = {
     log = opt.log || DEFAULT_LOG;
     mask = opt.mask || DEFAULT_MASK;
   }
-}
+};

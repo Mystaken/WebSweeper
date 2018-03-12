@@ -1,4 +1,6 @@
+// jshint esversion: 6
 'use strict';
+
 var config = require('../config/config.json');
 
 module.exports = function (router) {

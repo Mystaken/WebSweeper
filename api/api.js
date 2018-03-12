@@ -1,3 +1,6 @@
+// jshint esversion: 6
+'use strict';
+
 const express = require('express'),
   kraken      = require('kraken-js'),
   path        = require('path'),
