@@ -1,7 +1,7 @@
-const moment = require('moment'),
-  colors = require('colors'),
+const moment   = require('moment'),
+  colors       = require('colors'),
   DEFAULT_MASK = 5,
-  DEFAULT_LOG = console.log;
+  DEFAULT_LOG  = console.log;
 
 /**
  * Returns the current formatted date.

@@ -1,0 +1,7 @@
+{
+  "users": {
+    "ACTIVE": "A",
+    "INACTIVE": "I",
+    "PENDING": "P"
+  }
+}
