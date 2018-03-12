@@ -1,7 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose'),
-  userStatus   = require('../../config/status.json').users,
+  status   = require('../../config/status.json'),
   config = require('../../config/config.json'),
   utils  = require('../../lib/utils'),
   pug    = require('../../lib/pug'),
@@ -29,7 +29,7 @@ const userSchema = mongoose.Schema({
   },
   status: {
     type: String,
-    enum: utils.objValues(userStatus),
+    enum: utils.objValues(status),
     required: true
   },
 });
@@ -56,7 +56,7 @@ module.exports = {
         username: opt.username,
         password: hashPass,
         email: opt.email,
-        status: userStatus.PENDING
+        status: status.PENDING
       }).save();
     });
   },
@@ -120,6 +120,6 @@ module.exports = {
    * @return {Promise} a promise with the user info.
    */
   setInActive: function(id) {
-    return User.findByIdAndUpdate(id, { $set: { status:status.INACTIVE } }, { new: true }).exec();
+    return User.findByIdAndUpdate(id, { $set: { status: status.INACTIVE } }, { new: true }).exec();
   }
 }

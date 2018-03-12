@@ -1,7 +1,5 @@
 {
-  "users": {
-    "ACTIVE": "A",
-    "INACTIVE": "I",
-    "PENDING": "P"
-  }
+  "PENDING": "P",
+  "ACTIVE": "A",
+  "INACTIVE": "I"
 }
