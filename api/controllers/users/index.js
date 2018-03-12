@@ -69,11 +69,13 @@ module.exports = function (router) {
    *       "password": "superpassword"
    *     }
    *
-   * @apiSuccess {String}  message A Success Message
+   * @apiSuccess {String} username Username of the new user
+   * @apiSuccess {String} email Email of the new user
    * @apiSuccessExample {json} Success Response
    *     HTTP/1.1 200 OK
    *     {
-   *       "message": "Success"
+   *       "username": "websweeper",
+   *       "email": "example@mail.com"
    *     }
    * @apiUse ExistError
    * @apiUse MissingFieldsError
@@ -143,6 +145,6 @@ module.exports = function (router) {
    * @apiUse ExtraFieldsError
   */
   .patch(function(req, res, next) {
-
+    //TODO
   });
 };
