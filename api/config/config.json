@@ -6,8 +6,7 @@
     "DOMAIN": "localhost:3000"
   },
   "mongo" : {
-    "server": "mongodb://localhost/websweeper",
-    "opt": {}
+    "server": "mongodb://localhost/websweeper"
   },
 
   "specialization": {},
