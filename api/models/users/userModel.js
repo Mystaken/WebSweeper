@@ -7,7 +7,7 @@ const mongoose = require('mongoose'),
   utils  = require('../../lib/utils'),
   pug    = require('pug'),
   mail   = require('../../lib/mail'),
-  bcrypt = require('bcryptjs'),
+  bcrypt = require('bcrypt'),
   path   = require('path'),
   SALT_LEN   = 10,
   EMAIL_PATH = path.join(__dirname, '../../templates/users/verification.pug'),
@@ -51,7 +51,7 @@ module.exports = {
    *  - username and email must not be in database
    */
   createUser: function(opt) {
-    return bcrypt(opt.password, SALT_LEN).then(function(hashPass) {
+    return bcrypt.hash(opt.password, SALT_LEN).then(function(hashPass) {
       // create pending user
       return new User({
         username: opt.username,

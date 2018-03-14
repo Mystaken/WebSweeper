@@ -1,7 +1,9 @@
 'use strict';
 
 var userModel = require('../../models/users/userModel'),
-  config  = require('../../config/config.json');
+  sanitizer   = require('sanitizer'),
+  validator   = require('../../lib/validator'),
+  usersPostSchema = require('../../schemas/users/users_post.json');
 
 /**
  * @apiDefine ExtraFieldsError
@@ -11,8 +13,13 @@ var userModel = require('../../models/users/userModel'),
  * @apiErrorExample {json} ExtraFields
  *     HTTP/1.1 400 Bad Request
  *     {
- *       "code": "OBJECT_ADDITIONAL_PARAM",
- *       "fields": ["burger", "sandwich"] // will include all extra fields
+ *       status: 400,
+ *       data: [
+ *          {
+ *           "code": "OBJECT_ADDITIONAL_PARAM",
+ *           "fields": [ "#/burger", "#/sandwich" ] // will include all extra fields
+ *         }
+ *       ]
  *     }
  */
 /**
@@ -23,8 +30,13 @@ var userModel = require('../../models/users/userModel'),
  * @apiErrorExample {json} NotFound
  *     HTTP/1.1 404 Not Found
  *     {
- *       "code": "NOT_FOUND",
- *       "fields": ["username", "email"]
+ *       status: 400,
+ *       data: [
+ *          {
+ *           "code": "NOT_FOUND",
+ *           "fields": [ "#/username" ]
+ *         }
+ *       ]
  *     }
  */
 /**
@@ -33,10 +45,15 @@ var userModel = require('../../models/users/userModel'),
  * @apiError Exist Entity already exists
  *
  * @apiErrorExample {json} Exist
- *     HTTP/1.1 404 Not Found
+ *     HTTP/1.1 409 Conflict
  *     {
- *       "code": "OBJECT_MISSING_PROPERTY",
- *       "fields": ["username", "email"]
+ *       status: 400,
+ *       data: [
+ *          {
+ *           "code": "EXISTS",
+ *           "fields": [ "#/username", "#/email" ]
+ *         }
+ *       ]
  *     }
  */
 /**
@@ -45,10 +62,49 @@ var userModel = require('../../models/users/userModel'),
  * @apiError MissingFields Missing required fields in request
  *
  * @apiErrorExample {json} NotFound
- *     HTTP/1.1 409 Conflict
+ *     HTTP/1.1 400 Bad Request
  *     {
- *       "code": "EXISTS",
- *       "fields": ["username", "email"] // will only include fields that already exists
+ *       status: 400,
+ *       data: [
+ *          {
+ *           "code": "OBJECT_MISSING_PROPERTY",
+ *           "fields": [ "#/username" ]
+ *         }
+ *       ]
+ *     }
+ */
+/**
+ * @apiDefine MaxLengthError
+ *
+ * @apiError MaxLen Fields exceeds max length
+ *
+ * @apiErrorExample {json} MaxLen
+ *     HTTP/1.1 400 Bad Request
+ *     {
+ *       status: 400,
+ *       data: [
+ *          {
+ *           "code": "MAX_LENGTH",
+ *           "fields": [ "#/username" ]
+ *         }
+ *       ]
+ *     }
+ */
+/**
+ * @apiDefine MinLengthError
+ *
+ * @apiError MinLen Fields are below min length
+ *
+ * @apiErrorExample {json} MaxLen
+ *     HTTP/1.1 400 Bad Request
+ *     {
+ *       status: 400,
+ *       data: [
+ *          {
+ *           "code": "Min_LENGTH",
+ *           "fields": [ "#/username" ]
+ *         }
+ *       ]
  *     }
  */
 
@@ -60,9 +116,9 @@ module.exports = function (router) {
    * @apiPermission none
    * @apiDescription Creates a new user and sends a verification link to the email.
    *
-   * @apiParam {String} username Username of the new user
-   * @apiParam {String} email Email of the new user
-   * @apiParam {String} password Password of the new user
+   * @apiParam {String} username Username of the new user (min length = 3, max length = 20)
+   * @apiParam {String} email Email of the new user (min length = 3, max length = 100)
+   * @apiParam {String} password Password of the new user (min length = 8, max length = 20)
    * @apiParamExample {json} Sample Request Body
    *     {
    *       "username": "websweeper",
@@ -75,14 +131,25 @@ module.exports = function (router) {
    * @apiSuccessExample {json} Success Response
    *     HTTP/1.1 200 OK
    *     {
-   *       "username": "websweeper",
-   *       "email": "example@mail.com"
+   *       status: 200,
+   *       data: {
+   *         "username": "websweeper",
+   *         "email": "example@mail.com"
+   *       }
    *     }
    * @apiUse ExistError
    * @apiUse MissingFieldsError
    * @apiUse ExtraFieldsError
+   * @apiUse MaxLengthError
+   * @apiUse MinLengthError
   */
   router.route('/').post(function(req, res, next) {
+    var err;
+    validator.validate(req.body, usersPostSchema);
+    err = validator.getLastErrors();
+    if (err) {
+      res.requestError(400, err);
+    }
   });
 
   /**
@@ -103,10 +170,13 @@ module.exports = function (router) {
    * @apiSuccessExample {json} Success Response
    *     HTTP/1.1 200 OK
    *     {
-   *       "username": "websweeper",
-   *       "email": "example@mail.com",
-   *       "created_at": "21-12-2017 15:30",
-   *       "updated_at": "21-12-2017 15:30"
+   *       status: 200,
+   *       data: {
+   *        "username": "websweeper",
+   *        "email": "example@mail.com",
+   *        "created_at": "21-12-2017 15:30",
+   *        "updated_at": "21-12-2017 15:30"
+   *       }
    *     }
    * @apiUse NotFoundError
    * @apiUse ExtraFieldsError
@@ -138,16 +208,18 @@ module.exports = function (router) {
    * @apiSuccessExample {json} Success Response
    *     HTTP/1.1 200 OK
    *     {
-   *       "username": "websweeperchanged",
-   *       "email": "newexample@mail.com",
-   *       "created_at": "21-12-2017 15:30",
-   *       "updated_at": "21-12-2017 15:30"
+   *       status: 200,
+   *       data: {
+   *         "username": "websweeperchanged",
+   *         "email": "newexample@mail.com",
+   *         "created_at": "21-12-2017 15:30",
+   *         "updated_at": "21-12-2017 15:30"
+   *       }
    *     }
    * @apiUse NotFoundError
    * @apiUse ExtraFieldsError
   */
   .patch(function(req, res, next) {
-    //TODO
   });
 
 
