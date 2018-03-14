@@ -25,31 +25,5 @@
  *     }
  */
 module.exports = function (router) {
-  /**
-   * @api {POST} /auth/verification/:ticket Verify User
-   * @apiGroup Auth
-   * @apiName VerifyUser
-   * @apiPermission none
-   *
-   * @apiParam {String} ticket the ticket sent in the verification link
-   *
-   * @apiSuccess {HTML}  html the html to be displayed
-   * @apiUse ExtraFieldsError
-  */
-  router.route('verification/:ticket').get(function(req, res, next) {
-  });
 
-  /**
-   * @api {POST} /auth/verification/:ticket Resend verification link
-   * @apiGroup Auth
-   * @apiName ResendLink
-   * @apiPermission none
-   *
-   * @apiParam {String} username the username to be resent
-   *
-   * @apiUse ExtraFieldsError
-   * @apiUse NotFoundError
-  */
-  router.route('resend/:username').post(function(req, res, next) {
-  });
 };

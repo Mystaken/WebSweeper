@@ -54,10 +54,11 @@ var userModel = require('../../models/users/userModel'),
 
 module.exports = function (router) {
   /**
-   * @api {POST} /user/ Create User
+   * @api {POST} api/user/ Create User
    * @apiGroup User
    * @apiName PostUser
    * @apiPermission none
+   * @apiDescription Creates a new user and sends a verification link to the email.
    *
    * @apiParam {String} username Username of the new user
    * @apiParam {String} email Email of the new user
@@ -82,14 +83,14 @@ module.exports = function (router) {
    * @apiUse ExtraFieldsError
   */
   router.route('/').post(function(req, res, next) {
-
   });
 
   /**
-   * @api {GET} /user/:id Get User Info
+   * @api {GET} api/user/:id Get User Info
    * @apiName GetUser
    * @apiGroup User
    * @apiPermission none
+   * @apiDescription Return this user's information.
    *
    * @apiParam {String} id the id of the user
    *
@@ -114,10 +115,11 @@ module.exports = function (router) {
 
   })
   /**
-   * @api {PATCH} /user/:id Update User Info
+   * @api {PATCH} api/user/:id Update User Info
    * @apiName UpdateUser
    * @apiGroup User
    * @apiPermission must be same as login user
+   * @apiDescription Update this user's information and return it's updated information.
    *
    * @apiParam {String} id the id of user
    * @apiParam {String} username (Optional) the new username of user
@@ -146,5 +148,36 @@ module.exports = function (router) {
   */
   .patch(function(req, res, next) {
     //TODO
+  });
+
+
+  /**
+   * @api {POST} api/users/verification/:ticket Verify User
+   * @apiGroup Auth
+   * @apiName VerifyUser
+   * @apiPermission none
+   * @apiDescription Verifies the user's email with the link sent to the email.
+   *
+   * @apiParam {String} ticket the ticket sent in the verification link
+   *
+   * @apiSuccess {HTML}  html the html to be displayed
+   * @apiUse ExtraFieldsError
+  */
+  router.route('verification/:ticket').get(function(req, res, next) {
+  });
+
+  /**
+   * @api {POST} api/users/verification/resend/:username Resend verification link
+   * @apiGroup Auth
+   * @apiName ResendLink
+   * @apiPermission none
+   * @apiDescription Re-sends the verification link to the given user's email.
+   *
+   * @apiParam {String} username the username to be resent
+   *
+   * @apiUse ExtraFieldsError
+   * @apiUse NotFoundError
+  */
+  router.route('resend/:username').post(function(req, res, next) {
   });
 };
