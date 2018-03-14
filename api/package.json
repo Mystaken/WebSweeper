@@ -19,7 +19,8 @@
     "mailgun-js": "^0.16.0",
     "moment": "^2.20.1",
     "mongoose": "^5.0.7",
-    "pug": "^2.0.1"
+    "pug": "^2.0.1",
+    "z-schema": "^3.19.1"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
