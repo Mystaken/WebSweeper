@@ -7,6 +7,7 @@
   width: 100%;
   height: 100vh;
   background-color: rgb(32, 34, 37);
+  z-index: -1;
 }
 
 .background-glyph {
@@ -22,29 +23,15 @@
   background-image: url("assets/background.png");
 }
 
-.hang-down {
-  transform: translateY(10vh);
+#top-nav {
+  content: "";
+  /* Credit: https://pixabay.com/en/the-speaker-grill-texture-2184439/ */
+  background: url("assets/top-nav-bg.png");
+  height: 150px;
+  padding-top: 50px;
+  z-index: -1;
 }
 
-.center {
-  text-align: center;
-}
-
-.card-content {
-  background-color: rgb(47, 49, 54);
-  color: white;
-}
-
-.tabs {
-  background-color: rgb(54, 57, 62);
-  color: white;
-}
-
-label.active {
-  color: rgb(238, 110, 115) !important;
-}
-
-input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
-  border-bottom-color: rgb(238, 110, 115) !important;
-  box-shadow: 0 1px 0 0 rgb(246, 178, 181) !important;
+.btn, .btn-large {
+  background-color: rgb(238, 110, 115);
 }
