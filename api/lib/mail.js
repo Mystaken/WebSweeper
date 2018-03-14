@@ -16,7 +16,7 @@ module.exports = {
    * @return {Promise} A promise with the response of the mail
    */
   promiseSendMail: function(opt) {
-    opt.form = opt.form || config.from;
+    opt.from = opt.from || config.from;
     return mailgun.messages().send(opt);
   }
 };

@@ -1,8 +1,21 @@
 'use strict';
 
-var userModel = require('../../models/users/userModel'),
-  sanitizer   = require('sanitizer'),
-  validator   = require('../../lib/validator'),
+var User    = require('../../models/userModel'),
+  validator = require('../../lib/validator'),
+  mail      = require('../../lib/mail'),
+  status    = require('../../config/status.json'),
+  error     = require('../../config/error.json'),
+  config    = require('../../config/config.json'),
+
+  sanitizer = require('sanitizer'),
+  bcrypt    = require('bcrypt'),
+  path      = require('path'),
+  pug       = require('pug'),
+
+  SALT_LEN   = 10,
+  EMAIL_PATH = path.join(__dirname, '../../templates/users/verification.pug'),
+  VERIFICATION_ROUTE = `${config.app.DOMAIN}/api/auth/verification`,
+
   usersPostSchema = require('../../schemas/users/users_post.json');
 
 /**
@@ -145,11 +158,62 @@ module.exports = function (router) {
   */
   router.route('/').post(function(req, res, next) {
     var err;
+
+    // validate input
     validator.validate(req.body, usersPostSchema);
     err = validator.getLastErrors();
     if (err) {
-      res.requestError(400, err);
+      return res.requestError(400, err);
     }
+
+    // sanitize username / email
+    req.body.username = sanitizer.sanitize(req.body.username);
+    req.body.email = sanitizer.sanitize(req.body.email);
+
+    // check if user exists
+    return User.aggregate([
+    {
+      $match: {
+        $or: [
+          { username: req.body.username },
+          { email: req.body.email }
+        ]
+      }
+    }]).exec().then(function(user) {
+      if (user && user.length) {
+        return res.requestError(409, {
+          code: error.EXISTS,
+          data: [ '#/username', '#/email' ]
+        });
+      }
+      return bcrypt.hash(req.body.password, SALT_LEN);
+    }).then(function(hashPass) {
+      // create pending user
+      return new User({
+        username: req.body.username,
+        password: hashPass,
+        email: req.body.email,
+        status: status.PENDING
+      }).save();
+    }).then(function(user) {
+      // generate email to send
+      var htmlContent = pug.renderFile(EMAIL_PATH, {
+        username: req.body.username,
+        verifyLink: `${VERIFICATION_ROUTE}/${user._id}`
+      });
+      // send email
+      return mail.promiseSendMail({
+        to: req.body.email,
+        subject: 'Web Sweeper Sign-up',
+        html: htmlContent
+      });
+    }).then(function() {
+      return res.sendResponse({
+        email: req.body.email,
+        username: req.body.username
+      });
+    });
+
   });
 
   /**
@@ -184,6 +248,7 @@ module.exports = function (router) {
   router.route('/:id').get(function(req, res, next) {
 
   })
+
   /**
    * @api {PATCH} api/user/:id Update User Info
    * @apiName UpdateUser

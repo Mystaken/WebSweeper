@@ -89,7 +89,27 @@ module.exports = {
    * @return {Promise} a promise with the information of the user.
    */
   getUser: function(id) {
-    return User.find({_id: id}).exec();
+    return User.findOne({_id: id}).exec();
+  },
+
+  /**
+   * Returns the users that match all the fields in opt.
+   * @param opt {Object} the fields to filter
+   *
+   * @return {Promise} a promise with the information of the user.
+   */
+  getUsers: function(opt) {
+    return User.find(opt).exec();
+  },
+
+  /**
+   * Returns the users that match any of the fields in opt.
+   * @param opt {Object} the fields to filter
+   *
+   * @return {Promise} a promise with the information of the user.
+   */
+  getAnyUsers: function(opt) {
+    return User.find(opt).exec();
   },
 
   /**
