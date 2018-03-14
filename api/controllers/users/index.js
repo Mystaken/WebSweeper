@@ -167,7 +167,7 @@ module.exports = function (router) {
   });
 
   /**
-   * @api {POST} api/users/verification/resend/:username Resend verification link
+   * @api {POST} api/users/:username/verification/resend/ Resend verification link
    * @apiGroup Auth
    * @apiName ResendLink
    * @apiPermission none
@@ -178,6 +178,6 @@ module.exports = function (router) {
    * @apiUse ExtraFieldsError
    * @apiUse NotFoundError
   */
-  router.route('resend/:username').post(function(req, res, next) {
+  router.route('/:username/verification/resend').post(function(req, res, next) {
   });
 };
