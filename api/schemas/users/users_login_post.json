@@ -1,0 +1,18 @@
+{
+  "id": "users-login-post",
+  "type": "object",
+  "properties": {
+    "username": {
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 3
+    },
+    "password": {
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 8
+    }
+  },
+  "additionalProperties": false,
+  "required": [ "username", "password" ]
+}

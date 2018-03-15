@@ -16,7 +16,8 @@ var User    = require('../../models/userModel'),
   EMAIL_PATH = path.join(__dirname, '../../templates/users/verification.pug'),
   VERIFICATION_ROUTE = `${config.app.DOMAIN}/api/auth/verification`,
 
-  usersPostSchema = require('../../schemas/users/users_post.json');
+  usersPostSchema      = require('../../schemas/users/users_post.json'),
+  usersLoginPostSchema = require('../../schemas/users/users_login_post.json');
 
 /**
  * @apiDefine ExtraFieldsError
@@ -120,7 +121,23 @@ var User    = require('../../models/userModel'),
  *       ]
  *     }
  */
-
+/**
+ * @apiDefine InvalidLoginError
+ *
+ * @apiError InvalidLogin Fields are below min length
+ *
+ * @apiErrorExample {json} InvalidLogin
+ *     HTTP/1.1 401 Access Denied
+ *     {
+ *       status: 401,
+ *       data: [
+ *          {
+ *           "code": "ACCESS_DENIED",
+ *           "fields": [ "#/username" ]
+ *         }
+ *       ]
+ *     }
+ */
 module.exports = function (router) {
   /**
    * @api {POST} api/user/ Create User
@@ -181,10 +198,10 @@ module.exports = function (router) {
       }
     }]).exec().then(function(user) {
       if (user && user.length) {
-        return res.requestError(409, {
+        return res.requestError(409, [{
           code: error.EXISTS,
-          data: [ '#/username', '#/email' ]
-        });
+          fields: [ '#/username', '#/email' ]
+        }]);
       }
       return bcrypt.hash(req.body.password, SALT_LEN);
     }).then(function(hashPass) {
@@ -228,7 +245,7 @@ module.exports = function (router) {
    * @apiSuccess {String}  username Username of the user
    * @apiSuccess {String}  email Email of the user
    * @apiSuccess {Date} create_at  The date this user was created (DD-MM-YYYY HH:MM)
-   * @apiSuccess {Date} updated_at  The date this user was last updated (DD-MM-YYYY HH:MM)
+   * @apiSuccess {Date} updatedAt  The date this user was last updated (DD-MM-YYYY HH:MM)
    *
    *
    * @apiSuccessExample {json} Success Response
@@ -238,8 +255,8 @@ module.exports = function (router) {
    *       data: {
    *        "username": "websweeper",
    *        "email": "example@mail.com",
-   *        "created_at": "21-12-2017 15:30",
-   *        "updated_at": "21-12-2017 15:30"
+   *        "createdAt": "21-12-2017 15:30",
+   *        "updatedAt": "21-12-2017 15:30"
    *       }
    *     }
    * @apiUse NotFoundError
@@ -267,7 +284,7 @@ module.exports = function (router) {
    * @apiSuccess {String}  username Username of the user.
    * @apiSuccess {String}  email Email of the user
    * @apiSuccess {Date} create_at  The date this user was created (DD-MM-YYYY HH:MM).
-   * @apiSuccess {Date} updated_at  The date this user was last updated (DD-MM-YYYY HH:MM).
+   * @apiSuccess {Date} updatedAt  The date this user was last updated (DD-MM-YYYY HH:MM).
    *
    *
    * @apiSuccessExample {json} Success Response
@@ -277,8 +294,8 @@ module.exports = function (router) {
    *       data: {
    *         "username": "websweeperchanged",
    *         "email": "newexample@mail.com",
-   *         "created_at": "21-12-2017 15:30",
-   *         "updated_at": "21-12-2017 15:30"
+   *         "createdAt": "21-12-2017 15:30",
+   *         "updatedAt": "21-12-2017 15:30"
    *       }
    *     }
    * @apiUse NotFoundError
@@ -316,5 +333,80 @@ module.exports = function (router) {
    * @apiUse NotFoundError
   */
   router.route('/:username/verification/resend').post(function(req, res, next) {
+  });
+
+  /**
+   * @api {POST} api/users/login User Login
+   * @apiGroup Auth
+   * @apiName ResendLink
+   * @apiPermission none
+   * @apiDescription Logs the user in.
+   *
+   * @apiParam {String} username the username of the login user
+   * @apiParam {String} password the password for the account
+   *
+   * @apiSuccess {String}  id the id of the user
+   * @apiSuccess {String}  username Username of the user
+   * @apiSuccess {String}  email Email of the user
+   * @apiSuccess {Date} create_at  The date this user was created (DD-MM-YYYY HH:MM)
+   * @apiSuccess {Date} updatedAt  The date this user was last updated (DD-MM-YYYY HH:MM)
+   *
+   *
+   * @apiSuccessExample {json} Success Response
+   *     HTTP/1.1 200 OK
+   *     {
+   *       status: 200,
+   *       data: {
+   *        "id": "5935ed0e5ecf04cc3388de8e"
+   *        "username": "websweeper",
+   *        "email": "example@mail.com",
+   *        "createdAt": "21-12-2017 15:30",
+   *        "updatedAt": "21-12-2017 15:30"
+   *       }
+   *     }
+   * @apiUse InvalidLoginError
+  */
+  router.route('/login').post(function(req, res, next) {
+    var err,
+      loginUser;
+
+    validator.validate(req.body, usersLoginPostSchema);
+    err = validator.getLastErrors();
+    if (err) {
+      return res.requestError(400, err);
+    }
+
+    return User.aggregate([
+      {
+        $match: {
+          username: req.body.username
+        }
+      }
+    ]).exec().then(function(user) {
+      loginUser = user[0];
+      if (!user || !user.length) {
+        return res.requestError(401, [{
+            code: error.ACCESS_DENIED,
+            fields: [ '#/username', '#/password' ]
+          }]);
+      }
+      console.log(loginUser, req.body);
+      return bcrypt.compare(req.body.password, loginUser.password);
+    }).then(function(samePass) {
+      if (!samePass) {
+        return res.requestError(401, [{
+            code: error.ACCESS_DENIED,
+            fields: [ '#/username', '#/password' ]
+          }]);
+      }
+      req.session.user_id = loginUser.id;
+      return res.sendResponse({
+          id: loginUser._id,
+          username: loginUser.username,
+          email: loginUser.email,
+          createdAt: loginUser.createdAt,
+          updatedAt: loginUser.updatedAt
+        });
+    });
   });
 };

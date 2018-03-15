@@ -3,9 +3,9 @@
 const express = require('express'),
   Promise   = require('bluebird'),
   path      = require('path'),
-  ERROR     = require('../config/error.json'),
-  bcrypt    = require('bcrypt'),
-  VERSION   = bcrypt.hashSync((new Date()).toString(), 10).substring(7);
+  ERROR     = require('../config/error.json')
+
+var version;
 
 
 
@@ -27,7 +27,7 @@ function configureResponse (response) {
     return this.status(200).json({
       status: 200,
       data : response,
-      version: VERSION
+      version: version
     });
   };
 
@@ -36,12 +36,11 @@ function configureResponse (response) {
   response.invalidVerb = function () {
     return this.status(403).json({
       status: 403,
-      version: VERSION
+      version: version
     });
   };
 
-  /** Sends a error response. If no status is given, send
-      a status 500 response with no message.
+  /** Sends a error response.
    * @param err.status {int}  the error response status
    * @param err.message {str} the error message
    */
@@ -49,7 +48,7 @@ function configureResponse (response) {
     return this.status(status).json({
       status: status,
       data: message,
-      version: VERSION
+      version: version
     });
   };
 
@@ -60,7 +59,7 @@ function configureResponse (response) {
     this.status(403).json({
       status: 403,
       data: ERROR.FORBIDDEN,
-      version: VERSION
+      version: version
     });
   };
 }
@@ -72,6 +71,7 @@ module.exports = {
     configure: function (app, opt) {
         configureRequest(express.request, opt);
         configureResponse(express.response, opt);
+        version = opt.version;
         return Promise.resolve();
     }
 };

@@ -27,6 +27,8 @@ const userSchema = mongoose.Schema({
     enum: utils.objValues(status),
     required: true
   },
+},{
+  timestamps: true
 });
 
 const User = mongoose.model('users', userSchema);
