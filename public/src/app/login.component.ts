@@ -8,12 +8,11 @@ import { APIRoutingService } from './services/api-routing.service';
 })
 export class LoginComponent {
   constructor(private _api: APIRoutingService) {
-    console.log('whatsup')
-    this._api.get('/', {})
-      .subscribe((res) => console.log(res));
 
   }
 
-  onInit() {
+  signUp() {
+    this._api.get('/', {})
+      .subscribe((res) => console.log(res));
   }
 }
