@@ -8,6 +8,9 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login.component';
 import { GameComponent } from './game.component';
 
+import { APIRoutingService } from './services/api-routing.service';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +23,9 @@ import { GameComponent } from './game.component';
     HttpModule,
     RoutingModule,
   ],
-  providers: [],
+  providers: [
+    APIRoutingService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { APIRoutingService } from './services/api-routing.service';
 
 @Component({
   selector: 'login',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  constructor(private _api: APIRoutingService) {
+    console.log('whatsup')
+    this._api.get('/', {})
+      .subscribe((res) => console.log(res));
 
+  }
+
+  onInit() {
+  }
 }
