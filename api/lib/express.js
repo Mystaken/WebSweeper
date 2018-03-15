@@ -70,6 +70,7 @@ function configureResponse (response) {
     if (err && err.status) {
       this.requestError(err.status, err.data);
     } else {
+      console.log(err);
       this.status(500).end();
     }
   };

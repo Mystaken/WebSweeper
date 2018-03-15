@@ -15,7 +15,7 @@ const User    = require('../../models/userModel'),
 
   SALT_LEN   = 10,
   EMAIL_PATH = path.join(__dirname, '../../templates/users/verification.pug'),
-  VERIFICATION_ROUTE = `${config.app.DOMAIN}/api/auth/verification`,
+  VERIFICATION_ROUTE = `${config.app.DOMAIN}/api/users/verification`,
 
   usersPostSchema      = require('../../schemas/users/users_post.json'),
   usersLoginPostSchema = require('../../schemas/users/users_login_post.json');
@@ -200,10 +200,10 @@ module.exports = function (router) {
     }]).exec().then(function(user) {
       if (user && user.length) {
         return Promise.reject({
-          status: 400,
+          status: 409,
           data: [{
-            code: error.ACCESS_DENIED,
-            fields: [ '#/username', '#/password' ]
+            code: error.EXISTS,
+            fields: [ '#/username', '#/email' ]
           }]
         });
       }
@@ -321,14 +321,15 @@ module.exports = function (router) {
    *
    * @apiSuccess {HTML}  html the html to be displayed
   */
-  router.route('verification/:ticket').get(function(req, res, next) {
-    return User.aggregate([
-      {
-        $match: {
-          username: req.body.username
-        }
-      }
-    ]).exec();
+  router.route('/verification/:ticket').get(function(req, res, next) {
+    return User.findOneAndUpdate(
+      { _id: req.params.ticket },
+      { status: status.ACTIVE }
+    ).exec().then(function(ret) {
+      return res.json({a:'YAY'});
+    }).catch(function(err) {
+      return res.json({a:'NAHH'});
+    });
   });
 
   /**
@@ -348,8 +349,8 @@ module.exports = function (router) {
 
   /**
    * @api {POST} api/users/login User Login
-   * @apiGroup Auth
-   * @apiName ResendLink
+   * @apiGroup User
+   * @apiName UserLogin
    * @apiPermission none
    * @apiDescription Logs the user in.
    *
@@ -388,7 +389,8 @@ module.exports = function (router) {
     }
 
     return User.findOneAndUpdate({
-        username: req.body.username
+        username: req.body.username,
+        status: status.ACTIVE
       },{
         lastLogin: new Date()
       },{
@@ -433,9 +435,6 @@ module.exports = function (router) {
           createdAt: loginUser.createdAt,
           lastLogin: loginUser.lastLogin
         });
-    }).catch((err) => {
-      console.log(err);
-      res.handleError(err);
-    });
+    }).catch((err) => res.handleError(err));
   });
 };
