@@ -16,7 +16,7 @@
         <div class="card-content">
           <div id="sign-in-tab">Coming soon</div>
           <div id="sign-up-tab">
-            <form #signUpForm="ngForm">
+            <form #signUpForm="ngForm" (ngSubmit)="signUp()">
               <div class="row">
                 <div class="input-field col s12">
                   <input id="username" type="text" class="validate" name="username" required [(ngModel)]="username">
