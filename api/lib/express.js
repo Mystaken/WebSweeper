@@ -1,9 +1,9 @@
+// jshint esversion: 6
 'use strict';
 
 const express = require('express'),
-  Promise   = require('bluebird'),
   path      = require('path'),
-  ERROR     = require('../config/error.json')
+  ERROR     = require('../config/error.json');
 
 var version;
 
@@ -61,6 +61,17 @@ function configureResponse (response) {
       data: ERROR.FORBIDDEN,
       version: version
     });
+  };
+
+  /** Handles an error and sends correct response.
+   * @param err {Object} The err being handled
+   */
+  response.handleError = function(err) {
+    if (err && err.status) {
+      this.requestError(err.status, err.data);
+    } else {
+      this.status(500).end();
+    }
   };
 }
 

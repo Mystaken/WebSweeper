@@ -1,6 +1,7 @@
+// jshint esversion: 6
 'use strict';
 
-var User    = require('../../models/userModel'),
+const User    = require('../../models/userModel'),
   validator = require('../../lib/validator'),
   mail      = require('../../lib/mail'),
   status    = require('../../config/status.json'),
@@ -198,10 +199,13 @@ module.exports = function (router) {
       }
     }]).exec().then(function(user) {
       if (user && user.length) {
-        return res.requestError(409, [{
-          code: error.EXISTS,
-          fields: [ '#/username', '#/email' ]
-        }]);
+        return Promise.reject({
+          status: 400,
+          data: [{
+            code: error.ACCESS_DENIED,
+            fields: [ '#/username', '#/password' ]
+          }]
+        });
       }
       return bcrypt.hash(req.body.password, SALT_LEN);
     }).then(function(hashPass) {
@@ -210,7 +214,8 @@ module.exports = function (router) {
         username: req.body.username,
         password: hashPass,
         email: req.body.email,
-        status: status.PENDING
+        status: status.PENDING,
+        lastLogin: new Date()
       }).save();
     }).then(function(user) {
       // generate email to send
@@ -229,7 +234,7 @@ module.exports = function (router) {
         email: req.body.email,
         username: req.body.username
       });
-    });
+    }).catch((err) => res.handleError(err));
 
   });
 
@@ -315,9 +320,15 @@ module.exports = function (router) {
    * @apiParam {String} ticket the ticket sent in the verification link
    *
    * @apiSuccess {HTML}  html the html to be displayed
-   * @apiUse ExtraFieldsError
   */
   router.route('verification/:ticket').get(function(req, res, next) {
+    return User.aggregate([
+      {
+        $match: {
+          username: req.body.username
+        }
+      }
+    ]).exec();
   });
 
   /**
@@ -376,37 +387,55 @@ module.exports = function (router) {
       return res.requestError(400, err);
     }
 
-    return User.aggregate([
-      {
-        $match: {
-          username: req.body.username
-        }
-      }
-    ]).exec().then(function(user) {
-      loginUser = user[0];
-      if (!user || !user.length) {
-        return res.requestError(401, [{
+    return User.findOneAndUpdate({
+        username: req.body.username
+      },{
+        lastLogin: new Date()
+      },{
+        _id: 1,
+        username: 1,
+        email: 1,
+        createdAt: 1,
+        lastLogin: {
+          $dateToString: {
+            format: "%Y-%m-%d %H:%M:%S",
+            date: "$last_login"
+          }
+        },
+        password: 1
+    }).exec().then(function(user) {
+      loginUser = user;
+      if (!user) {
+        return Promise.reject({
+          status: 400,
+          data: [{
             code: error.ACCESS_DENIED,
             fields: [ '#/username', '#/password' ]
-          }]);
+          }]
+        });
       }
-      console.log(loginUser, req.body);
       return bcrypt.compare(req.body.password, loginUser.password);
     }).then(function(samePass) {
       if (!samePass) {
-        return res.requestError(401, [{
+        return Promise.reject({
+          status: 400,
+          data: [{
             code: error.ACCESS_DENIED,
             fields: [ '#/username', '#/password' ]
-          }]);
+          }]
+        });
       }
-      req.session.user_id = loginUser.id;
+      req.session.user_id = loginUser._id;
       return res.sendResponse({
           id: loginUser._id,
           username: loginUser.username,
           email: loginUser.email,
           createdAt: loginUser.createdAt,
-          updatedAt: loginUser.updatedAt
+          lastLogin: loginUser.lastLogin
         });
+    }).catch((err) => {
+      console.log(err);
+      res.handleError(err);
     });
   });
 };

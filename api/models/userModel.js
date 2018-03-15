@@ -27,6 +27,10 @@ const userSchema = mongoose.Schema({
     enum: utils.objValues(status),
     required: true
   },
+  lastLogin: {
+    type: Date,
+    required: true
+  }
 },{
   timestamps: true
 });
