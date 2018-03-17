@@ -7,6 +7,8 @@ import { APIRoutingService } from './services/api-routing.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  user = '';
+  pass = '';
   username = '';
   password = '';
   email = '';
@@ -16,8 +18,17 @@ export class LoginComponent {
   }
 
   signUp() {
-    console.log(this.username);
-    this._api.get('/', {})
-      .subscribe((res) => console.log(res));
+    this._api.post('/api/user/', {
+      'username': this.username,
+      'email': this.email,
+      'password': this.password,
+    }).subscribe((res) => console.log(res));
+  }
+
+  signIn() {
+    this._api.post('/api/users/login', {
+      'username': this.username,
+      'password': this.password,
+    }).subscribe((res) => console.log(res));
   }
 }

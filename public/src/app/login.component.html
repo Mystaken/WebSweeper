@@ -14,7 +14,23 @@
           </ul>
         </div>
         <div class="card-content">
-          <div id="sign-in-tab">Coming soon</div>
+          <div id="sign-in-tab">
+            <form #signInForm="ngForm" (ngSubmit)="signIn()">
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="user" type="text" class="validate" name="user" required [(ngModel)]="user">
+                  <label for="user">Username</label>
+                </div>
+                <div class="input-field col s12">
+                  <input id="pass" type="password" class="validate" name="pass" required [(ngModel)]="pass">
+                  <label for="pass">Password</label>
+                </div>
+              </div>
+              <div class="row center">
+                <button type="submit" class="waves-effect waves-light btn" [disabled]="!signInForm.form.valid">Sign In</button>
+              </div>
+            </form>
+          </div>
           <div id="sign-up-tab">
             <form #signUpForm="ngForm" (ngSubmit)="signUp()">
               <div class="row">
