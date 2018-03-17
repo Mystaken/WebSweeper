@@ -25,7 +25,8 @@
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",
-        "../vendor/materialize/js/materialize.min.js"
+        "../vendor/materialize/js/materialize.min.js",
+        "../vendor/socket.io.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

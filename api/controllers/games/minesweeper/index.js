@@ -128,6 +128,7 @@ module.exports = function (router) {
       }
       if (game.status == status.NEW) {
         newGame = minesweeper.MineSweeper(req.body.n, req.body.m, req.body.mines);
+        game.status = status.ACTIVE;
       } else {
         newGame = game.game;
       }

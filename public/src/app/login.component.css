@@ -19,7 +19,7 @@
   background-repeat: no-repeat;
   background-position: bottom;
   /* Credit: https://pixabay.com/en/retro-perspective-grid-tron-synth-1548260/ */
-  background-image: url("assets/background.png");
+  background-image: url("/assets/background.png");
 }
 
 .hang-down {

@@ -20,14 +20,14 @@
   background-repeat: no-repeat;
   background-position: bottom;
   /* Credit: https://pixabay.com/en/retro-perspective-grid-tron-synth-1548260/ */
-  background-image: url("assets/background.png");
+  background-image: url("/assets/background.png");
 }
 
 #top-nav {
   position: fixed;
   top: 0;
   /* Credit: https://pixabay.com/en/the-speaker-grill-texture-2184439/ */
-  background: url("assets/top-nav-bg.png");
+  background: url("/assets/top-nav-bg.png");
   background-position: center;
   background-repeat: no-repeat;
   height: 150px;

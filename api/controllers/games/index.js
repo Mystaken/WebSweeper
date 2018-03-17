@@ -8,7 +8,7 @@ const Game = require('../../models/gameModel'),
   gamePutSchema = require('../../schemas/games/games_put.json');
 module.exports = function (router) {
   /**
-   * @api {PUT} api/games/ Create Game
+   * @api {POST} api/games/ Create Game
    * @apiGroup Game
    * @apiName CreateGame
    * @apiPermission user signed in
@@ -26,7 +26,7 @@ module.exports = function (router) {
    * @apiUse ExtraFieldsError
    * @apiUse InvalidLoginError
   */
-  router.route('/').put(function (req, res, next) {
+  router.route('/').post(function (req, res, next) {
     req.user = { _id: '5935ed0e5ecf04cc3388de8e' };
     return new Game({
         host: req.user._id,
