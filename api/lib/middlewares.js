@@ -1,8 +1,7 @@
 // jshint esversion: 6
 'use strict';
 
-const Promise = require('bluebird'),
-  User  = require('../models/userModel'),
+const User  = require('../models/userModel'),
   error = require('../config/error.json');
 
 
@@ -38,7 +37,7 @@ module.exports = {
           }]
         });
       });
-    }
+    };
     return result;
   }
 };
