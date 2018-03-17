@@ -1,12 +1,13 @@
 // jshint esversion: 6
 'use strict';
 
-const User    = require('../../models/userModel'),
-  validator = require('../../lib/validator'),
-  mail      = require('../../lib/mail'),
-  status    = require('../../config/status.json'),
-  error     = require('../../config/error.json'),
-  config    = require('../../config/config.json'),
+const User   = require('../../models/userModel'),
+  validator  = require('../../lib/validator'),
+  mail       = require('../../lib/mail'),
+  middleware = require('../../lib/middleware'),
+  status     = require('../../config/status.json'),
+  error      = require('../../config/error.json'),
+  config     = require('../../config/config.json'),
 
   sanitizer = require('sanitizer'),
   bcrypt    = require('bcrypt'),
@@ -420,7 +421,7 @@ module.exports = function (router) {
     }).then(function(samePass) {
       if (!samePass) {
         return Promise.reject({
-          status: 400,
+          status: 401,
           data: [{
             code: error.ACCESS_DENIED,
             fields: [ '#/username', '#/password' ]
