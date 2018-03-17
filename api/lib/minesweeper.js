@@ -128,7 +128,6 @@ function reveal(game, n, m, moves) {
     moves = moves || [],
     i, j,
     next;
-  console.log(n, m);
   if (!(curr.status == 1 || curr.status == 2 || curr.number == -1)) {
     moves.push({
       type: 0,
@@ -174,22 +173,3 @@ function stringify(game) {
   }
   return res;
 }
-
-var game = MineSweeper(5, 5, 1);
-reveal(game, 0, 3);
-var i, j, res = "";
-for (i=0; i < game.m; i++) {
-  for (j=0; j < game.n; j++) {
-
-    if (game.gameState[i + j * game.n].number == -1) {
-      res += 'x';
-    } else if (game.gameState[i + j * game.n].status == 1) {
-      res += 'c';
-    } else {
-      res += game.gameState[i + j * game.n].number;
-    }
-  }
-  res += '\n';
-}
-console.log(game);
-console.log(res);
