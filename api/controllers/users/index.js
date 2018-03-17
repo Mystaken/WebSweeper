@@ -15,7 +15,7 @@ const User    = require('../../models/userModel'),
   pug       = require('pug'),
 
   SALT_LEN   = 10,
-  EMAIL_PATH = path.join(__dirname, '../../templates/users/verification.pug'),
+  EMAIL_PATH = path.join(__dirname, '../../views/users/verification.pug'),
   VERIFICATION_ROUTE = `${config.app.DOMAIN}/api/users/verification`,
 
   usersPostSchema      = require('../../schemas/users/users_post.json'),

@@ -7,11 +7,14 @@ const express = require('express'),
   bodyParser  = require('body-parser'),
   cors        = require('cors'),
   session     = require('express-session'),
-  bcrypt    = require('bcrypt'),
+  bcrypt      = require('bcrypt'),
+  app         = express(),
+  server      = require('http').Server(app),
+  io          = require('socket.io')(server),
+
 
   logger      = require('./lib/logger'),
   config      = require('./config/config.json'),
-  app         = express(),
   spec        = require('./lib/spec')(app),
 
   APP_DIR     = path.join(__dirname, config.app.APP_DIR),
@@ -30,7 +33,7 @@ app.use(bodyParser.json())
 spec.configure({
   version: VERSION
   }).then(function() {
-    return app.listen(config.app.PORT, function() {
+    return server.listen(config.app.PORT, function() {
       logger.info(config.app.name + ' started at PORT: ' + config.app.PORT);
     });
   }).catch(function(err) {
