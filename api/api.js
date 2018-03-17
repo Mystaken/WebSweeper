@@ -28,7 +28,8 @@ app.use(bodyParser.json())
     secret: VERSION,
     resave: false,
     saveUninitialized: true,
-  }));
+  }))
+  .use(cors());
 // REMOVE START
 app.use(express.static('static'));
 

@@ -7,6 +7,7 @@ import { RoutingModule } from './routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login.component';
 import { GameComponent } from './game.component';
+import { MinesweeperComponent } from './minesweeper.component';
 
 import { APIRoutingService } from './services/api-routing.service';
 
@@ -16,6 +17,7 @@ import { APIRoutingService } from './services/api-routing.service';
     AppComponent,
     LoginComponent,
     GameComponent,
+    MinesweeperComponent,
   ],
   imports: [
     BrowserModule,

@@ -18,7 +18,7 @@ export class LoginComponent {
   }
 
   signUp() {
-    this._api.post('/api/user/', {
+    this._api.post('/api/users/', {
       'username': this.username,
       'email': this.email,
       'password': this.password,
@@ -27,8 +27,8 @@ export class LoginComponent {
 
   signIn() {
     this._api.post('/api/users/login', {
-      'username': this.username,
-      'password': this.password,
+      'username': this.user,
+      'password': this.pass,
     }).subscribe((res) => console.log(res));
   }
 }
