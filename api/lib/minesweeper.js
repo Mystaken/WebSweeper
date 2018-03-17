@@ -89,8 +89,6 @@ function MineSweeper(n, m, mines, skip_x, skip_y) {
       }
     }
   }
-
-
   game = {
     n: n,
     m: m,
@@ -104,6 +102,7 @@ function MineSweeper(n, m, mines, skip_x, skip_y) {
   };
   return game;
 }
+
 
 /** Flags/unflags a cell for the game
  * @param game {Object} a MineSweeper configuration.
