@@ -1,0 +1,6 @@
+{
+  "id": "game-put",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": false
+}

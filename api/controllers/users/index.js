@@ -5,7 +5,7 @@ const User    = require('../../models/userModel'),
   validator   = require('../../lib/validator'),
   mail        = require('../../lib/mail'),
   middlewares = require('../../lib/middlewares'),
-  status      = require('../../config/status.json'),
+  status      = require('../../config/status.json').users,
   error       = require('../../config/error.json'),
   config      = require('../../config/config.json'),
 
@@ -21,125 +21,7 @@ const User    = require('../../models/userModel'),
   usersPostSchema      = require('../../schemas/users/users_post.json'),
   usersLoginPostSchema = require('../../schemas/users/users_login_post.json');
 
-/**
- * @apiDefine ExtraFieldsError
- *
- * @apiError ExtraFields Extra fields in the request
- *
- * @apiErrorExample {json} ExtraFields
- *     HTTP/1.1 400 Bad Request
- *     {
- *       status: 400,
- *       data: [
- *          {
- *           "code": "OBJECT_ADDITIONAL_PARAM",
- *           "fields": [ "#/burger", "#/sandwich" ] // will include all extra fields
- *         }
- *       ]
- *     }
- */
-/**
- * @apiDefine NotFoundError
- *
- * @apiError NotFound Entity not found or inactive.
- *
- * @apiErrorExample {json} NotFound
- *     HTTP/1.1 404 Not Found
- *     {
- *       status: 400,
- *       data: [
- *          {
- *           "code": "NOT_FOUND",
- *           "fields": [ "#/username" ]
- *         }
- *       ]
- *     }
- */
-/**
- * @apiDefine ExistError
- *
- * @apiError Exist Entity already exists
- *
- * @apiErrorExample {json} Exist
- *     HTTP/1.1 409 Conflict
- *     {
- *       status: 400,
- *       data: [
- *          {
- *           "code": "EXISTS",
- *           "fields": [ "#/username", "#/email" ]
- *         }
- *       ]
- *     }
- */
-/**
- * @apiDefine MissingFieldsError
- *
- * @apiError MissingFields Missing required fields in request
- *
- * @apiErrorExample {json} NotFound
- *     HTTP/1.1 400 Bad Request
- *     {
- *       status: 400,
- *       data: [
- *          {
- *           "code": "OBJECT_MISSING_PROPERTY",
- *           "fields": [ "#/username" ]
- *         }
- *       ]
- *     }
- */
-/**
- * @apiDefine MaxLengthError
- *
- * @apiError MaxLen Fields exceeds max length
- *
- * @apiErrorExample {json} MaxLen
- *     HTTP/1.1 400 Bad Request
- *     {
- *       status: 400,
- *       data: [
- *          {
- *           "code": "MAX_LENGTH",
- *           "fields": [ "#/username" ]
- *         }
- *       ]
- *     }
- */
-/**
- * @apiDefine MinLengthError
- *
- * @apiError MinLen Fields are below min length
- *
- * @apiErrorExample {json} MaxLen
- *     HTTP/1.1 400 Bad Request
- *     {
- *       status: 400,
- *       data: [
- *          {
- *           "code": "Min_LENGTH",
- *           "fields": [ "#/username" ]
- *         }
- *       ]
- *     }
- */
-/**
- * @apiDefine InvalidLoginError
- *
- * @apiError InvalidLogin Fields are below min length
- *
- * @apiErrorExample {json} InvalidLogin
- *     HTTP/1.1 401 Access Denied
- *     {
- *       status: 401,
- *       data: [
- *          {
- *           "code": "ACCESS_DENIED",
- *           "fields": [ "#/username" ]
- *         }
- *       ]
- *     }
- */
+
 module.exports = function (router) {
   /**
    * @api {POST} api/user/ Create User
@@ -237,6 +119,8 @@ module.exports = function (router) {
       });
     }).catch((err) => res.handleError(err));
 
+  }).all(function (req, res, next) {
+    return res.invalidVerb();
   });
 
   /**
@@ -270,14 +154,7 @@ module.exports = function (router) {
    * @apiUse NotFoundError
    * @apiUse ExtraFieldsError
   */
-  router.route('/:id').get(middlewares.authenticate(), function(req, res, next) {
-    res.sendResponse({
-      id: req.user._id,
-      username: req.user.username,
-      email: req.user.email,
-      createdAt: req.user.createdAt,
-      updatedAt: req.user.updatedAt
-    });
+  router.route('/:id').get(function(req, res, next) {
   })
 
   /**
@@ -316,6 +193,8 @@ module.exports = function (router) {
    * @apiUse ExtraFieldsError
   */
   .patch(function(req, res, next) {
+  }).all(function (req, res, next) {
+    return res.invalidVerb();
   });
 
 
@@ -336,9 +215,10 @@ module.exports = function (router) {
       { status: status.ACTIVE }
     ).exec().then(function(ret) {
       return res.json({a:'YAY'});
-    }).catch(function(err) {
-      return res.json({a:'NAHH'});
-    });
+    }).catch((err) => res.handleError(err));
+
+  }).all(function (req, res, next) {
+    return res.invalidVerb();
   });
 
   /**
@@ -354,6 +234,8 @@ module.exports = function (router) {
    * @apiUse NotFoundError
   */
   router.route('/:username/verification/resend').post(function(req, res, next) {
+  }).all(function (req, res, next) {
+    return res.invalidVerb();
   });
 
   /**
@@ -445,5 +327,7 @@ module.exports = function (router) {
           lastLogin: loginUser.lastLogin
         });
     }).catch((err) => res.handleError(err));
+  }).all(function (req, res, next) {
+    return res.invalidVerb();
   });
 };

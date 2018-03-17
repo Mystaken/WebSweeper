@@ -12,7 +12,7 @@ const express = require('express'),
   server      = require('http').Server(app),
   io          = require('socket.io')(server),
 
-
+  sockets     = require('./sockets')(io),
   logger      = require('./lib/logger'),
   config      = require('./config/config.json'),
   spec        = require('./lib/spec')(app),
@@ -29,7 +29,13 @@ app.use(bodyParser.json())
     resave: false,
     saveUninitialized: true,
   }));
+// REMOVE START
+app.use(express.static('static'));
 
+app.get('/', function(req, res){
+  res.sendFile(path.join(__dirname, './static/test.html'));
+});
+// REMOVE END
 spec.configure({
   version: VERSION
   }).then(function() {

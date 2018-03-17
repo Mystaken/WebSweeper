@@ -1,5 +1,13 @@
 {
-  "PENDING": "P",
-  "ACTIVE": "A",
-  "INACTIVE": "I"
+  "users": {
+    "PENDING": "P",
+    "ACTIVE": "A",
+    "INACTIVE": "I"
+  },
+  "games": {
+    "NEW": "N",
+    "ACTIVE": "A",
+    "WIN": "W",
+    "LOSS": "L"
+  }
 }
