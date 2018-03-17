@@ -9,9 +9,7 @@
  *  - n {Integer}: the length of the x-axis
  *  - m {Integer}: the length of the y-axis
  *  - mines {Integer}: number of mines in the game
- *  - status {Array of Status}: the current game state
- *  - skip_x {Integer}: guarantees no mine in this x y position
- *  - skip_y {Integer}: guarantees no mine in this x y position
+ *  - gameState {Array of Status}: the current game state
  *
  * Status is a object with the properties for a cell
  * - status {Integer} the status of the current cell
@@ -38,6 +36,8 @@
  * @param {n} {Integer} the length of the x-axis of the game.
  * @param {m} {Integer} the length of the y-axis of the game.
  * @param {mines} {Integer} the number of mines for this game.
+ * @param skip_x {Integer}: guarantees no mine in this x y position
+ * @param skip_y {Integer}: guarantees no mine in this x y position
  *
  * @return {Object} the configuration for the game.
  */
@@ -140,7 +140,8 @@ function reveal(game, n, m, moves) {
     i, j,
     next;
   moves = moves || [];
-  if ((n + m*game.n) >= m * n || (n + m*game.n) < 0) {
+  if ((n + m*game.n) >= game.m * game.n || (n + m*game.n) < 0) {
+    console.log(1);
     return moves;
   }
   if (!(curr.status == 1 || curr.status == 2 || curr.number == -1)) {
