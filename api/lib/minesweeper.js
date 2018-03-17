@@ -10,6 +10,8 @@
  *  - m {Integer}: the length of the y-axis
  *  - mines {Integer}: number of mines in the game
  *  - status {Array of Status}: the current game state
+ *  - skip_x {Integer}: guarantees no mine in this x y position
+ *  - skip_y {Integer}: guarantees no mine in this x y position
  *  
  * Status is a object with the properties for a cell
  * - status {Integer} the status of the current cell
@@ -39,24 +41,33 @@
  *
  * @return {Object} the configuration for the game.
  */
-function MineSweeper(n, m, mines) {
+function MineSweeper(n, m, mines, skip_x, skip_y) {
   var game,
     mineLocation,
     i, j, k,
     next,
     tmp,
-    status = [];
+    status = [],
+    rest = n * m - mines;
+
+  if (skip_x && skip_y) {
+    rest -= 1;
+  }
 
   // randomize mine locations
   mineLocation = Array(mines)
     .fill(-1)
-    .concat(Array(n * m - mines).fill(0));
+    .concat(Array(rest).fill(0));
 
   for (i=0;i<n*m;i++) {
     j = Math.floor(Math.random() * (n * m));
     tmp = mineLocation[j];
     mineLocation[j] = mineLocation[i];
     mineLocation[i] = tmp;
+  }
+
+  if (skip_x && skip_y) {
+    mineLocation.splice(skip_x + skip_y * n, 0, 0);
   }
 
   // get numbers for cells.
@@ -78,6 +89,8 @@ function MineSweeper(n, m, mines) {
       }
     }
   }
+
+
   game = {
     n: n,
     m: m,
@@ -125,9 +138,10 @@ function flag(game, n, m) {
 function reveal(game, n, m, moves) {
   var idx = n + m * game.n,
     curr = game.gameState[idx],
-    moves = moves || [],
     i, j,
     next;
+  moves = moves || [];
+
   if (!(curr.status == 1 || curr.status == 2 || curr.number == -1)) {
     moves.push({
       type: 0,
@@ -153,6 +167,17 @@ function reveal(game, n, m, moves) {
   return moves;
 }
 
+/** Returns true iff there is a mine in this cell.
+ * @param game {Object} a MineSweeper configuration.
+ * @param {n} {Integer} the position on the x-axis of the game.
+ * @param {m} {Integer} the position on the y-axis of the game.
+ *
+ * @return {Boolean} The true iff there is a mine in this cell.
+ */
+function checkMine(game, n, m) {
+  return game.gameState[n + m * game.n].number == -1;
+}
+
 /** Returns a string representation of the game.
  * @param game {Object} a MineSweeper configuration.
  *
@@ -173,3 +198,11 @@ function stringify(game) {
   }
   return res;
 }
+
+
+module.exports = {
+  createGame: MineSweeper,
+  checkMine: checkMine,
+  reveal: reveal,
+  flag: flag
+};
