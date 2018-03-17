@@ -38,21 +38,16 @@ module.exports = function (router) {
    * @apiUse NotFoundError
   */
   router.route('/:id').get(function(req, res, next) {
-    return Game.aggregate([{
-      $match: {
-        _id: req.params.id
-      }
-    },{
-      $project: {
-        id: "$id",
-        _id: 0,
-        host: 1,
-        status: 1,
-        config: 1,
-        createdAt: 1
-      }
-    }]).exec().then(function(game) {
-      if (!game || !game.length) {
+    return Game.findById(req.params.id, {
+      id: "$id",
+      _id: 0,
+      host: 1,
+      status: 1,
+      config: 1,
+      createdAt: 1
+    }).exec().then(function(game) {
+      console.log(game);
+      if (!game) {
         return Promise.reject({
           status: 404,
           data: [{
@@ -61,7 +56,18 @@ module.exports = function (router) {
           }]
         });
       }
-      return res.sendResponse(game[0]);
+      if (game.game) {
+        game.game.gameState = game.game.gameState.map(function(cell) {
+          if (cell.status === 1) {
+            return cell;
+          } else {
+            return {
+              status: cell.status
+            };
+          }
+        });
+      }
+      return res.sendResponse(game);
     }).catch((err) => res.handleError(err));
   })
 
@@ -100,7 +106,7 @@ module.exports = function (router) {
    * @apiUse ExtraFieldsError
   */
   .post(function(req, res, next) {
-    var err;
+    var err, newGame, moves, resStatus = 0;
 
     validator.validate(req.body, minesweeperPostSchema);
     err = validator.getLastErrors();
@@ -109,15 +115,7 @@ module.exports = function (router) {
       return res.requestError(400, err);
     }
 
-    return Game.findById(req.params.id, {
-        id: "$id",
-        _id: 0,
-        host: 1,
-        status: 1,
-        config: 1,
-        createdAt: 1
-    }).exec().then(function(game) {
-      var newGame, moves, resStatus = 0;
+    return Game.findById(req.params.id).exec().then(function(game) {
       // game does not exist
       if (!game) {
         return Promise.reject({
@@ -145,11 +143,13 @@ module.exports = function (router) {
         moves = minesweeper.flag(newGame, req.body.x, req.body.y);
       }
       game.game = newGame;
+      return game.save();
+    }).then(function() {
       return res.sendResponse({
         moves: moves,
         status: resStatus
       });
-      }).catch((err) => res.handleError(err));
+    }).catch((err) => res.handleError(err));
   }).all(function (req, res, next) {
     return res.invalidVerb();
   });

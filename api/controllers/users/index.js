@@ -23,8 +23,102 @@ const User    = require('../../models/userModel'),
 
 
 module.exports = function (router) {
+
   /**
-   * @api {POST} api/user/ Create User
+   * @api {POST} api/users/login User Login
+   * @apiGroup User
+   * @apiName UserLogin
+   * @apiPermission none
+   * @apiDescription Logs the user in.
+   *
+   * @apiParam {String} username the username of the login user
+   * @apiParam {String} password the password for the account
+   *
+   * @apiSuccess {String}  id the id of the user
+   * @apiSuccess {String}  username Username of the user
+   * @apiSuccess {String}  email Email of the user
+   * @apiSuccess {Date} create_at  The date this user was created (DD-MM-YYYY HH:MM)
+   * @apiSuccess {Date} updatedAt  The date this user was last updated (DD-MM-YYYY HH:MM)
+   *
+   *
+   * @apiSuccessExample {json} Success Response
+   *     HTTP/1.1 200 OK
+   *     {
+   *       status: 200,
+   *       data: {
+   *        "id": "5935ed0e5ecf04cc3388de8e"
+   *        "username": "websweeper",
+   *        "email": "example@mail.com",
+   *        "createdAt": "21-12-2017 15:30",
+   *        "updatedAt": "21-12-2017 15:30"
+   *       }
+   *     }
+   * @apiUse InvalidLoginError
+  */
+  router.route('/login').post(function(req, res, next) {
+    var err,
+      loginUser;
+
+    validator.validate(req.body, usersLoginPostSchema);
+    err = validator.getLastErrors();
+    if (err) {
+      return res.requestError(400, err);
+    }
+
+    return User.findOneAndUpdate({
+        username: req.body.username,
+        status: status.ACTIVE
+      },{
+        lastLogin: new Date()
+      },{
+        _id: 1,
+        username: 1,
+        email: 1,
+        createdAt: 1,
+        lastLogin: {
+          $dateToString: {
+            format: "%Y-%m-%d %H:%M:%S",
+            date: "$last_login"
+          }
+        },
+        password: 1
+    }).exec().then(function(user) {
+      loginUser = user;
+      if (!user) {
+        return Promise.reject({
+          status: 400,
+          data: [{
+            code: error.ACCESS_DENIED,
+            fields: [ '#/username', '#/password' ]
+          }]
+        });
+      }
+      return bcrypt.compare(req.body.password, loginUser.password);
+    }).then(function(samePass) {
+      if (!samePass) {
+        return Promise.reject({
+          status: 401,
+          data: [{
+            code: error.ACCESS_DENIED,
+            fields: [ '#/username', '#/password' ]
+          }]
+        });
+      }
+      req.session.user_id = loginUser._id;
+      return res.sendResponse({
+          id: loginUser._id,
+          username: loginUser.username,
+          email: loginUser.email,
+          createdAt: loginUser.createdAt,
+          lastLogin: loginUser.lastLogin
+        });
+    }).catch((err) => res.handleError(err));
+  }).all(function (req, res, next) {
+    return res.invalidVerb();
+  });
+
+  /**
+   * @api {POST} api/users/ Create User
    * @apiGroup User
    * @apiName PostUser
    * @apiPermission none
@@ -124,7 +218,7 @@ module.exports = function (router) {
   });
 
   /**
-   * @api {GET} api/user/:id Get User Info
+   * @api {GET} api/users/:id Get User Info
    * @apiName GetUser
    * @apiGroup User
    * @apiPermission none
@@ -158,7 +252,7 @@ module.exports = function (router) {
   })
 
   /**
-   * @api {PATCH} api/user/:id Update User Info
+   * @api {PATCH} api/users/:id Update User Info
    * @apiName UpdateUser
    * @apiGroup User
    * @apiPermission must be same as login user
@@ -238,96 +332,4 @@ module.exports = function (router) {
     return res.invalidVerb();
   });
 
-  /**
-   * @api {POST} api/users/login User Login
-   * @apiGroup User
-   * @apiName UserLogin
-   * @apiPermission none
-   * @apiDescription Logs the user in.
-   *
-   * @apiParam {String} username the username of the login user
-   * @apiParam {String} password the password for the account
-   *
-   * @apiSuccess {String}  id the id of the user
-   * @apiSuccess {String}  username Username of the user
-   * @apiSuccess {String}  email Email of the user
-   * @apiSuccess {Date} create_at  The date this user was created (DD-MM-YYYY HH:MM)
-   * @apiSuccess {Date} updatedAt  The date this user was last updated (DD-MM-YYYY HH:MM)
-   *
-   *
-   * @apiSuccessExample {json} Success Response
-   *     HTTP/1.1 200 OK
-   *     {
-   *       status: 200,
-   *       data: {
-   *        "id": "5935ed0e5ecf04cc3388de8e"
-   *        "username": "websweeper",
-   *        "email": "example@mail.com",
-   *        "createdAt": "21-12-2017 15:30",
-   *        "updatedAt": "21-12-2017 15:30"
-   *       }
-   *     }
-   * @apiUse InvalidLoginError
-  */
-  router.route('/login').post(function(req, res, next) {
-    var err,
-      loginUser;
-
-    validator.validate(req.body, usersLoginPostSchema);
-    err = validator.getLastErrors();
-    if (err) {
-      return res.requestError(400, err);
-    }
-
-    return User.findOneAndUpdate({
-        username: req.body.username,
-        status: status.ACTIVE
-      },{
-        lastLogin: new Date()
-      },{
-        _id: 1,
-        username: 1,
-        email: 1,
-        createdAt: 1,
-        lastLogin: {
-          $dateToString: {
-            format: "%Y-%m-%d %H:%M:%S",
-            date: "$last_login"
-          }
-        },
-        password: 1
-    }).exec().then(function(user) {
-      loginUser = user;
-      if (!user) {
-        return Promise.reject({
-          status: 400,
-          data: [{
-            code: error.ACCESS_DENIED,
-            fields: [ '#/username', '#/password' ]
-          }]
-        });
-      }
-      return bcrypt.compare(req.body.password, loginUser.password);
-    }).then(function(samePass) {
-      if (!samePass) {
-        return Promise.reject({
-          status: 401,
-          data: [{
-            code: error.ACCESS_DENIED,
-            fields: [ '#/username', '#/password' ]
-          }]
-        });
-      }
-      req.session.user_id = loginUser._id;
-      return res.sendResponse({
-          id: loginUser._id,
-          username: loginUser.username,
-          email: loginUser.email,
-          createdAt: loginUser.createdAt,
-          lastLogin: loginUser.lastLogin
-        });
-    }).catch((err) => res.handleError(err));
-  }).all(function (req, res, next) {
-    return res.invalidVerb();
-  });
 };
