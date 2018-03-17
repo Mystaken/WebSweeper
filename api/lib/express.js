@@ -36,6 +36,7 @@ function configureResponse (response) {
   response.invalidVerb = function () {
     return this.status(403).json({
       status: 403,
+      data: ERROR.INVALID_VERB,
       version: version
     });
   };
