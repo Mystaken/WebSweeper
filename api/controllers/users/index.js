@@ -1,13 +1,13 @@
 // jshint esversion: 6
 'use strict';
 
-const User   = require('../../models/userModel'),
-  validator  = require('../../lib/validator'),
-  mail       = require('../../lib/mail'),
-  middleware = require('../../lib/middleware'),
-  status     = require('../../config/status.json'),
-  error      = require('../../config/error.json'),
-  config     = require('../../config/config.json'),
+const User    = require('../../models/userModel'),
+  validator   = require('../../lib/validator'),
+  mail        = require('../../lib/mail'),
+  middlewares = require('../../lib/middlewares'),
+  status      = require('../../config/status.json'),
+  error       = require('../../config/error.json'),
+  config      = require('../../config/config.json'),
 
   sanitizer = require('sanitizer'),
   bcrypt    = require('bcrypt'),
@@ -248,6 +248,7 @@ module.exports = function (router) {
    *
    * @apiParam {String} id the id of the user
    *
+   * @apiSuccess {String}  id the id of the user
    * @apiSuccess {String}  username Username of the user
    * @apiSuccess {String}  email Email of the user
    * @apiSuccess {Date} create_at  The date this user was created (DD-MM-YYYY HH:MM)
@@ -259,6 +260,7 @@ module.exports = function (router) {
    *     {
    *       status: 200,
    *       data: {
+   *        "id": "5aac8bcd0ae1b610fc1a5160"
    *        "username": "websweeper",
    *        "email": "example@mail.com",
    *        "createdAt": "21-12-2017 15:30",
@@ -268,8 +270,14 @@ module.exports = function (router) {
    * @apiUse NotFoundError
    * @apiUse ExtraFieldsError
   */
-  router.route('/:id').get(function(req, res, next) {
-
+  router.route('/:id').get(middlewares.authenticate(), function(req, res, next) {
+    res.sendResponse({
+      id: req.user._id,
+      username: req.user.username,
+      email: req.user.email,
+      createdAt: req.user.createdAt,
+      updatedAt: req.user.updatedAt
+    });
   })
 
   /**

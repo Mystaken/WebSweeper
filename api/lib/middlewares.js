@@ -2,7 +2,8 @@
 'use strict';
 
 const Promise = require('bluebird'),
-  User = require('../models/userModel');
+  User  = require('../models/userModel'),
+  error = require('../config/error.json');
 
 
 module.exports = {
@@ -17,12 +18,9 @@ module.exports = {
     var result = function(req, res, next) {
       // session not set.
       if (!req.session.user_id) {
-        return res.requestError(401, {
-          status: 401,
-          data: [{
+        return res.requestError(401, [{
             code: error.ACCESS_DENIED,
-          }]
-        });
+          }]);
       }
 
       // check if session belongs to valid user

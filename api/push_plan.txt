@@ -3,3 +3,6 @@ Required dependencies
 - apidoc
 - npm
 - node
+
+
+remove apidoc from package.json and add install global
