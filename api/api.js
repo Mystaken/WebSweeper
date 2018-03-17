@@ -11,7 +11,7 @@ const express = require('express'),
   app         = express(),
   server      = require('http').Server(app),
 
-  sockets     = require('./sockets/sockets').init(server),
+  sockets     = require('./sockets/sockets')(server),
   logger      = require('./lib/logger'),
   config      = require('./config/config.json'),
   spec        = require('./lib/spec')(app),
