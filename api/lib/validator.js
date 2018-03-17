@@ -26,7 +26,7 @@ module.exports = {
         } else if (err.code === 'OBJECT_MISSING_REQUIRED_PROPERTY') {
           path = [ '#/' + err.params[0] ];
         } else {
-          path = [ '#/' + err.path ];
+          path = [ err.path ];
         }
         return {
           code: err.code,

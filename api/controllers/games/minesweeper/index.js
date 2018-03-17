@@ -1,8 +1,12 @@
 // jshint esversion: 6
 'use strict';
-const Game = require('../../../models/gameModel'),
-  sweeper  = require('../../../lib/minesweeper'),
-  error    = require('../../../config/error.json');
+const Game    = require('../../../models/gameModel'),
+  minesweeper = require('../../../lib/minesweeper'),
+  validator   = require('../../../lib/validator'),
+  error       = require('../../../config/error.json'),
+  status      = require('../../../config/status.json').games,
+
+  minesweeperPostSchema = require('../../../schemas/games/minesweeper/minesweeper_post.json');
 
 module.exports = function (router) {
 
@@ -70,11 +74,14 @@ module.exports = function (router) {
    * @apiParam {String} id the id of the game.
    * @apiParam {Integer} n the position on x-axis
    * @apiParam {Integer} m the position on y-axis
+   * @apiParam {Integer} mines the number of mines in the game
+   * @apiParam {Integer} x the the x coordinate of the move
+   * @apiParam {Integer} y the y coordinate of the move
    * @apiParam {Integer} move 0 = reveal, 1 = toggle flag
    *
    *
    * @apiSuccess {Array} moves contains type (0=reveal, 1=flag, 2=unflag), n and m
-   * @apiSuccess {Integer} status the status of the game (0=active, 1=win, 2=loss)
+   * @apiSuccess {Integer} status the status of the game (0=active, 1=loss)
    * @apiSuccessExample {json} Success Response
    *     HTTP/1.1 200 OK
    *     {
@@ -89,9 +96,60 @@ module.exports = function (router) {
    *       }
    *     }
    * @apiUse NotFoundError
+   * @apiUse MissingFieldsError
+   * @apiUse ExtraFieldsError
   */
   .post(function(req, res, next) {
+    var err;
 
+    validator.validate(req.body, minesweeperPostSchema);
+    err = validator.getLastErrors();
+
+    if (err) {
+      return res.requestError(400, err);
+    }
+
+    return Game.findById(req.params.id, {
+        id: "$id",
+        _id: 0,
+        host: 1,
+        status: 1,
+        config: 1,
+        createdAt: 1
+    }).exec().then(function(game) {
+      var newGame, moves, resStatus = 0;
+      // game does not exist
+      if (!game) {
+        return Promise.reject({
+          status: 404,
+          data: [{
+            code: error.NOT_FOUND,
+            fields: [ '#/id' ]
+          }]
+        });
+      }
+      if (game.status == status.NEW) {
+        newGame = minesweeper.MineSweeper(req.body.n, req.body.m, req.body.mines);
+      } else {
+        newGame = game.game;
+      }
+      // reveal
+      if (req.body.move == 0) {
+        moves = minesweeper.reveal(newGame, req.body.x, req.body.y);
+        // Hit mine, game over!
+        if (!moves.length && minesweeper.checkMine(newGame, req.body.x, req.body.y)) {
+          resStatus = 1;
+        }
+      // flag
+      } else {
+        moves = minesweeper.flag(newGame, req.body.x, req.body.y);
+      }
+      game.game = newGame;
+      return res.sendResponse({
+        moves: moves,
+        status: resStatus
+      });
+      }).catch((err) => res.handleError(err));
   }).all(function (req, res, next) {
     return res.invalidVerb();
   });

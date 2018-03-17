@@ -12,7 +12,7 @@
  *  - status {Array of Status}: the current game state
  *  - skip_x {Integer}: guarantees no mine in this x y position
  *  - skip_y {Integer}: guarantees no mine in this x y position
- *  
+ *
  * Status is a object with the properties for a cell
  * - status {Integer} the status of the current cell
  *     0: Unflagged. Basically the default state
@@ -140,7 +140,9 @@ function reveal(game, n, m, moves) {
     i, j,
     next;
   moves = moves || [];
-
+  if ((n + m*game.n) >= m * n || (n + m*game.n) < 0) {
+    return moves;
+  }
   if (!(curr.status == 1 || curr.status == 2 || curr.number == -1)) {
     moves.push({
       type: 0,
@@ -200,8 +202,9 @@ function stringify(game) {
 
 
 module.exports = {
-  createGame: MineSweeper,
+  MineSweeper: MineSweeper,
   checkMine: checkMine,
   reveal: reveal,
-  flag: flag
+  flag: flag,
+  stringify:stringify
 };

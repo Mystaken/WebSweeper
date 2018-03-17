@@ -1,0 +1,26 @@
+{
+  "id": "minesweeper-post",
+  "type": "object",
+  "properties": {
+    "n": {
+      "type": "integer"
+    },
+    "m": {
+      "type": "integer"
+    },
+    "mines": {
+      "type": "integer"
+    },
+    "x": {
+      "type": "integer"
+    },
+    "y": {
+      "type": "integer"
+    },
+    "move": {
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [ "n", "m", "x", "y", "move" ]
+}
