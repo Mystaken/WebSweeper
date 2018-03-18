@@ -1,7 +1,9 @@
 // jshint esversion: 6
 'use strict';
 
-const Game = require('../../../models/gameModel');
+const Game  = require('../../../models/gameModel'),
+  validator = require('../../../lib/validator'),
+  roomsGetSchema = require('../../../schemas/games/rooms/rooms_get.json');
 
 module.exports = function (router) {
   /**
@@ -39,7 +41,40 @@ module.exports = function (router) {
    * @apiUse MissingFieldsError
   */
   router.route('/').get(function(req, res, next) {
+    var err, query;
 
+    //validation
+    if (req.query.limit) {
+      req.query.limit = parseInt(req.query.limit, 10);
+    }
+    if (req.query.offset) {
+      req.query.offset = parseInt(req.query.offset, 10);
+    }
+    validator.validate(req.query, roomsGetSchema);
+    err = validator.getLastErrors();
+    if (err) {
+      return res.requestError(400, err);
+    }
+    //get rooms
+    query = Game.find({},{
+        id: "$_id",
+        _id: 0,
+        host: 1,
+        createdAt: 1,
+        updatedAt: 1
+      })
+      .sort({
+        updatedAt: 'asc'
+      })
+      .limit(req.query.limit)
+
+    if (req.query.offset) {
+      query.skip(req.query.offset);
+    }
+
+    return query.exec().then(function(rooms) {
+      return res.sendResponse(rooms);
+    }).catch((err) => res.handleError(err));
   }).all(function (req, res, next) {
     return res.invalidVerb();
   });

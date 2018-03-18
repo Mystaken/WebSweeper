@@ -40,7 +40,7 @@ module.exports = function (router) {
   */
   router.route('/:id').get(function(req, res, next) {
     return Game.findById(req.params.id, {
-      id: "$id",
+      id: "$_id",
       _id: 0,
       host: 1,
       status: 1,
