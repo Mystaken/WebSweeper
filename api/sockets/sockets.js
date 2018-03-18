@@ -24,11 +24,12 @@ module.exports = {
 
     io.on('connection', function(socket) {
       chat(io, socket);
+      console.log('user connected');
 
       socket.on('disconnect', function(){
         console.log('user disconnected');
       });
     });
-    this.io;
+    this.io = io;
   }
 }
