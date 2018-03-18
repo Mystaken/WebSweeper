@@ -128,7 +128,7 @@ module.exports = function (router) {
         });
       }
       if (game.status == status.NEW) {
-        newGame = minesweeper.MineSweeper(req.body.n, req.body.m, req.body.mines, req.body.x, req.body.y);
+        newGame = minesweeper.MineSweeper(req.body.n, req.body.m, req.body.mines);
         game.status = status.ACTIVE;
       } else {
         newGame = game.game;
@@ -146,6 +146,7 @@ module.exports = function (router) {
       }
       game.game = newGame;
       game.markModified('game');
+      console.log(newGame.gameState);
       return game.save();
     }).then(function(g) {
       return res.sendResponse({
