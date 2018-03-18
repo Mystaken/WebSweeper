@@ -5,6 +5,7 @@ const Game    = require('../../../models/gameModel'),
   validator   = require('../../../lib/validator'),
   error       = require('../../../config/error.json'),
   status      = require('../../../config/status.json').games,
+  sockets     = require('../../../sockets/sockets').io,
 
   minesweeperPostSchema = require('../../../schemas/games/minesweeper/minesweeper_post.json');
 
@@ -146,13 +147,14 @@ module.exports = function (router) {
       }
       game.game = newGame;
       game.markModified('game');
-      console.log(newGame.gameState);
       return game.save();
     }).then(function(g) {
-      return res.sendResponse({
+      var result = {
         moves: moves,
         status: resStatus
-      });
+      };
+      io.sockets.in('new minesweeper move', result);
+      return res.sendResponse(result);
     }).catch((err) => res.handleError(err));
   }).all(function (req, res, next) {
     return res.invalidVerb();

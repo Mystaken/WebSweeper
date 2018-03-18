@@ -16,6 +16,8 @@ const User    = require('../../models/userModel'),
 
   SALT_LEN   = 10,
   EMAIL_PATH = path.join(__dirname, '../../views/users/verification.pug'),
+  SIGNUP_SUCCESS = path.join(__dirname, '../../views/users/signup_success.pug'),
+  SIGNUP_FAIL    = path.join(__dirname, '../../views/users/signup_fail.html'),
   VERIFICATION_ROUTE = `${config.app.DOMAIN}/api/users/verification`,
 
   usersPostSchema      = require('../../schemas/users/users_post.json'),
@@ -290,6 +292,7 @@ module.exports = function (router) {
    * @apiUse ExtraFieldsError
   */
   .patch(function(req, res, next) {
+    return res.requestError(501, { code: error.NOT_IMPLEMENTED });
   }).all(function (req, res, next) {
     return res.invalidVerb();
   });
@@ -308,12 +311,20 @@ module.exports = function (router) {
   */
   router.route('/verification/:ticket').get(function(req, res, next) {
     return User.findOneAndUpdate(
-      { _id: req.params.ticket },
+      {
+        _id: req.params.ticket,
+        status: status.PENDING
+      },
       { status: status.ACTIVE }
     ).exec().then(function(ret) {
+      var htmlContent;
       if (!ret) {
+        return res.sendFile(SIGNUP_FAIL);
       }
-      return res.json({a:'YAY'});
+      htmlContent = pug.renderFile(SIGNUP_SUCCESS, {
+        redirect: `${config.app.DOMAIN}`
+      });
+      return res.send(htmlContent);
     }).catch((err) => res.handleError(err));
 
   }).all(function (req, res, next) {
@@ -333,6 +344,7 @@ module.exports = function (router) {
    * @apiUse NotFoundError
   */
   router.route('/:username/verification/resend').post(function(req, res, next) {
+    return res.requestError(501, { code: error.NOT_IMPLEMENTED });
   }).all(function (req, res, next) {
     return res.invalidVerb();
   });
