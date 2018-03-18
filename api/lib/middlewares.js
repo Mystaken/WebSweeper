@@ -15,8 +15,13 @@ module.exports = {
    */
   authenticate: function(opt) {
     var result = function(req, res, next) {
+      if (!req.session.user) {
+        req.session.user = {
+          ''
+        };
+      }
       // session not set.
-      if (!req.session.user_id) {
+      if (!req.session.user) {
         return res.requestError(401, [{
             code: error.ACCESS_DENIED,
           }]);
