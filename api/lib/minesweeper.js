@@ -121,13 +121,12 @@ function flag(game, n, m) {
   if (currStatus === 1) {
     return [];
   } else if (currStatus === 0) {
-    game.gameState[idx].status = 2;
     newStatus = 2;
   // currStatus === 2
   } else {
-    game.gameState[idx].status = 0;
     newStatus = 0;
   }
+  game.gameState[idx].status = newStatus;
   return [{
     n: n,
     m: m,
