@@ -66,7 +66,7 @@ module.exports = function (router) {
       .sort({
         updatedAt: 'asc'
       })
-      .limit(req.query.limit)
+      .limit(req.query.limit);
 
     if (req.query.offset) {
       query.skip(req.query.offset);

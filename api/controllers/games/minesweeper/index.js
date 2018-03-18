@@ -5,7 +5,7 @@ const Game    = require('../../../models/gameModel'),
   validator   = require('../../../lib/validator'),
   error       = require('../../../config/error.json'),
   status      = require('../../../config/status.json').games,
-  sockets     = require('../../../sockets/sockets').io,
+  io     = require('../../../sockets/sockets').io,
 
   minesweeperPostSchema = require('../../../schemas/games/minesweeper/minesweeper_post.json');
 
@@ -171,4 +171,4 @@ module.exports = function (router) {
   }).all(function (req, res, next) {
     return res.invalidVerb();
   });
-}
+};

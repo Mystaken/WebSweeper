@@ -102,8 +102,6 @@ function MineSweeper(n, m, mines, skip_x, skip_y) {
       };
     })
   };
-  console.log(mineLocation);
-  console.log(game.gameState);
   return game;
 }
 
