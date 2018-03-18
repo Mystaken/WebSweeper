@@ -36,7 +36,7 @@ module.exports = {
           id: user._id,
           username: user.username,
           email: user.email,
-          updatedAt: user.updatedAt,
+          lastLogin: user.lastLogin,
           createdAt: user.createdAt
         };
         next();
