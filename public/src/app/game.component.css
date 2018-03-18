@@ -7,6 +7,14 @@
   z-index: 0;
 }
 
+.btn-flat {
+  z-index: 0;
+  padding: 0 9px;
+  color: white;
+  background-color: rgb(47, 49, 54);
+  margin: 1px 1px;
+}
+
 .background {
   position: fixed;
   width: 100%;
@@ -75,17 +83,45 @@ chat {
 #create-game-container {
   position: absolute;
   width: 300px;
-  margin-left: calc((85% - 300px) / 2);
+  /* margin-left: calc((85% - 300px) / 2); */
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   padding: 50px;
   box-shadow: 0 10px 35px 0 black;
   background-color: rgb(47, 49, 54);
 }
 
-.lobby-entry {
+.top-nav-btn {
   color: white;
+  font-size: 2rem;
 }
 
-#back-to-lobby-btn {
+.larger {
+  font-size: 3rem;
+}
+
+.badge {
   color: white;
-  font-size: 5rem;
+  padding-top: 6px;
+}
+
+.lobby-entry {
+  color: white;
+  font-size: 2rem;
+  padding: 12px 12px 0 12px;
+  border-bottom: 1px solid rgb(47, 49, 54);
+}
+
+.lobby-entry:hover {
+  background-color: rgb(54, 57, 62);
+}
+
+.create-time {
+  font-size: small;
+}
+
+.spectate-btn {
+  margin-top: 15px;
+  background-color: rgb(47, 49, 54);
 }

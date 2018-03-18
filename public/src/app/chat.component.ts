@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { APIRoutingService } from './services/api-routing.service';
 import { SocketService } from './services/socket.service';
 
@@ -12,9 +12,15 @@ export class ChatComponent {
   messages = [];
 
   @Input() gameId: '';
+  @Output() closeChat = new EventEmitter();
 
   constructor(private _api: APIRoutingService, private _socket: SocketService) {
-    this._socket.joinRoom(this.gameId);
+
+  }
+
+  joinRoom(gameId) {
+    this.messages = [];
+    this._socket.joinRoom(gameId);
     this._socket.getMessage(msg => {
       console.log(msg);
       this.messages.push(msg.message);
@@ -22,6 +28,7 @@ export class ChatComponent {
   }
 
   sendMessage() {
+    console.log(this.gameId, this.message);
     this._socket.sendMessage(this.gameId, this.message);
     this.message = '';
   }

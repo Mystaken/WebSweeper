@@ -141,7 +141,8 @@ module.exports = function (router) {
           }]
         });
       }
-      if (game.host !== req.user.id) {
+      // can only modify if host
+      if (!game.host.equals(req.user.id)) {
         return Promise.reject({
           status: 403,
           data: [{

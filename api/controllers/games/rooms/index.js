@@ -59,24 +59,26 @@ module.exports = function (router) {
       return res.requestError(400, err);
     }
     //get rooms
-    query = Game.find({},{
-        id: "$_id",
-        _id: 0,
-        host: 1,
-        username: 1,
-        createdAt: {
-          $dateToString: {
-            format: "%Y-%m-%d %H:%M:%S",
-            date: "$createdAt"
-          }
-        },
-        updatedAt: {
-          $dateToString: {
-            format: "%Y-%m-%d %H:%M:%S",
-            date: "$updatedAt"
+    query = Game.aggregate([{
+      $project: {
+          id: "$_id",
+          _id: 0,
+          host: 1,
+          username: 1,
+          createdAt: {
+            $dateToString: {
+              format: "%Y-%m-%d %H:%M:%S",
+              date: "$createdAt"
+            }
+          },
+          updatedAt: {
+            $dateToString: {
+              format: "%Y-%m-%d %H:%M:%S",
+              date: "$updatedAt"
+            }
           }
         }
-      })
+      }])
       .sort({
         updatedAt: 'asc'
       })

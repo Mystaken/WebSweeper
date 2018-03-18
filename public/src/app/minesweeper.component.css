@@ -2,6 +2,7 @@
   padding: 0 9px;
   background-color: #DDD;
   margin: 1px 1px;
+  z-index: 0;
 }
 
 .btn-flat > i {
