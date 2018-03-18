@@ -95,6 +95,7 @@ module.exports = function (router) {
       }
       return bcrypt.compare(req.body.password, loginUser.password);
     }).then(function(samePass) {
+      var result;
       if (!samePass) {
         return Promise.reject({
           status: 401,
@@ -104,14 +105,15 @@ module.exports = function (router) {
           }]
         });
       }
-      req.session.user_id = loginUser._id;
-      return res.sendResponse({
+      result = {
           id: loginUser._id,
           username: loginUser.username,
           email: loginUser.email,
           createdAt: loginUser.createdAt,
           lastLogin: loginUser.lastLogin
-        });
+        };
+      req.session.user = result;
+      return res.sendResponse(result);
     }).catch((err) => res.handleError(err));
   }).all(function (req, res, next) {
     return res.invalidVerb();
