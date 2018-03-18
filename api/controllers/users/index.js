@@ -248,7 +248,8 @@ module.exports = function (router) {
    * @apiUse NotFoundError
    * @apiUse ExtraFieldsError
   */
-  router.route('/:id').get(function(req, res, next) {
+  router.route('/:id').get(middlewares.authenticate(), function(req, res, next) {
+    return res.sendResponse(req.session.user);
   })
 
   /**

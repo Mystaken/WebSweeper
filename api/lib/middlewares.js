@@ -17,6 +17,7 @@ module.exports = {
     var result = function(req, res, next) {
       // session not set.
       if (!req.session.user_id) {
+        console.log(req.session);
         return res.requestError(401, [{
             code: error.ACCESS_DENIED,
           }]);

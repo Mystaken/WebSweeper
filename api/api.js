@@ -1,17 +1,17 @@
 // jshint esversion: 6
 'use strict';
 
-const express = require('express'),
-  kraken      = require('kraken-js'),
-  path        = require('path'),
-  bodyParser  = require('body-parser'),
-  cors        = require('cors'),
-  session     = require('express-session'),
-  bcrypt      = require('bcrypt'),
-  app         = express(),
-  server      = require('http').Server(app),
+const express  = require('express'),
+  kraken       = require('kraken-js'),
+  path         = require('path'),
+  bodyParser   = require('body-parser'),
+  cookieParser = require('cookie-parser'),
+  cors         = require('cors'),
+  bcrypt       = require('bcrypt'),
+  app          = express(),
+  server       = require('http').Server(app),
 
-  sockets     = require('./sockets/sockets')(server),
+  sockets     = require('./sockets/sockets'),
   logger      = require('./lib/logger'),
   config      = require('./config/config.json'),
   spec        = require('./lib/spec')(app),
@@ -20,16 +20,20 @@ const express = require('express'),
   VERSION     = bcrypt.hashSync((new Date()).toString(), 10).substring(7),
   secret      = bcrypt.hashSync((new Date()).toString(), 3).substring(7);
 
-
-app.use(bodyParser.json())
-  .use(kraken(spec.onconfig))
-  .use(express.static(APP_DIR))
-  .use(session({
+const session = require('express-session')({
     secret: secret,
     resave: false,
     saveUninitialized: true,
-  }))
+  });
+
+app.use(bodyParser.json())
+  .use(cookieParser())
+  .use(kraken(spec.onconfig))
+  .use(express.static(APP_DIR))
+  .use(session)
   .use(cors());
+
+sockets(server, session);
 // REMOVE START
 app.use(express.static('static'));
 
