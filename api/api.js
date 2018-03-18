@@ -17,14 +17,15 @@ const express = require('express'),
   spec        = require('./lib/spec')(app),
 
   APP_DIR     = path.join(__dirname, config.app.APP_DIR),
-  VERSION     = bcrypt.hashSync((new Date()).toString(), 10).substring(7);
+  VERSION     = bcrypt.hashSync((new Date()).toString(), 10).substring(7),
+  secret      = bcrypt.hashSync((new Date()).toString(), 3).substring(7);
 
 
 app.use(bodyParser.json())
   .use(kraken(spec.onconfig))
   .use(express.static(APP_DIR))
   .use(session({
-    secret: VERSION,
+    secret: secret,
     resave: false,
     saveUninitialized: true,
   }))

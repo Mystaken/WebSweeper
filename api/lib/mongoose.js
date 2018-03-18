@@ -3,7 +3,8 @@
 var mongoose = require('mongoose'),
   Promise  = require('bluebird'),
   moment   = require('moment'),
-  config   = require('../config/config.json');
+  config   = require('../config/config.json'),
+  DB_NAME  = 'websweeper';
 
 /*
  * Returns true iff the given id is valid.
@@ -21,6 +22,6 @@ module.exports = {
   configure: function (app, opt) {
     mongoose.Promise = Promise;
     mongoose.validID = validID;
-    return mongoose.connect(config.mongo.server);
+    return mongoose.connect(`${config.mongo.server}/${DB_NAME}`);
   }
 };
