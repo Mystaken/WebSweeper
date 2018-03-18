@@ -6,5 +6,24 @@
   </div>
 </div>
 <div class="container">
-
+  <form #createGameForm="ngForm" (ngSubmit)="createGame()">
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="row" type="number" class="validate" name="row" required [(ngModel)]="row">
+        <label for="row">Number of rows</label>
+      </div>
+      <div class="input-field col s12">
+        <input id="col" type="number" class="validate" name="col" required [(ngModel)]="col">
+        <label for="col">Number of columns</label>
+      </div>
+      <div class="input-field col s12">
+        <input id="mines" type="number" class="validate" name="mines" required [(ngModel)]="mines">
+        <label for="mines">Number of mines</label>
+      </div>
+    </div>
+    <div class="row center">
+      <button type="submit" class="waves-effect waves-light btn" [disabled]="!createGameForm.form.valid">Submit</button>
+    </div>
+  </form>
+  <minesweeper #ms [row]="row" [col]="col" [mines]="mines" [gameId]="gameId"></minesweeper>
 </div>

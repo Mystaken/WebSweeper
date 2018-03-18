@@ -5,6 +5,23 @@
 }
 
 .btn-flat > i {
+  color: white;
   font-style: normal;
   font-size: 18px !important;
+}
+
+.btn-flat.revealed {
+  background-color: #666;
+}
+
+.btn-flat.failed {
+  background-color: rgb(238, 110, 115);
+}
+
+.btn-flat.winned {
+  background-color: #9CCC65;
+}
+
+.flagged {
+  color: red !important;
 }

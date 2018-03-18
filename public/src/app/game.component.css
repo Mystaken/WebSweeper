@@ -1,3 +1,7 @@
+.container {
+  padding-top: 180px;
+}
+
 .btn {
   background-color: rgb(238, 110, 115);
 }
@@ -26,6 +30,8 @@
 #top-nav {
   position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   /* Credit: https://pixabay.com/en/the-speaker-grill-texture-2184439/ */
   background: url("/assets/top-nav-bg.png");
   background-position: center;
@@ -33,7 +39,7 @@
   height: 150px;
   width: 850px;
   padding-top: 50px;
-  z-index: -1;
+  z-index: 1;
   box-shadow: 0 10px 35px 0 black !important;
 }
 
@@ -45,4 +51,17 @@
 
 .btn, .btn-large {
   background-color: rgb(238, 110, 115);
+}
+
+label.active {
+  color: rgb(238, 110, 115) !important;
+}
+
+input {
+  color: white;
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="number"]:focus {
+  border-bottom-color: rgb(238, 110, 115) !important;
+  box-shadow: 0 1px 0 0 rgb(246, 178, 181) !important;
 }

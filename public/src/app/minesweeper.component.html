@@ -1,7 +1,12 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <div *ngFor="let row of board" (contextmenu)="disableContextMenu($event)">
-  <a id="{{cell.x}}-{{cell.y}}" class="waves-effect waves-teal btn-flat" *ngFor="let cell of row" (click)="click($event)" (contextmenu)="rightClick($event)">
-      <i class="material-icons">{{icons[cell.number]}}</i>
+  <a id="{{cell.x}}-{{cell.y}}"
+     class="btn-flat {{cell.status == 0 ? 'waves-effect' : ''}} {{cell.status == 1 ? 'revealed' : ''}}"
+     [ngClass]="getCellClasses()"
+     *ngFor="let cell of row"
+     (click)="click($event, 0)"
+     (contextmenu)="click($event, 1)">
+    <i class="material-icons {{cell.status == 2 ? 'flagged' : ''}}">{{cell.display}}</i>
   </a>
 </div>
