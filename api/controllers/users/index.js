@@ -41,9 +41,9 @@ module.exports = function (router) {
    *       "password": "superpassword"
    *     }
    *
-   * @apiSuccess {String}  id the id of the user
-   * @apiSuccess {String}  username Username of the user
-   * @apiSuccess {String}  email Email of the user
+   * @apiSuccess {String} id the id of the user
+   * @apiSuccess {String} username Username of the user
+   * @apiSuccess {String} email Email of the user
    * @apiSuccess {Date} create_at  The date this user was created (DD-MM-YYYY HH:MM)
    * @apiSuccess {Date} updatedAt  The date this user was last updated (DD-MM-YYYY HH:MM)
    *
@@ -235,9 +235,9 @@ module.exports = function (router) {
    *
    * @apiParam {String} id the id of the user
    *
-   * @apiSuccess {String}  id the id of the user
-   * @apiSuccess {String}  username Username of the user
-   * @apiSuccess {String}  email Email of the user
+   * @apiSuccess {String} id the id of the user
+   * @apiSuccess {String} username Username of the user
+   * @apiSuccess {String} email Email of the user
    * @apiSuccess {Date} create_at  The date this user was created (DD-MM-YYYY HH:MM)
    * @apiSuccess {Date} updatedAt  The date this user was last updated (DD-MM-YYYY HH:MM)
    *

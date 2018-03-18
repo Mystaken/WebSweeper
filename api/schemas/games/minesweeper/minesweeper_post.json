@@ -3,22 +3,29 @@
   "type": "object",
   "properties": {
     "n": {
-      "type": "integer"
+      "type": "integer",
+      "minimum": 0
     },
     "m": {
-      "type": "integer"
+      "type": "integer",
+      "minimum": 0
     },
     "mines": {
-      "type": "integer"
+      "type": "integer",
+      "minimum": 0
     },
     "x": {
-      "type": "integer"
+      "type": "integer",
+      "minimum": 0
     },
     "y": {
-      "type": "integer"
+      "type": "integer",
+      "minimum": 0
     },
     "move": {
-      "type": "integer"
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1
     }
   },
   "additionalProperties": false,

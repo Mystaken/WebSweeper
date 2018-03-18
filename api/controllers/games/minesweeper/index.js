@@ -47,7 +47,6 @@ module.exports = function (router) {
       config: 1,
       createdAt: 1
     }).exec().then(function(game) {
-      console.log(game);
       if (!game) {
         return Promise.reject({
           status: 404,
@@ -79,8 +78,8 @@ module.exports = function (router) {
    * @apiPermission user signed in
    * @apiDescription Get the configuration of the minesweeper game.
    * @apiParam {String} id the id of the game.
-   * @apiParam {Integer} n the position on x-axis
-   * @apiParam {Integer} m the position on y-axis
+   * @apiParam {Integer} n the length on x-axis
+   * @apiParam {Integer} m the length on y-axis
    * @apiParam {Integer} mines the number of mines in the game
    * @apiParam {Integer} x the the x coordinate of the move
    * @apiParam {Integer} y the y coordinate of the move
@@ -95,7 +94,11 @@ module.exports = function (router) {
    *       "move": 1,
    *     }
    *
-   * @apiSuccess {Array} moves contains type (0=reveal, 1=flag, 2=unflag), n and m (and number if type=0)
+   * @apiSuccess {Object[]} moves the list of moves to make
+   * @apiSuccess {Integer} move.type the type of the move(0=reveal,1=flag,2=unflag)
+   * @apiSuccess {Integer} move.n the position on the x-axis of the move
+   * @apiSuccess {Integer} move.m the position on the y-axis of the move
+   * @apiSuccess {Integer} move.number (only if type=0) The number to be displayed
    * @apiSuccess {Integer} status the status of the game (0=active, 1=loss)
    * @apiSuccessExample {json} Success Response
    *     HTTP/1.1 200 OK
@@ -114,6 +117,7 @@ module.exports = function (router) {
    * @apiUse NotFoundError
    * @apiUse MissingFieldsError
    * @apiUse ExtraFieldsError
+   * @apiUse MinError
   */
   .post(function(req, res, next) {
     var err, newGame, moves, resStatus = 0;

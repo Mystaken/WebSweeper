@@ -15,7 +15,7 @@ var config = require('../config/config.json');
  *       data: [
  *          {
  *           "code": "OBJECT_ADDITIONAL_PARAM",
- *           "fields": [ "#/burger", "#/sandwich" ] // will include all extra fields
+ *           "fields": [ "#/burger" ]
  *         }
  *       ]
  *     }
@@ -49,7 +49,7 @@ var config = require('../config/config.json');
  *       data: [
  *          {
  *           "code": "EXISTS",
- *           "fields": [ "#/username", "#/email" ]
+ *           "fields": [ "#/username" ]
  *         }
  *       ]
  *     }
@@ -99,8 +99,42 @@ var config = require('../config/config.json');
  *       status: 400,
  *       data: [
  *          {
- *           "code": "Min_LENGTH",
+ *           "code": "MIN_LENGTH",
  *           "fields": [ "#/username" ]
+ *         }
+ *       ]
+ *     }
+ */
+ /**
+ * @apiDefine MaxError
+ *
+ * @apiError Max Fields exceeds max size
+ *
+ * @apiErrorExample {json} Max
+ *     HTTP/1.1 400 Bad Request
+ *     {
+ *       status: 400,
+ *       data: [
+ *          {
+ *           "code": "MINIMUM",
+ *           "fields": [ "#/size" ]
+ *         }
+ *       ]
+ *     }
+ */
+/**
+ * @apiDefine MinError
+ *
+ * @apiError Min Fields are below min size
+ *
+ * @apiErrorExample {json} Max
+ *     HTTP/1.1 400 Bad Request
+ *     {
+ *       status: 400,
+ *       data: [
+ *          {
+ *           "code": "MAXIMUM",
+ *           "fields": [ "#/size" ]
  *         }
  *       ]
  *     }
