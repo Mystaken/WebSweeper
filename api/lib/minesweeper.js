@@ -69,7 +69,7 @@ function MineSweeper(n, m, mines, skip_x, skip_y) {
   }
 
   if (skip_x && skip_y) {
-    mineLocation.splice(skip_x + skip_y * n, 0, 0);
+    mineLocation.splice(skip_x + skip_y * n, 1, 0);
   }
 
   // get numbers for cells.
