@@ -23,5 +23,9 @@ module.exports = function(server, session) {
   io.on('connection', function(socket) {
     console.log('user', socket.request.session.user_id, 'connected');
     chat(io, socket);
+
+    socket.on('disconnect', function(){
+      console.log('user', socket.request.session.user_id, 'disconnected');
+    });
   });
 }

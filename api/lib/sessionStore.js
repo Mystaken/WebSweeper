@@ -13,4 +13,4 @@ module.exports = function(session) {
     store = new MongoSessionStore(storeConfig);
 
   return store;
-}
+};

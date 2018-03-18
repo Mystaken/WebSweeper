@@ -155,4 +155,4 @@ module.exports = function (router) {
   }).all(function (req, res, next) {
     return res.invalidVerb();
   });
-}
+};
