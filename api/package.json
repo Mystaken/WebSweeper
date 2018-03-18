@@ -2,7 +2,7 @@
   "name": "web-sweeper-api",
   "version": "0.1.0",
   "description": "The API for the WebSweeper APP",
-  "main": "api.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

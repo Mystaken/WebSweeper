@@ -4,6 +4,7 @@
 
 .btn {
   background-color: rgb(238, 110, 115);
+  z-index: 0;
 }
 
 .background {
@@ -69,4 +70,22 @@ chat {
   position: fixed;
   right: 0;
   top: 0;
+}
+
+#create-game-container {
+  position: absolute;
+  width: 300px;
+  margin-left: calc((85% - 300px) / 2);
+  padding: 50px;
+  box-shadow: 0 10px 35px 0 black;
+  background-color: rgb(47, 49, 54);
+}
+
+.lobby-entry {
+  color: white;
+}
+
+#back-to-lobby-btn {
+  color: white;
+  font-size: 5rem;
 }

@@ -25,3 +25,7 @@
 .flagged {
   color: red !important;
 }
+
+#minesweeper-container {
+  text-align: center;
+}

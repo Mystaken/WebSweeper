@@ -9,11 +9,16 @@ import { APIRoutingService } from './services/api-routing.service';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent {
-  row = 8;
-  col = 8;
-  mines = 10;
+  row;
+  col;
+  mines;
   gameId = '';
-  
+
+  isLobby = true;
+  isCreateGame = false;
+  isChatOpen = false;
+  isInGame = false;
+
   @ViewChild('ms') ms: MinesweeperComponent
   @ViewChild('cht') cht: ChatComponent
 
@@ -27,5 +32,24 @@ export class GameComponent {
         this.gameId = res.id;
         this.ms.createBoard(true);
     });
+
+    this.isLobby = false;
+    this.isCreateGame = false;
+    this.isChatOpen = false;
+    this.isInGame = true;
+  }
+
+  backToLobby() {
+    this.isLobby = true;
+    this.isCreateGame = false;
+    this.isChatOpen = false;
+    this.isInGame = false;
+  }
+
+  showCreategame() {
+    this.isLobby = false;
+    this.isCreateGame = true;
+    this.isChatOpen = false;
+    this.isInGame = false;
   }
 }
