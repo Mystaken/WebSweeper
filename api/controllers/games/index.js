@@ -29,11 +29,12 @@ module.exports = function (router) {
   router.route('/').post(middlewares.authenticate(), function (req, res, next) {
     return new Game({
         host: req.user.id,
+        username: req.user.username,
         status: status.NEW
       }).save().then(function(game) {
         return res.sendResponse({
           id: game._id
-          });
+        });
       }).catch((err) => res.handleError(err));
   }).all(function (req, res, next) {
 

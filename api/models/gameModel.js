@@ -19,6 +19,10 @@ const gameSchema = mongoose.Schema({
   },
   game: {
     type: Object
+  },
+  username: {
+    type: String,
+    require: true
   }
 },{
   timestamps: true

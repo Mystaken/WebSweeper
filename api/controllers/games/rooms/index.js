@@ -26,6 +26,7 @@ module.exports = function (router) {
    * @apiSuccess {String} rooms.id the id of the lobby
    * @apiSuccess {Date} rooms.createAt the create date of the lobby
    * @apiSuccess {Date} rooms.updatedAt the date the lobby was last updated
+   * @apiSuccess {Date} rooms.username the username of the host
    *     HTTP/1.1 200 OK
    *     {
    *       status: 200,
@@ -33,7 +34,8 @@ module.exports = function (router) {
    *         "host": "5935ed0e5ecf04cc3388de8e",
    *         "id": "5e3bba1234c0e5e4a34fae8e",
    *         "createdAt": "21-12-2017 15:30",
-   *         "updatedAt": "21-12-2017 15:30"
+   *         "updatedAt": "21-12-2017 15:30",
+   *         "username": "Hello Kitty"
    *       }]
    *     }
    * @apiUse MinError
@@ -61,8 +63,19 @@ module.exports = function (router) {
         id: "$_id",
         _id: 0,
         host: 1,
-        createdAt: 1,
-        updatedAt: 1
+        username: 1,
+        createdAt: {
+          $dateToString: {
+            format: "%Y-%m-%d %H:%M:%S",
+            date: "$createdAt"
+          }
+        },
+        updatedAt: {
+          $dateToString: {
+            format: "%Y-%m-%d %H:%M:%S",
+            date: "$updatedAt"
+          }
+        }
       })
       .sort({
         updatedAt: 'asc'
