@@ -10,20 +10,26 @@ const express  = require('express'),
   bcrypt       = require('bcrypt'),
   app          = express(),
   server       = require('http').Server(app),
+  expressSess  = require('express-session'),
 
-  sockets     = require('./sockets/sockets'),
-  logger      = require('./lib/logger'),
-  config      = require('./config/config.json'),
-  spec        = require('./lib/spec')(app),
+  config    = require('./config/config.json'),
+  sockets   = require('./sockets/sockets'),
+  sessionDB = require('./lib/sessionStore')(expressSess),
+  logger    = require('./lib/logger'),
+  spec      = require('./lib/spec')(app),
 
   APP_DIR     = path.join(__dirname, config.app.APP_DIR),
   VERSION     = bcrypt.hashSync((new Date()).toString(), 10).substring(7),
   secret      = bcrypt.hashSync((new Date()).toString(), 3).substring(7);
 
-const session = require('express-session')({
+const session = expressSess({
     secret: secret,
+    store: sessionDB,
     resave: false,
     saveUninitialized: true,
+    cookie: {
+      secure: false
+    }
   });
 
 app.use(bodyParser.json())

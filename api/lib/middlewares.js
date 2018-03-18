@@ -28,7 +28,14 @@ module.exports = {
       }
 
       // check if session belongs to valid user
-      return User.findById(req.session.user.id).exec().then(function(user) {
+      return User.findById(req.session.user.id, {
+        id: "$_id",
+        _id: 0,
+        username: 1,
+        email: 1,
+        createdAt: 1,
+        updatedAt: 1
+      }).exec().then(function(user) {
         if (!user) {
           return Promise.reject();
         }
