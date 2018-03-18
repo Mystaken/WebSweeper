@@ -33,7 +33,7 @@ app.use(bodyParser.json())
   .use(session)
   .use(cors());
 
-sockets(server, session);
+sockets.init(server, session);
 // REMOVE START
 app.use(express.static('static'));
 
