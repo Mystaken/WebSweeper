@@ -117,7 +117,6 @@ function flag(game, n, m) {
   var idx = n + m * game.n,
     currStatus = game.gameState[idx].status,
     newStatus;
-
   if (currStatus === 1) {
     return [];
   } else if (currStatus === 0) {

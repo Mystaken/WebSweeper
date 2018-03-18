@@ -145,8 +145,9 @@ module.exports = function (router) {
         moves = minesweeper.flag(newGame, req.body.x, req.body.y);
       }
       game.game = newGame;
+      game.markModified('game');
       return game.save();
-    }).then(function() {
+    }).then(function(g) {
       return res.sendResponse({
         moves: moves,
         status: resStatus
@@ -155,4 +156,4 @@ module.exports = function (router) {
   }).all(function (req, res, next) {
     return res.invalidVerb();
   });
-};
+}
