@@ -3,6 +3,7 @@
 
 const Game  = require('../../../models/gameModel'),
   validator = require('../../../lib/validator'),
+  middlewares = require('../../../lib/middlewares'),
   roomsGetSchema = require('../../../schemas/games/rooms/rooms_get.json');
 
 module.exports = function (router) {
@@ -40,7 +41,7 @@ module.exports = function (router) {
    * @apiUse InvalidLoginError
    * @apiUse MissingFieldsError
   */
-  router.route('/').get(function(req, res, next) {
+  router.route('/').get(middlewares.authenticate(), function(req, res, next) {
     var err, query;
 
     //validation

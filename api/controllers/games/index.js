@@ -26,10 +26,9 @@ module.exports = function (router) {
    * @apiUse ExtraFieldsError
    * @apiUse InvalidLoginError
   */
-  router.route('/').post(function (req, res, next) {
-    req.user = { _id: '5935ed0e5ecf04cc3388de8e' };
+  router.route('/').post(middlewares.authenticate(), function (req, res, next) {
     return new Game({
-        host: req.user._id,
+        host: req.user.id,
         status: status.NEW
       }).save().then(function(game) {
         return res.sendResponse({

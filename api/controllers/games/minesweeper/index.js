@@ -2,6 +2,7 @@
 'use strict';
 const Game    = require('../../../models/gameModel'),
   minesweeper = require('../../../lib/minesweeper'),
+  middlewares = require('../../../lib/middlewares'),
   validator   = require('../../../lib/validator'),
   error       = require('../../../config/error.json'),
   status      = require('../../../config/status.json').games,
@@ -38,7 +39,7 @@ module.exports = function (router) {
    *     }
    * @apiUse NotFoundError
   */
-  router.route('/:id').get(function(req, res, next) {
+  router.route('/:id').get(middlewares.authenticate(), function(req, res, next) {
     return Game.findById(req.params.id, {
       id: "$_id",
       _id: 0,
@@ -119,7 +120,7 @@ module.exports = function (router) {
    * @apiUse ExtraFieldsError
    * @apiUse MinError
   */
-  .post(function(req, res, next) {
+  .post(middlewares.authenticate(), function(req, res, next) {
     var err, newGame, moves, resStatus = 0;
 
     validator.validate(req.body, minesweeperPostSchema);
@@ -136,6 +137,15 @@ module.exports = function (router) {
           status: 404,
           data: [{
             code: error.NOT_FOUND,
+            fields: [ '#/id' ]
+          }]
+        });
+      }
+      if (game.host !== req.user.id) {
+        return Promise.reject({
+          status: 403,
+          data: [{
+            code: error.FORBIDDEN,
             fields: [ '#/id' ]
           }]
         });
