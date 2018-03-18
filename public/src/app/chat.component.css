@@ -16,6 +16,8 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 }
 
 #chat-container {
+  position: fixed;
+  right: 0;
   width: 300px;
   height: 90vh;
   margin-top: 5vh;

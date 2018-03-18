@@ -8,10 +8,21 @@ import { SocketService } from './services/socket.service';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent {
+  message = '';
+  messages = [];
+
+  @Input() gameId: '';
 
   constructor(private _api: APIRoutingService, private _socket: SocketService) {
-    this._socket.joinRoom('123');
-    this._socket.sendMessage('123', 'Yo');
-    this._socket.getMessage().subscribe((res) => console.log(res));
+    this._socket.joinRoom(this.gameId);
+    this._socket.getMessage(msg => {
+      console.log(msg);
+      this.messages.push(msg.message);
+    });
+  }
+
+  sendMessage() {
+    this._socket.sendMessage(this.gameId, this.message);
+    this.message = '';
   }
 }

@@ -1,18 +1,17 @@
 <div id="chat-container">
   <div id="chat-stream">
-    <div class="msg">
-      <strong>You Watanabe: </strong> Onegai! Cinderella
-    </div>
-    <div class="msg">
-      <strong>You Watanabe: </strong> Yume wa yume de owarenai
+    <div class="msg" *ngFor="let msg of this.messages">
+      {{msg}}
     </div>
   </div>
   <div id="msg-box">
-    <div id="msg-input">
-      <input type="text" name="msg">
-    </div>
-    <button id="send-btn" class="btn waves-effect" type="submit" name="action">
-      <i class="material-icons">send</i>
-    </button>
+    <form #chatForm="ngForm" (ngSubmit)="sendMessage()">
+      <div id="msg-input">
+        <input type="text" name="message" name="message" required [(ngModel)]="message">
+      </div>
+      <button id="send-btn" class="btn waves-effect" type="submit" name="action">
+        <i class="material-icons">send</i>
+      </button>
+    </form>
   </div>
 </div>

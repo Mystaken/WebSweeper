@@ -90,6 +90,11 @@ export class MinesweeperComponent {
       'y': y - 0,
       'move': isRightClick - 0,
     }).subscribe((res) => {
+      this.processMoves(res);
+    });
+  }
+
+  processMoves(res) {
       console.log(res);
       this.gameStatus = res.status;
       var moves = res.moves;
@@ -97,10 +102,9 @@ export class MinesweeperComponent {
         var nextMove = moves[i];
         this.board[nextMove.n][nextMove.m].status = nextMove.type;
         this.board[nextMove.n][nextMove.m].number = nextMove.number;
-        if (!isRightClick) this.revealCount++;
+        if (nextMove.type == 1) this.revealCount++;
       }
       this.updateDisplay();
-    });
   }
 
   disableContextMenu($event) {

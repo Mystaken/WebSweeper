@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { MinesweeperComponent } from './minesweeper.component';
+import { ChatComponent } from './chat.component';
 import { APIRoutingService } from './services/api-routing.service';
 
 @Component({
@@ -12,7 +13,9 @@ export class GameComponent {
   col = 8;
   mines = 10;
   gameId = '';
+  
   @ViewChild('ms') ms: MinesweeperComponent
+  @ViewChild('cht') cht: ChatComponent
 
   constructor(private _api: APIRoutingService) {
 
