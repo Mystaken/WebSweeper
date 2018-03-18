@@ -20,9 +20,9 @@
  *
  * Move is an object with the properties
  * - type {Integer} the type of the move
- *    0: reveal
- *    1: flag
- *    2: unflag
+ *     0: Unflagged. Basically the default state
+ *     1: Shown, already expanded
+ *     2: Flagged, flagged by user
  * - n {Integer}: the position on x-axis
  * - m {Integer}: the position on y-axis
  * - number {Integer} the number to be displayed (for # of mines around this cell; -1 is a mine)
@@ -115,18 +115,22 @@ function MineSweeper(n, m, mines, skip_x, skip_y) {
  */
 function flag(game, n, m) {
   var idx = n + m * game.n,
-    currStatus = game.gameState[idx].status;
+    currStatus = game.gameState[idx].status,
+    newStatus;
 
-  if (currStatus == 0) {
+  if (currStatus === 1) {
     return [];
+  } else if (currStatus === 0) {
+    game.gameState[idx].status = 2;
+  // currStatus === 2
   } else {
-    game.gameState[idx].status = 3 - currStatus;
-    return [{
-      n: n,
-      m: m,
-      type: 3 - currStatus
-    }];
+    game.gameState[idx].status = 0;
   }
+  return [{
+    n: n,
+    m: m,
+    type: newStatus
+  }];
 }
 
 /** Reveals a cell for the game
@@ -147,7 +151,7 @@ function reveal(game, n, m, moves) {
   }
   if (!(curr.status == 1 || curr.status == 2 || curr.number == -1)) {
     moves.push({
-      type: 0,
+      type: 1,
       n: n,
       m: m,
       number: curr.number
