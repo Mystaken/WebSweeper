@@ -25,6 +25,8 @@
  *    2: unflag
  * - n {Integer}: the position on x-axis
  * - m {Integer}: the position on y-axis
+ * - number {Integer} the number to be displayed (for # of mines around this cell; -1 is a mine)
+ *                    Only for type =0
  *
  * idx_in_array = position_x + position_y * n
  * position_x = Math.floor(idx_in_array / n)
@@ -141,14 +143,14 @@ function reveal(game, n, m, moves) {
     next;
   moves = moves || [];
   if ((n + m*game.n) >= game.m * game.n || (n + m*game.n) < 0) {
-    console.log(1);
     return moves;
   }
   if (!(curr.status == 1 || curr.status == 2 || curr.number == -1)) {
     moves.push({
       type: 0,
       n: n,
-      m: m
+      m: m,
+      number: curr.number
     });
     curr.status = 1;
     if (curr.number == 0) {

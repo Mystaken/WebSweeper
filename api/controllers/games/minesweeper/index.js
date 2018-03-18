@@ -86,7 +86,7 @@ module.exports = function (router) {
    * @apiParam {Integer} move 0 = reveal, 1 = toggle flag
    *
    *
-   * @apiSuccess {Array} moves contains type (0=reveal, 1=flag, 2=unflag), n and m
+   * @apiSuccess {Array} moves contains type (0=reveal, 1=flag, 2=unflag), n and m (and number if type=0)
    * @apiSuccess {Integer} status the status of the game (0=active, 1=loss)
    * @apiSuccessExample {json} Success Response
    *     HTTP/1.1 200 OK
@@ -97,6 +97,7 @@ module.exports = function (router) {
    *           type: 0,
    *           n: 1,
    *           m: 3,
+   *           number: 1 // only if type=0
    *         }],
    *        status: 0
    *       }
