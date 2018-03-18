@@ -12,6 +12,7 @@ export class LoginComponent {
   username = '';
   password = '';
   email = '';
+  isSignedUp = false;
 
   constructor(private _api: APIRoutingService) {
 

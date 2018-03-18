@@ -32,7 +32,7 @@
             </form>
           </div>
           <div id="sign-up-tab">
-            <form #signUpForm="ngForm" (ngSubmit)="signUp()">
+            <form #signUpForm="ngForm" (ngSubmit)="signUp()" *ngIf="!isSignedUp">
               <div class="row">
                 <div class="input-field col s12">
                   <input id="username" type="text" class="validate" name="username" required [(ngModel)]="username">
@@ -51,6 +51,11 @@
                 <button type="submit" class="waves-effect waves-light btn" [disabled]="!signUpForm.form.valid">Sign Up</button>
               </div>
             </form>
+            <div class="center" *ngIf="isSignedUp">
+              <p>You have been signed up.</p>
+              <p>A verification email has been sent to {{email}}.</p>
+              <p>Please check your email to activate your account.</p>
+            </div>
           </div>
         </div>
       </div>
