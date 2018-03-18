@@ -35,6 +35,11 @@ module.exports = function (router) {
    *
    * @apiParam {String} username the username of the login user
    * @apiParam {String} password the password for the account
+   * @apiParamExample {json} Sample Request
+   *     {
+   *       "username": "websweeper",
+   *       "password": "superpassword"
+   *     }
    *
    * @apiSuccess {String}  id the id of the user
    * @apiSuccess {String}  username Username of the user
@@ -131,7 +136,7 @@ module.exports = function (router) {
    * @apiParam {String} username Username of the new user (min length = 3, max length = 20)
    * @apiParam {String} email Email of the new user (min length = 3, max length = 100)
    * @apiParam {String} password Password of the new user (min length = 8, max length = 20)
-   * @apiParamExample {json} Sample Request Body
+   * @apiParamExample {json} Sample Request
    *     {
    *       "username": "websweeper",
    *       "email": "example@mail.com",
@@ -266,7 +271,7 @@ module.exports = function (router) {
    * @apiParam {String} id the id of user
    * @apiParam {String} username (Optional) the new username of user
    * @apiParam {String} email (Optional) the new email of user
-   * @apiParamExample {json} Sample Request Body
+   * @apiParamExample {json} Sample Request
    *     {
    *       "username": "websweeperchanged",
    *       "email": "newexample@mail.com"

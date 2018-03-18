@@ -85,7 +85,15 @@ module.exports = function (router) {
    * @apiParam {Integer} x the the x coordinate of the move
    * @apiParam {Integer} y the y coordinate of the move
    * @apiParam {Integer} move 0 = reveal, 1 = toggle flag
-   *
+   * @apiParamExample {json} Sample Request
+   *     {
+   *       "n": 5,
+   *       "m": 5,
+   *       "mines": 10,
+   *       "x": 2,
+   *       "y": 2,
+   *       "move": 1,
+   *     }
    *
    * @apiSuccess {Array} moves contains type (0=reveal, 1=flag, 2=unflag), n and m (and number if type=0)
    * @apiSuccess {Integer} status the status of the game (0=active, 1=loss)
