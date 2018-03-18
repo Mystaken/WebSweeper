@@ -13,7 +13,6 @@ module.exports = function(io, socket) {
    */
   socket.on('chat message', function(msg){
     socket.broadcast.to(`chat_${msg.room}`).emit('listen message', msg);
-    io.emit('chat message', msg);
   });
 
   socket.on('leave chat room', function(room) {

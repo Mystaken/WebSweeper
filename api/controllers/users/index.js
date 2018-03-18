@@ -311,6 +311,8 @@ module.exports = function (router) {
       { _id: req.params.ticket },
       { status: status.ACTIVE }
     ).exec().then(function(ret) {
+      if (!ret) {
+      }
       return res.json({a:'YAY'});
     }).catch((err) => res.handleError(err));
 
