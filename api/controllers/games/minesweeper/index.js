@@ -95,10 +95,10 @@ module.exports = function (router) {
    *     }
    *
    * @apiSuccess {Object[]} moves the list of moves to make
-   * @apiSuccess {Integer} move.type the type of the move(0=reveal,1=flag,2=unflag)
-   * @apiSuccess {Integer} move.n the position on the x-axis of the move
-   * @apiSuccess {Integer} move.m the position on the y-axis of the move
-   * @apiSuccess {Integer} move.number (only if type=0) The number to be displayed
+   * @apiSuccess {Integer} moves.type the type of the move(0=reveal,1=flag,2=unflag)
+   * @apiSuccess {Integer} moves.n the position on the x-axis of the move
+   * @apiSuccess {Integer} moves.m the position on the y-axis of the move
+   * @apiSuccess {Integer} moves.number (only if type=0) The number to be displayed
    * @apiSuccess {Integer} status the status of the game (0=active, 1=loss)
    * @apiSuccessExample {json} Success Response
    *     HTTP/1.1 200 OK
