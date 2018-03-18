@@ -17,6 +17,10 @@
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
+    "gulp": "^3.9.1",
+    "gulp-apidoc": "^0.2.7",
+    "gulp-sequence": "^1.0.0",
+    "gulp-util": "^3.0.8",
     "kraken-js": "^2.2.0",
     "mailgun-js": "^0.16.0",
     "moment": "^2.20.1",
@@ -27,10 +31,7 @@
     "z-schema": "^3.19.1"
   },
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-apidoc": "^0.2.7",
     "gulp-jshint": "^2.1.0",
-    "gulp-util": "^3.0.8",
     "jshint": "^2.9.5",
     "jshint-stylish": "^2.2.1"
   }
