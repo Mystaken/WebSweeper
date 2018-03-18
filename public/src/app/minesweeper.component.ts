@@ -99,14 +99,6 @@ export class MinesweeperComponent {
         this.board[nextMove.n][nextMove.m].number = nextMove.number;
         if (!isRightClick) this.revealCount++;
       }
-      // if (isRightClick) {
-      //   console.log(this.board[x][y].status);
-      //   if (this.board[x][y].status == 0) {
-      //     this.board[x][y].status = 2;
-      //   } else if (this.board[x][y].status == 2) {
-      //     this.board[x][y].status = 0;
-      //   }
-      // }
       this.updateDisplay();
     });
   }

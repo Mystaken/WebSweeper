@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login.component';
 import { GameComponent } from './game.component';
 import { MinesweeperComponent } from './minesweeper.component';
+import { ChatComponent } from './chat.component';
 
 const routes: Routes = [
   {
@@ -22,9 +23,9 @@ const routes: Routes = [
     component: GameComponent,
   },
   {
-    path: 'minesweeper',
+    path: 'chat',
     pathMatch: 'full',
-    component: MinesweeperComponent,
+    component: ChatComponent,
   },
 ];
 

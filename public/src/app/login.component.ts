@@ -23,7 +23,9 @@ export class LoginComponent {
       'username': this.username,
       'email': this.email,
       'password': this.password,
-    }).subscribe((res) => console.log(res));
+    }).subscribe((res) => {
+      this.isSignedUp = true;
+    });
   }
 
   signIn() {

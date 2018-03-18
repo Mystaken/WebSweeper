@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login.component';
 import { GameComponent } from './game.component';
 import { MinesweeperComponent } from './minesweeper.component';
+import { ChatComponent } from './chat.component';
 
 import { APIRoutingService } from './services/api-routing.service';
 
@@ -18,6 +19,7 @@ import { APIRoutingService } from './services/api-routing.service';
     LoginComponent,
     GameComponent,
     MinesweeperComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,

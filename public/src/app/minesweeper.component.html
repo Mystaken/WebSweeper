@@ -1,5 +1,3 @@
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
 <div *ngFor="let row of board" (contextmenu)="disableContextMenu($event)">
   <a id="{{cell.x}}-{{cell.y}}"
      class="btn-flat {{cell.status == 0 ? 'waves-effect' : ''}} {{cell.status == 1 ? 'revealed' : ''}}"
