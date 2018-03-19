@@ -37,6 +37,6 @@ module.exports = function (router) {
         });
       }).catch((err) => res.handleError(err));
   }).all(function (req, res, next) {
-
+    return res.invalidVerb();
   });
 };

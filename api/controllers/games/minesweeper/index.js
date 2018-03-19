@@ -40,14 +40,7 @@ module.exports = function (router) {
    * @apiUse NotFoundError
   */
   router.route('/:id').get(middlewares.authenticate(), function(req, res, next) {
-    return Game.findById(req.params.id, {
-      id: "$_id",
-      _id: 0,
-      host: 1,
-      status: 1,
-      config: 1,
-      createdAt: 1
-    }).exec().then(function(game) {
+    return Game.findById(req.params.id).exec().then(function(game) {
       if (!game) {
         return Promise.reject({
           status: 404,
@@ -68,7 +61,13 @@ module.exports = function (router) {
           }
         });
       }
-      return res.sendResponse(game);
+      return res.sendResponse({
+          id: game._id,
+          host: game.host,
+          status: game.status,
+          config: game.config || {},
+          createdAt: game.createdAt
+        });
     }).catch((err) => res.handleError(err));
   })
 
