@@ -175,7 +175,7 @@ module.exports = function (router) {
         moves: moves,
         status: resStatus
       };
-      io.sockets.in('new minesweeper move', result);
+      io.sockets.in(`chat_${newGame._id}`).emit('new minesweeper move', result);
       return res.sendResponse(result);
     }).catch((err) => res.handleError(err));
   }).all(function (req, res, next) {
