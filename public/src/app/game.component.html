@@ -16,7 +16,8 @@
   <div id="lobby-container" *ngIf="isLobby">
     <div class="lobby-entry" *ngFor="let entry of rooms">
       <div class="row">
-        <div class="col s10">
+        <div class="col s1"></div>
+        <div class="col s9">
           {{entry.username}}
           <br>
           <div class="create-time">Last active: {{entry.updatedAt}}</div>
