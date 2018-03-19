@@ -21,7 +21,8 @@
       "styles": [
         "styles.css",
         "../vendor/materialize/css/materialize.min.css",
-        "../vendor/animate.min.css"
+        "../vendor/animate.min.css",
+        "../vendor/materialize/material-icons.css"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",
