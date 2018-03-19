@@ -37,16 +37,11 @@ app.use(bodyParser.json())
   .use(kraken(spec.onconfig))
   .use(express.static(APP_DIR))
   .use(session)
+  .use('/api/doc', express.static('doc'))
   .use(cors());
 
 sockets.init(server, session);
-// REMOVE START
-app.use(express.static('static'));
 
-app.get('/', function(req, res){
-  res.sendFile(path.join(__dirname, './static/test.html'));
-});
-// REMOVE END
 spec.configure({
   version: VERSION
   }).then(function() {

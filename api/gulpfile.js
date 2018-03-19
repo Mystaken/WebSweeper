@@ -7,6 +7,7 @@ const gulp = require('gulp'),
   apidoc   = require('gulp-apidoc'),
   exec     = require('child_process').exec;
 
+/** Runs the code with jshint */
 gulp.task('jshint', function(done) {
   gulp.src(['./controllers/**/*.js', './lib/**/*.js', './models/**/*.js', './sockets/*.js', 'app.js', 'gulpfile.js'])
     .pipe(jshint("./config/.jshintrc"))
@@ -14,6 +15,7 @@ gulp.task('jshint', function(done) {
     .pipe(jshint.reporter('jshint-stylish'));
 });
 
+/** Generates the api route documentation */
 gulp.task('doc', function(done){
   apidoc({
     src: 'controllers/',
@@ -24,23 +26,23 @@ gulp.task('doc', function(done){
 });
 
 
+/** Builds the front end application */
 gulp.task('build', function(done) {
   exec('cd ../public && gulp build', function(error, stdout, stderr) {
     done(error);
   });
 });
 
+/** Remove any previously built application */
 gulp.task('clean', function(done) {
   exec('cd ../public && gulp clean', function(error, stdout, stderr) {
     done(error);
   });
 });
 
+/** Deploys the application */
 gulp.task('deploy', ['doc', 'clean'], function(done) {
   exec('cd ../public && gulp deploy', function(error, stdout, stderr) {
     done(error);
   });
 });
-
-
-gulp
