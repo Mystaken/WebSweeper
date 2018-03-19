@@ -9,4 +9,10 @@
       <i class="material-icons {{cell.status == 2 ? 'flagged' : ''}}">{{cell.display}}</i>
     </a>
   </div>
+  <div class="message" *ngIf="revealCount >= row * col - mines">
+    Congratulation, you win!
+  </div>
+  <div class="message" *ngIf="!(revealCount >= row * col - mines) && (gameStatus == 1)">
+    You hit a bomb. No worries, you can still play.
+  </div>
 </div>

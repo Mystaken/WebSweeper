@@ -55,7 +55,6 @@ export class MinesweeperComponent {
       this.isSpectating = false;
     } else {
       boardConfig = initBoard;
-      console.log(initBoard);
       this.row = initBoard.m;
       this.col = initBoard.m;
       this.mines = initBoard.mines;
@@ -104,8 +103,8 @@ export class MinesweeperComponent {
     var y = rowCol[1];
     if ((!isRightClick && this.board[x][y].status != 0) || (isRightClick && this.board[x][y].status == 1)) return;
     this._api.post('/api/games/minesweeper/' + this.gameId, {
-      'n': this.col,
-      'm': this.row,
+      'n': this.row,
+      'm': this.col,
       'mines': this.mines,
       'x': x - 0,
       'y': y - 0,
