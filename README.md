@@ -102,5 +102,6 @@ You can also visit `${api.domain}/api/doc` once the server is deployed.
 
 
 ## Project Team Members
+Team Name: Web Sweeper (yes, it's the same as project name.)
 * [Pengyun(Andrew) Wang](https://github.com/A-Kun)
 * [Tianxiang(Kevin) Gao](https://github.com/Mystaken)
