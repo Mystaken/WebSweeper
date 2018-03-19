@@ -38,10 +38,11 @@ In addition, you will also need a [Mailgun](https://www.mailgun.com/) account. T
    - `lib/` - contains general libraies for our application
    - `views/` - contains non-statically served files. Mostly `.pug` files.
    - `schemas/`- contains all the schemas used by [z-schema](https://github.com/zaggino/z-schema) to validate the HTTP request.
-   - `gulpfile.js`- configures all the gulp tasks
+   - `gulpfile.js`- configures all the gulp tasks for api
  - `public/` - the code for the front-end Angular application. Most of this was auto-generated from [Angular CLI](https://cli.angular.io/)
    - `vendor/`- contains third party libaries used
    - `src/`- contains the source code for the application
+   - `gulpfile.js`- configures all the gulp tasks for front-end
 
 ### Building and Deploy
 
