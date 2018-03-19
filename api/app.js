@@ -38,6 +38,7 @@ app.use(bodyParser.json())
   .use(express.static(APP_DIR))
   .use(session)
   .use('/api/doc', express.static('doc'))
+  .use('/', express.static('.build'))
   .use(cors());
 
 sockets.init(server, session);

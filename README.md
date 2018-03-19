@@ -1,4 +1,3 @@
-
 # Web Sweeper
 
 Web Sweeper is an online Minesweeper game that allows other people to come in and watch and commentate (similar to Twitch chat). Users can either create a room and begin a game or go spectate and commentate other people playing the game. Users can also upload emotes for spectators to use when commentating in their game rooms and also change the game themes by uploading bomb icons, background images, etc. Each user will also have their personal profile that they can edit.
@@ -92,15 +91,34 @@ node app.js
 ```
 
 ## API Route Documentation
+
 The API Route is generate from [apiDoc](http://apidocjs.com/) . To generate this separately,  run `gulp doc` and the documentation will be in `doc/index.html`.
 You can also visit `${api.domain}/api/doc` once the server is deployed.
-## Web Technology Used
 
+## Web Technology Used
+Credits to the technologies used.
 ### Front End Technology
 
+- [Angular](https://angular.io/)
+- [Angular CLI](https://cli.angular.io/)
+- [Materialize](http://materializecss.com/)
+- [Animate.css](https://daneden.github.io/animate.css/)
+
 ### Back End Technology
+- [Express.js](https://expressjs.com/)
+- [Socket.IO](https://socket.io/)
+- [krakenjs](http://krakenjs.com/)
+- [Pug](https://pugjs.org)
+- [mailgun-js](https://github.com/bojand/mailgun-js)
+- [z-schema](https://github.com/zaggino/z-schema)
+- [mongoose](http://mongoosejs.com/)
+- [bcrypt](https://github.com/kelektiv/node.bcrypt.js)
+- [sanitizer](https://github.com/theSmaw/Caja-HTML-Sanitizer)
 
-
+### Other Credits
+- Background pictures
+   - https://pixabay.com/en/retro-perspective-grid-tron-synth-1548260/
+   - https://pixabay.com/en/the-speaker-grill-texture-2184439/
 ## Project Team Members
 Team Name: Web Sweeper (yes, it's the same as project name.)
 * [Pengyun(Andrew) Wang](https://github.com/A-Kun)
