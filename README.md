@@ -1,38 +1,105 @@
-# Web Sweeper
-Team Name/Project Name: Web Sweeper
 
-#### Team Members
+# Web Sweeper
+
+Web Sweeper is an online Minesweeper game that allows other people to come in and watch and commentate (similar to Twitch chat). Users can either create a room and begin a game or go spectate and commentate other people playing the game. Users can also upload emotes for spectators to use when commentating in their game rooms and also change the game themes by uploading bomb icons, background images, etc. Each user will also have their personal profile that they can edit.
+
+## Table of Contents
+- [Code Overview](#code-overview)
+   - [Dependencies](#dependencies)
+   - [Code Structure](#code-structure)
+   - [Build and Deploy](#build-and-deploy)
+- [API Route Documentation](#api-route-documentation)
+- [Web Technology Used](#web-technology-used)
+  - [Front End Technology](#front-end-technology)
+  - [Back End Technology](#back-end-technology)
+- [Project Team Members](#project-team-members)
+
+## Code Overview
+
+### Dependencies
+
+- [MongoDB](https://www.mongodb.com/) - the database used by the server.
+- [gulpjs](https://gulpjs.com/) - tool used to automate many tasks.
+- [apiDoc](http://apidocjs.com/) - used to generate all the documentation for the api routes
+- [NodeJS](https://nodejs.org) (>=7.10.1) - Javascript framework used for both front end and backend
+- [npm](https://www.npmjs.com/) (>=4.2.0) - Package management tool for NodeJS
+- [Angular CLI](https://cli.angular.io/) (>=1.7.3) - client we used to generate our front-end Angular application
+
+In addition, you will also need a [Mailgun](https://www.mailgun.com/) account. This is used to send a verification link to a users email when they sign up.
+
+### Code Structure
+
+ - `api/`  - the code for the back-end server
+   - `app.js` - the entry point to our application. This file defines the Express server, sets up connection to MongoDB, and configures the server.
+   - `controllers/` - contains the route definitions. This is automatically required by KrakenJS
+   - `models/` - contains the Mongoose models and schemas.
+   - `config/` - contains the configurations for our application
+   - `sockets/` - contains the code that sets up the sockets
+   - `lib/` - contains general libraies for our application
+   - `views/` - contains non-statically served files. Mostly `.pug` files.
+   - `schemas/`- contains all the schemas used by [z-schema](https://github.com/zaggino/z-schema) to validate the HTTP request.
+   - `gulpfile.js`- configures all the gulp tasks
+ - `public/` - the code for the front-end Angular application. Most of this was auto-generated from [Angular CLI](https://cli.angular.io/)
+   - `vendor/`- contains third party libaries used
+   - `src/`- contains the source code for the application
+
+### Building and Deploy
+
+Once you have all the dependencies, we can clone and build the application
+
+#### Clone project
+
+```
+git clone https://github.com/UTSCC09/WebSweeper
+```
+
+#### Install packages
+
+Install packages in both `api` and `public`.
+
+```
+cd WebSweeper/public
+npm install
+cd ../api
+npm install
+```
+#### Fix configurations
+There are two configurations you may need to set for the API
+First, make a copy of the `mailgun.json` and add your Mailgun configurations to the json.
+```
+cp config/mailgun.json.template config/mailgun.json
+```
+Second, change `mongo.server` in the `config/config.json` file to go to your own Mongo server.
+
+#### Build Application
+
+Run this inside of `api` folder.
+
+```
+gulp deploy
+```
+
+This will:
+   - remove previously build project
+   - build the Angular application
+   - create the api route documentation
+
+#### Start Server
+
+```
+node app.js
+```
+
+## API Route Documentation
+The API Route is generate from [apiDoc](http://apidocjs.com/) . To generate this separately,  run `gulp doc` and the documentation will be in `doc/index.html`.
+You can also visit `${api.domain}/api/doc` once the server is deployed.
+## Web Technology Used
+
+### Front End Technology
+
+### Back End Technology
+
+
+## Project Team Members
 * [Pengyun(Andrew) Wang](https://github.com/A-Kun)
 * [Tianxiang(Kevin) Gao](https://github.com/Mystaken)
-
-### Description
-Web Sweeper is an online Mine-Sweeper game that allows other people to come in and watch and commentate (similar to Twitch chat). Users can either create a room and begin a game or go spectate and commentate other people playing the game. Users can also upload emotes for spectators to use when commentating in their game rooms and also change the game themes by uploading bomb icons, background images, etc. Each user will also have their personal profile that they can edit.
-
-### Features for Beta
-* Users will be able to create a room and be a host for a game
-* Users will be able to upload emotes for their spectators to use in their game room
-* Users will be able to view a list of rooms currently live, enter one, and become a spectator for a game
-* The host of the room will be able to play MineSweeper
-* Everyone in the room will get updated comments from the chat box
-* There will be an anti-cheat mechanism to prevent hosts from getting additional information on the state of the game board
-* OAuth for login
-
-
-### Features for Final product
-* Users will be able to customize their own profile
-* Users will be able to customize the game boards
-* There will be a filter in the chat box for bad words
-* Fully responsive to all mobile and tablet devices
-
-
-### Web Technology Used
-* NodeJS + ExpressJS + KrakenJS for backend
-* Angular for frontend framework
-* Foundation for CSS Framework
-
-### Top 5 Technical Challenges
-1. Creating a web socket for P2P connection
-2. Creating a good database design so that our application can be efficient for multiple concurrent users and games
-3. Making sure every user has the correct authorization (ex. spectators should not be able to play the game)
-4. Making the application fully responsive.
-5. Getting familiar with new frameworks such as Angular
