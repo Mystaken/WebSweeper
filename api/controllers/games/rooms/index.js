@@ -64,7 +64,7 @@ module.exports = function (router) {
     query = Game.aggregate([{
       $match: {
         status: {
-          $in: [ status.PENDING ]
+          $nin: [ status.NEW ]
         }
       }
     },{
