@@ -62,8 +62,8 @@ module.exports = function (router) {
     }
     //get rooms
     query = Game.aggregate([{
-      $match: {
-        $not: { status: status.PENDING }
+      $not: {
+        $match: { status: status.PENDING }
       }
     },{
       $project: {
