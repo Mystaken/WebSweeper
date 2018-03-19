@@ -1,3 +1,5 @@
+
+
 # Web Sweeper
 
 Web Sweeper is an online Minesweeper game that allows other people to come in and watch and commentate (similar to Twitch chat). Users can either create a room and begin a game or go spectate and commentate other people playing the game. Users can also upload emotes for spectators to use when commentating in their game rooms and also change the game themes by uploading bomb icons, background images, etc. Each user will also have their personal profile that they can edit.
@@ -100,26 +102,40 @@ Credits to the technologies used.
 ### Front End Technology
 
 - [Angular](https://angular.io/)
+Front end framework to speed up development cycle.
 - [Angular CLI](https://cli.angular.io/)
+Used to generate and build our Angular applications
 - [Materialize](http://materializecss.com/)
+Some components utilise CSS from this CSS library
 - [Animate.css](https://daneden.github.io/animate.css/)
+Used for some quick-and-easy animation
 
 ### Back End Technology
 - [Express.js](https://expressjs.com/)
-- [Socket.IO](https://socket.io/)
+The framework that speeds up development
 - [krakenjs](http://krakenjs.com/)
+An extension to Express.js we use. This is used primarily to give our project structure.
+- [Socket.IO](https://socket.io/)
+Both the chat and the game utilize this to update all users in a game room.
 - [Pug](https://pugjs.org)
+Known previously as Jade. Used to create flexible HTML. The main use case at the moment is creating verification emails.
 - [mailgun-js](https://github.com/bojand/mailgun-js)
+Used to send verification emails
 - [z-schema](https://github.com/zaggino/z-schema)
+Used to do quick and clean validation on the request body/query to check for errors before sending to database
 - [mongoose](http://mongoosejs.com/)
+Used to communicate with MongoDB
 - [bcrypt](https://github.com/kelektiv/node.bcrypt.js)
+Hashing is done here. Currently used when hashing user's password and creating application versions.
 - [sanitizer](https://github.com/theSmaw/Caja-HTML-Sanitizer)
+Routes with strings in the request are sanitised to strip any HTML tags.
 
 ### Other Credits
-- Background pictures
+- Pictures
    - https://pixabay.com/en/retro-perspective-grid-tron-synth-1548260/
    - https://pixabay.com/en/the-speaker-grill-texture-2184439/
 ## Project Team Members
 Team Name: Web Sweeper (yes, it's the same as project name.)
+
 * [Pengyun(Andrew) Wang](https://github.com/A-Kun)
 * [Tianxiang(Kevin) Gao](https://github.com/Mystaken)
