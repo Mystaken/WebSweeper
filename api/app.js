@@ -18,9 +18,9 @@ const express  = require('express'),
   logger    = require('./lib/logger'),
   spec      = require('./lib/spec')(app),
 
-  APP_DIR     = path.join(__dirname, config.app.APP_DIR),
-  VERSION     = bcrypt.hashSync((new Date()).toString(), 10).substring(7),
-  secret      = bcrypt.hashSync((new Date()).toString(), 3).substring(7);
+  APP_DIR = path.join(__dirname, config.app.APP_DIR),
+  VERSION = bcrypt.hashSync((new Date()).toString(), 10).substring(7),
+  secret  = bcrypt.hashSync((new Date()).toString(), 3).substring(7);
 
 const session = expressSess({
     secret: secret,
@@ -35,11 +35,13 @@ const session = expressSess({
 app.use(bodyParser.json())
   .use(cookieParser())
   .use(kraken(spec.onconfig))
-  .use(express.static(APP_DIR))
   .use(session)
   .use('/api/doc', express.static('doc'))
-  .use('/', express.static('.build'))
-  .use(cors());
+  .use(express.static('.build'))
+  .use(cors())
+  .get(/\/api\/.*/, function(req, res, next) {
+      return res.sendFile('index.html', { root: APP_DIR });
+  });
 
 sockets.init(server, session);
 

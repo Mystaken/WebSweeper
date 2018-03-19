@@ -2,7 +2,7 @@
   "app": {
     "name": "WebSweeper API",
     "PORT": 3000,
-    "APP_DIR": "../dist",
+    "APP_DIR": ".build",
     "DOMAIN": "http://localhost:3000"
   },
   "mongo" : {
