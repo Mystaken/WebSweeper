@@ -2,7 +2,7 @@
 'use strict';
 
 const mongoose = require('mongoose'),
-  status   = require('../config/status.json').game,
+  status   = require('../config/status.json').games,
   config   = require('../config/config.json'),
   utils    = require('../lib/utils');
 

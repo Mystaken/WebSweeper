@@ -4,7 +4,7 @@
 const Game    = require('../../../models/gameModel'),
   validator   = require('../../../lib/validator'),
   middlewares = require('../../../lib/middlewares'),
-  status      = require('../../../config/status.json').game,
+  status      = require('../../../config/status.json').games,
 
   roomsGetSchema = require('../../../schemas/games/rooms/rooms_get.json');
 
