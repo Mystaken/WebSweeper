@@ -6,6 +6,8 @@ const Game    = require('../../../models/gameModel'),
   middlewares = require('../../../lib/middlewares'),
   status      = require('../../../config/status.json').games,
 
+  moment      = require('moment'),
+
   roomsGetSchema = require('../../../schemas/games/rooms/rooms_get.json');
 
 module.exports = function (router) {
@@ -18,10 +20,12 @@ module.exports = function (router) {
 
    * @apiParam limit {Integer} The max number of rooms to return
    * @apiParam offset {Integer} (Optional) The number of rooms to skip
+   * @apiParam staleness {Integer} (Optional) Amount of time prior to current time to include.
    * @apiParamExample {json} Sample Request
    *     {
    *       "limit": 1,
-   *       "offset": 0
+   *       "offset": 0,
+   *       "staleness": 300
    *     }
    * @apiSuccess {Object[]} rooms the list of rooms
    * @apiSuccess {String} rooms.host the id of the host
@@ -46,7 +50,7 @@ module.exports = function (router) {
    * @apiUse MissingFieldsError
   */
   router.route('/').get(middlewares.authenticate(), function(req, res, next) {
-    var err, query;
+    var err, query, matchQuery;
 
     //validation
     if (req.query.limit) {
@@ -55,18 +59,29 @@ module.exports = function (router) {
     if (req.query.offset) {
       req.query.offset = parseInt(req.query.offset, 10);
     }
+    if (req.query.staleness) {
+      req.query.staleness = parseInt(req.query.staleness, 10);
+    }
     validator.validate(req.query, roomsGetSchema);
     err = validator.getLastErrors();
     if (err) {
       return res.requestError(400, err);
     }
+
+    matchQuery = {
+      status: {
+        $nin: [ status.PENDING ]
+      }
+    };
+
+    if (req.query.staleness) {
+      matchQuery.updatedAt = {
+        $gte: moment().subtract(req.query.staleness, 'seconds').toDate()
+      };
+    }
     //get rooms
     query = Game.aggregate([{
-      $match: {
-        status: {
-          $nin: [ status.NEW ]
-        }
-      }
+      $match: matchQuery
     },{
       $project: {
           id: "$_id",
