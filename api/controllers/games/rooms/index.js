@@ -1,9 +1,11 @@
 // jshint esversion: 6
 'use strict';
 
-const Game  = require('../../../models/gameModel'),
-  validator = require('../../../lib/validator'),
+const Game    = require('../../../models/gameModel'),
+  validator   = require('../../../lib/validator'),
   middlewares = require('../../../lib/middlewares'),
+  status      = require('../../../config/status.json').game,
+
   roomsGetSchema = require('../../../schemas/games/rooms/rooms_get.json');
 
 module.exports = function (router) {
@@ -60,6 +62,10 @@ module.exports = function (router) {
     }
     //get rooms
     query = Game.aggregate([{
+      $match: {
+        $not: { status: status.PENDING }
+      }
+    },{
       $project: {
           id: "$_id",
           _id: 0,
