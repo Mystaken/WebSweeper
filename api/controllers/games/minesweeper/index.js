@@ -24,7 +24,7 @@ module.exports = function (router) {
    * @apiSuccess {String} id the id of the game
    * @apiSuccess {String} host the id of the host for the game
    * @apiSuccess {String} status the status of the game
-   * @apiSuccess {Object} config The minesweeper config
+   * @apiSuccess {Object} game The minesweeper game
    * @apiSuccessExample {json} Success Response
    *     HTTP/1.1 200 OK
    *     {
@@ -33,7 +33,7 @@ module.exports = function (router) {
    *         "id": "5935ed0e5ecf04cc3388de8e",
    *         "host": "5935ed0e5ecf04cc3388de8e",
    *         "status": "N",
-   *         "config": {},
+   *         "game": {},
    *         "createdAt": "21-12-2017 15:30",
    *       }
    *     }
@@ -65,7 +65,7 @@ module.exports = function (router) {
           id: game._id,
           host: game.host,
           status: game.status,
-          config: game.config || {},
+          game: game.game || {},
           createdAt: game.createdAt
         });
     }).catch((err) => res.handleError(err));
