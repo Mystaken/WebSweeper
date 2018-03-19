@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { APIRoutingService } from './services/api-routing.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class LoginComponent {
   email = '';
   isSignedUp = false;
 
-  constructor(private _api: APIRoutingService) {
+  constructor(private _api: APIRoutingService, private _router: Router) {
 
   }
 
@@ -32,6 +33,8 @@ export class LoginComponent {
     this._api.post('/api/users/login', {
       'username': this.user,
       'password': this.pass,
-    }).subscribe((res) => console.log(res));
+    }).subscribe((res) => {
+      this._router.navigate(['/game']);
+    });
   }
 }

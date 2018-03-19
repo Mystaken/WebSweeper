@@ -15,11 +15,6 @@ module.exports = {
    */
   authenticate: function(opt) {
     var result = function(req, res, next) {
-      if (!req.session.user) {
-        req.session.user = {
-          id: '5aad71fdab16ed270721317f'
-        };
-      }
       // session not set.
       if (!req.session.user) {
         return res.requestError(401, [{
