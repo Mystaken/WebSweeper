@@ -1,7 +1,7 @@
 <div id="minesweeper-container">
   <div *ngFor="let row of board" (contextmenu)="disableContextMenu($event)">
     <a id="{{cell.x}}-{{cell.y}}"
-       class="btn-flat {{cell.status == 0 ? 'waves-effect' : ''}} {{cell.status == 1 ? 'revealed' : ''}}"
+       class="btn-flat {{!isSpectating && cell.status == 0 ? 'waves-effect' : ''}} {{cell.status == 1 ? 'revealed' : ''}}"
        [ngClass]="getCellClasses()"
        *ngFor="let cell of row"
        (click)="click($event, 0)"

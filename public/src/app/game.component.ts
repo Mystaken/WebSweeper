@@ -14,6 +14,7 @@ export class GameComponent {
   mines;
   gameId = '';
   rooms = [];
+  newMsgCounter = 0;
 
   isLobby = true;
   isCreateGame = false;
@@ -28,8 +29,9 @@ export class GameComponent {
   }
 
   getRooms() {
-    this._api.get('/api/games/rooms/?limit=10', {}).subscribe((res) => {
+    this._api.get('/api/games/rooms/?limit=10&staleness=300', {}).subscribe((res) => {
       this.rooms = res;
+      this.rooms.reverse();
     });
   }
 
@@ -37,7 +39,24 @@ export class GameComponent {
     this._api.post('/api/games/', {
     }).subscribe((res) => {
       this.gameId = res.id;
-      this.ms.createBoard(true);
+      this.ms.createBoard(undefined);
+
+      this.cht.joinRoom(res.id);
+    });
+
+    this.isLobby = false;
+    this.isCreateGame = false;
+    this.isChatOpen = false;
+    this.isInGame = true;
+  }
+
+  spectateGame($event) {
+    var id = $event.target.id || $event.target.parentNode.id;
+
+    this._api.get('/api/games/minesweeper/' + id, {
+    }).subscribe((res) => {
+      this.gameId = res.id;
+      this.ms.createBoard(res.game);
 
       this.cht.joinRoom(res.id);
     });
@@ -50,7 +69,7 @@ export class GameComponent {
 
   backToLobby() {
     this.getRooms();
-    
+
     this.isLobby = true;
     this.isCreateGame = false;
     this.isChatOpen = false;
@@ -70,9 +89,15 @@ export class GameComponent {
 
   toggleChat() {
     this.isChatOpen = !this.isChatOpen;
+    this.newMsgCounter = 0;
   }
 
   closeChat() {
     this.isChatOpen = false;
+  }
+
+  updateMsgCounter(counter) {
+    this.newMsgCounter = counter;
+    console.log(counter);
   }
 }

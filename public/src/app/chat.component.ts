@@ -12,7 +12,10 @@ export class ChatComponent {
   messages = [];
 
   @Input() gameId: '';
+  @Input() isChatOpen;
+  @Input() newMsgCounter;
   @Output() closeChat = new EventEmitter();
+  @Output() updateMsgCounter = new EventEmitter();
 
   constructor(private _api: APIRoutingService, private _socket: SocketService) {
 
@@ -22,13 +25,15 @@ export class ChatComponent {
     this.messages = [];
     this._socket.joinRoom(gameId);
     this._socket.getMessage(msg => {
-      console.log(msg);
       this.messages.push(msg.message);
+      if (!this.isChatOpen) {
+        this.newMsgCounter++;
+        this.updateMsgCounter.emit(this.newMsgCounter);
+      }
     });
   }
 
   sendMessage() {
-    console.log(this.gameId, this.message);
     this._socket.sendMessage(this.gameId, this.message);
     this.message = '';
   }

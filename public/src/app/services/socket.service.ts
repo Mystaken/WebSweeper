@@ -14,7 +14,11 @@ export class SocketService {
     this.socket.emit('chat message', {room: room, message: msg});
   }
 
-  getMessage(cb: Function) {
-    return this.socket.on('listen message', cb);
+  getMessage(callback: Function) {
+    return this.socket.on('listen message', callback);
+  }
+
+  newMove(callback: Function) {
+    return this.socket.on('new minesweeper move', callback);
   }
 }

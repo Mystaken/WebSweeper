@@ -11,7 +11,6 @@
   z-index: 0;
   padding: 0 9px;
   color: white;
-  background-color: rgb(47, 49, 54);
   margin: 1px 1px;
 }
 
@@ -80,6 +79,10 @@ chat {
   top: 0;
 }
 
+#play-btn {
+  font-size: 2rem;
+}
+
 #create-game-container {
   position: absolute;
   width: 300px;
@@ -101,7 +104,8 @@ chat {
   font-size: 3rem;
 }
 
-.badge {
+.counter {
+  position: absolute;
   color: white;
   padding-top: 6px;
 }

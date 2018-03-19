@@ -28,6 +28,7 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 #chat-stream {
   width: 100%;
   height: calc(100% - 58px - 38px);
+  overflow-y: scroll;
 }
 
 #msg-box {

@@ -70,7 +70,7 @@ module.exports = function (router) {
 
     matchQuery = {
       status: {
-        $nin: [ status.PENDING ]
+        $nin: [ status.NEW ]
       }
     };
 

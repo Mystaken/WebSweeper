@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { APIRoutingService } from './services/api-routing.service';
+import { SocketService } from './services/socket.service';
 
 @Component({
   selector: 'minesweeper',
@@ -10,6 +11,7 @@ export class MinesweeperComponent {
   board = [];
   gameStatus = 0;
   revealCount = 0;
+  isSpectating;
 
   @Input() row: 0;
   @Input() col: 0;
@@ -30,16 +32,16 @@ export class MinesweeperComponent {
     9: '９',
   };
 
-  constructor(private _api: APIRoutingService) {
+  constructor(private _api: APIRoutingService, private _socket: SocketService) {
 
   }
 
-  createBoard(isFirstTime) {
+  createBoard(initBoard) {
     this.gameStatus = 0;
     this.revealCount = 0
 
     var boardConfig;
-    if (isFirstTime) {
+    if (!initBoard) {
       var tempGameState = [];
       for (var i = 0; i < this.row * this.col; i++) {
         tempGameState.push({status: 0, number: 0});
@@ -47,9 +49,20 @@ export class MinesweeperComponent {
       boardConfig = {
         m: this.row,
         n: this.col,
-        mines: 10,
+        mines: this.mines,
         gameState: tempGameState,
       };
+      this.isSpectating = false;
+    } else {
+      boardConfig = initBoard;
+      console.log(initBoard);
+      this.row = initBoard.m;
+      this.col = initBoard.m;
+      this.mines = initBoard.mines;
+      for (var i = 0; i < initBoard.gameState.length; i++) {
+        if (initBoard.gameState[i].status == 1) this.revealCount++;
+      }
+      this.isSpectating = true;
     }
 
     var m = boardConfig.m;
@@ -75,13 +88,21 @@ export class MinesweeperComponent {
         this.board[j].push(newState);
       }
     }
+
+    if (this.isSpectating) {
+      this._socket.newMove(res => {
+        this.processMoves(res);
+      });
+    }
   }
 
   click($event, isRightClick) {
+    if (this.isSpectating) return;
+
     var rowCol = ($event.target.id || $event.target.parentNode.id).split('-');
     var x = rowCol[0];
     var y = rowCol[1];
-    if ((!isRightClick && this.board[x][y].status != 0) || (isRightClick && this.board[x][y].status == 1)) return
+    if ((!isRightClick && this.board[x][y].status != 0) || (isRightClick && this.board[x][y].status == 1)) return;
     this._api.post('/api/games/minesweeper/' + this.gameId, {
       'n': this.col,
       'm': this.row,
@@ -95,16 +116,15 @@ export class MinesweeperComponent {
   }
 
   processMoves(res) {
-      console.log(res);
-      this.gameStatus = res.status;
-      var moves = res.moves;
-      for (var i = 0; i < moves.length; i++) {
-        var nextMove = moves[i];
-        this.board[nextMove.n][nextMove.m].status = nextMove.type;
-        this.board[nextMove.n][nextMove.m].number = nextMove.number;
-        if (nextMove.type == 1) this.revealCount++;
-      }
-      this.updateDisplay();
+    this.gameStatus = res.status;
+    var moves = res.moves;
+    for (var i = 0; i < moves.length; i++) {
+      var nextMove = moves[i];
+      this.board[nextMove.n][nextMove.m].status = nextMove.type;
+      this.board[nextMove.n][nextMove.m].number = nextMove.number;
+      if (nextMove.type == 1) this.revealCount++;
+    }
+    this.updateDisplay();
   }
 
   disableContextMenu($event) {
