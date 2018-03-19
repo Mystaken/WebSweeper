@@ -18,6 +18,13 @@
         "arguments": [{ "directory": "path:./controllers" }]
       }
     },
+    "redirect": {
+        "priority": 140,
+        "enabled": true,
+        "module": {
+            "name": "path:./lib/redirect"
+        }
+    },
     "appsec": {
       "priority": 110,
       "module": {

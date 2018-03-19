@@ -39,9 +39,6 @@ app.use(bodyParser.json())
   .use('/api/doc', express.static('doc'))
   .use(express.static('.build'))
   .use(cors())
-  .get(/\/api\/.*/, function(req, res, next) {
-      return res.sendFile('index.html', { root: APP_DIR });
-  });
 
 sockets.init(server, session);
 
