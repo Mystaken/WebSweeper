@@ -21,15 +21,15 @@ export class MinesweeperComponent {
   icons = {
     'flag': 'flag',
     0: '　',
-    1: '１',
-    2: '２',
-    3: '３',
-    4: '４',
-    5: '５',
-    6: '６',
-    7: '７',
-    8: '８',
-    9: '９',
+    1: '1',
+    2: '2',
+    3: '3',
+    4: '4',
+    5: '5',
+    6: '6',
+    7: '7',
+    8: '8',
+    9: '9',
   };
 
   constructor(private _api: APIRoutingService, private _socket: SocketService) {
