@@ -18,6 +18,7 @@ const express  = require('express'),
   logger    = require('./lib/logger'),
   spec      = require('./lib/spec')(app),
 
+  PORT    = process.env.PORT || config.app.PORT,
   APP_DIR = path.join(__dirname, config.app.APP_DIR),
   VERSION = bcrypt.hashSync((new Date()).toString(), 10).substring(7),
   secret  = bcrypt.hashSync((new Date()).toString(), 3).substring(7);
@@ -45,8 +46,8 @@ sockets.init(server, session);
 spec.configure({
   version: VERSION
   }).then(function() {
-    return server.listen(config.app.PORT, function() {
-      logger.info(config.app.name + ' started at PORT: ' + config.app.PORT);
+    return server.listen(PORT, function() {
+      logger.info(config.app.name + ' started at PORT: ' + PORT);
     });
   }).catch(function(err) {
     logger.fatal(err);

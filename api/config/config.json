@@ -3,7 +3,7 @@
     "name": "WebSweeper API",
     "PORT": 3000,
     "APP_DIR": ".build",
-    "DOMAIN": "http://localhost:3000"
+    "DOMAIN": "https://web-sweeper.herokuapp.com/"
   },
   "mongo" : {
     "server": "mongodb://websweeper_admin:c09weebadmin@ds121248.mlab.com:21248",
