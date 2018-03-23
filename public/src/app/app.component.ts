@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'root',
+  selector: 'app',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app works!';
+  rows = 5;
+  columns = 10;
+  mines = 1;
+  active=true;
+  test = (a) => console.log(a);
 }

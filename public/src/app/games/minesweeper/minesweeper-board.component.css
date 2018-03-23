@@ -35,3 +35,9 @@
   color: white;
   margin-top: 1rem;
 }
+
+.material-icons {
+  font-family: 'Roboto, san-serif';
+  padding-right: 9px;
+  padding-left: 9px;
+}

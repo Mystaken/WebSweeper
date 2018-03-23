@@ -5,8 +5,8 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/Rx';
 
 @Injectable()
-export class APIRoutingService {
-  private _api_route = '';
+export class APIService {
+  private _apiUrl: string = environment.apiURL;
 
   constructor(private _http: Http) { }
 
@@ -20,60 +20,50 @@ export class APIRoutingService {
     }
   }
 
-  get(route, params) {
-    let param;
-    params = params || {};
+  get(route:string, params: object): Observable<any> {
     let requestOpts: URLSearchParams = new URLSearchParams();
-    for (param in params) {
-        if (params.hasOwnProperty(param)) {
-          requestOpts.set(param, params[param]);
-        }
-    }
+    Object.keys(params).forEach(key => {
+      requestOpts.set(key, params[key]);
+    });
     // append tokens in headers if authenticated
     let requestOptions = new RequestOptions();
 
     requestOptions.params = requestOpts;
 
-    return this._http.get(this._api_route + route, requestOptions)
+    return this._http.get(this._apiUrl + route, requestOptions)
         .map(res => res.json().data)
         .catch(this._parseError);
   }
 
-  put(route, params) {
+  put(route:string, params: object): Observable<any> {
     params = params || {};
 
 
-    return this._http.put(this._api_route + route, params)
+    return this._http.put(this._apiUrl + route, params)
         .map(res => res.json().data)
         .catch(this._parseError);
   }
 
-  post(route, params) {
+  post(route:string, params: object): Observable<any> {
     params = params || {};
 
-    return this._http.post(this._api_route + route, params)
+    return this._http.post(this._apiUrl + route, params)
         .map(res => res.json().data)
         .catch(this._parseError);
   }
 
-  delete(route, params) {
-    let param;
-    params = params || {};
+  delete(route:string, params: object): Observable<any> {
     let requestOpts: URLSearchParams = new URLSearchParams();
-    for (param in params) {
-        if (params.hasOwnProperty(param)) {
-          requestOpts.set(param, params[param]);
-        }
-    }
-
+    Object.keys(params).forEach(key => {
+      requestOpts.set(key, params[key]);
+    });
+    // append tokens in headers if authenticated
     let requestOptions = new RequestOptions();
 
     requestOptions.params = requestOpts;
 
-    return this._http.delete(this._api_route + route, requestOptions)
+    return this._http.delete(this._apiUrl + route, requestOptions)
         .map(res => res.json().data)
         .catch(this._parseError);
   }
-
-
 }

@@ -1,1 +1,7 @@
-<router-outlet></router-outlet>
+<minesweeper-board
+  [rows]="rows"
+  [columns]="columns"
+  [mines]="mines"
+  [active]="active"
+  (revealed)="test($event)"
+  (flagged)="test($event)"></minesweeper-board>
