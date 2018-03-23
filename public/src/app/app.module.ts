@@ -14,7 +14,7 @@ import { ChatComponent } from './chat.component';
 import { APIRoutingService } from './services/api-routing.service';
 import { SocketService } from './services/socket.service';
 
-const config: SocketIoConfig = { url: 'http://localhost:3000/', options: {path: '/socket'} };
+const config: SocketIoConfig = { url: '', options: {path: '/socket'} };
 
 @NgModule({
   declarations: [

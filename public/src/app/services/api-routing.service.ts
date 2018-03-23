@@ -6,7 +6,7 @@ import 'rxjs/Rx';
 
 @Injectable()
 export class APIRoutingService {
-  private _api_route = 'http://localhost:3000';
+  private _api_route = '';
 
   constructor(private _http: Http) { }
 
