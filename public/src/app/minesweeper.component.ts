@@ -56,7 +56,7 @@ export class MinesweeperComponent {
     } else {
       boardConfig = initBoard;
       this.row = initBoard.m;
-      this.col = initBoard.m;
+      this.col = initBoard.n;
       this.mines = initBoard.mines;
       for (var i = 0; i < initBoard.gameState.length; i++) {
         if (initBoard.gameState[i].status == 1) this.revealCount++;
