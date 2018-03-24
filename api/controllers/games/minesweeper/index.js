@@ -6,11 +6,65 @@ const Game    = require('../../../models/gameModel'),
   validator   = require('../../../lib/validator'),
   error       = require('../../../config/error.json'),
   status      = require('../../../config/status.json').games,
-  io     = require('../../../sockets/sockets').io,
+  io          = require('../../../sockets/sockets').io,
 
-  minesweeperPostSchema = require('../../../schemas/games/minesweeper/minesweeper_post.json');
+  mongoose    = require('mongoose'),
+
+  minesweeperIDPostSchema = require('../../../schemas/games/minesweeper/minesweeper_id_post.json'),
+  minesweeperPostSchema = require('../../../schemas/games/minesweeper/minesweeper_post.json'),
+  TYPE = 1;
 
 module.exports = function (router) {
+
+  /**
+   * @api {POST} api/games/minesweeper Create Game
+   * @apiGroup MineSweeper
+   * @apiName CreateGame
+   * @apiPermission user signed in
+   * @apiDescription Creates a new game
+   *
+   * @apiParam {Integer} n the length on x-axis
+   * @apiParam {Integer} m the length on y-axis
+   * @apiParam {Integer} mines the number of mines in the game
+   * @apiSuccessExample {json} Success Response
+   *     HTTP/1.1 200 OK
+   *     {
+   *       status: 200,
+   *       data: {
+   *         "id": "5935ed0e5ecf04cc3388de8e"
+   *       }
+   *     }
+   * @apiUse ExtraFieldsError
+   * @apiUse InvalidLoginError
+  */
+  router.route('/').post(middlewares.authenticate(), function (req, res, next) {
+    var err;
+
+    validator.validate(req.body, minesweeperPostSchema);
+    err = validator.getLastErrors();
+
+    if (err) {
+      return res.requestError(400, err);
+    }
+
+    return new Game({
+        host: req.user.id,
+        username: req.user.username,
+        type: TYPE,
+        status: status.NEW,
+        game: {
+          n: req.body.n,
+          m: req.body.m,
+          mines: req.body.mines
+        }
+      }).save().then(function(game) {
+        return res.sendResponse({
+          id: game._id
+        });
+      }).catch((err) => res.handleError(err));
+  }).all(function (req, res, next) {
+    return res.invalidVerb();
+  });
 
   /**
    * @api {GET} api/games/minesweeper/:id Get MineSweeper Game
@@ -24,6 +78,7 @@ module.exports = function (router) {
    * @apiSuccess {String} id the id of the game
    * @apiSuccess {String} host the id of the host for the game
    * @apiSuccess {String} status the status of the game
+   * @apiSuccess {Integer} type The type of this game (always 1)
    * @apiSuccess {Object} game The minesweeper game
    * @apiSuccessExample {json} Success Response
    *     HTTP/1.1 200 OK
@@ -35,13 +90,47 @@ module.exports = function (router) {
    *         "status": "N",
    *         "game": {},
    *         "createdAt": "21-12-2017 15:30",
+   *         "createdAt": "21-12-2017 15:30",
+   *         "type": 1,
    *       }
    *     }
    * @apiUse NotFoundError
   */
   router.route('/:id').get(middlewares.authenticate(), function(req, res, next) {
-    return Game.findById(req.params.id).exec().then(function(game) {
-      if (!game) {
+    if (!mongoose.validID(req.params.id)) {
+      return res.requestError(404, [{
+          code: error.NOT_FOUND,
+          fields: [ '#/id' ]
+        }]);
+    }
+    return Game.aggregate([{
+      $match: {
+        _id: mongoose.Types.ObjectId(req.params.id)
+      }
+    },{
+      $project: {
+        id: "$_id",
+        _id: 0,
+        host: 1,
+        username: 1,
+        createdAt: {
+          $dateToString: {
+            format: "%Y-%m-%d %H:%M:%S",
+            date: "$createdAt"
+          }
+        },
+        status: 1,
+        updatedAt: {
+          $dateToString: {
+            format: "%Y-%m-%d %H:%M:%S",
+            date: "$updatedAt"
+          }
+        },
+        type: 1
+      }
+    }]).exec().then(function(games) {
+      var game;
+      if (!games.length) {
         return Promise.reject({
           status: 404,
           data: [{
@@ -50,24 +139,17 @@ module.exports = function (router) {
           }]
         });
       }
-      if (game.game) {
-        game.game.gameState = game.game.gameState.map(function(cell) {
-          if (cell.status === 1) {
-            return cell;
-          } else {
-            return {
-              status: cell.status
-            };
-          }
-        });
-      }
-      return res.sendResponse({
-          id: game._id,
-          host: game.host,
-          status: game.status,
-          game: game.game || {},
-          createdAt: game.createdAt
-        });
+      game = games[0];
+      game.game.gameState = game.game.gameState.map(function(cell) {
+        if (cell.status === 1) {
+          return cell;
+        } else {
+          return {
+            status: cell.status
+          };
+        }
+      });
+      return res.sendResponse();
     }).catch((err) => res.handleError(err));
   })
 
@@ -77,10 +159,7 @@ module.exports = function (router) {
    * @apiName PostMineSweeper
    * @apiPermission user signed in
    * @apiDescription Get the configuration of the minesweeper game.
-   * @apiParam {String} id the id of the game.
-   * @apiParam {Integer} n the length on x-axis
-   * @apiParam {Integer} m the length on y-axis
-   * @apiParam {Integer} mines the number of mines in the game
+   * @apiParam {String} id the id of the game
    * @apiParam {Integer} x the the x coordinate of the move
    * @apiParam {Integer} y the y coordinate of the move
    * @apiParam {Integer} move 0 = reveal, 1 = toggle flag
@@ -122,7 +201,7 @@ module.exports = function (router) {
   .post(middlewares.authenticate(), function(req, res, next) {
     var err, newGame, moves, resStatus = 0;
 
-    validator.validate(req.body, minesweeperPostSchema);
+    validator.validate(req.body, minesweeperIDPostSchema);
     err = validator.getLastErrors();
 
     if (err) {
@@ -151,7 +230,7 @@ module.exports = function (router) {
         });
       }
       if (game.status == status.NEW) {
-        newGame = minesweeper.MineSweeper(req.body.n, req.body.m, req.body.mines);
+        newGame = minesweeper.MineSweeper(game.game.n, game.game.m, game.game.mines);
         game.status = status.ACTIVE;
       } else {
         newGame = game.game;
@@ -178,7 +257,5 @@ module.exports = function (router) {
       io.sockets.emit('new minesweeper move', result);
       return res.sendResponse(result);
     }).catch((err) => res.handleError(err));
-  }).all(function (req, res, next) {
-    return res.invalidVerb();
   });
 };

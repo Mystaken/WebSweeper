@@ -6,9 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  rows = 5;
-  columns = 10;
-  mines = 1;
+  rows = 10;
+  columns = 5;
+  mines = 5;
   active=true;
   test = (a) => console.log(a);
 }

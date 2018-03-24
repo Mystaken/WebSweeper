@@ -1,9 +1,9 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { RoutingModule } from './routing.module';
 import { GamesModule } from './games/games.module';
+import { LoginModule } from './login/login.module';
 
 import { APIService } from './services/api.service';
 import { AppComponent } from './app.component';
@@ -13,10 +13,10 @@ import { AppComponent } from './app.component';
     AppComponent
   ],
   imports: [
-    BrowserModule,
-    FormsModule,
     HttpModule,
-    GamesModule
+    RoutingModule,
+    GamesModule,
+    LoginModule
   ],
   providers: [],
   bootstrap: [AppComponent]

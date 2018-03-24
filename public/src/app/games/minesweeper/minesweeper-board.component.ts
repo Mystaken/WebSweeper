@@ -7,21 +7,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class MinesweeperBoardComponent {
 
-  /* number of columns in the game */
-  private _n: number;
-
-  /* number of rows in the game */
-  private _m: number;
-
-  /* number of mines in the game */
-  private _mines: number;
-
-  /* the board to be displayed  Array[row][column]*/
-  private _board: Array<Array<MineCell>> = [];
-
-  /* number of mines revealed */
-  private _revealed: number;
-
   @Input()
   set columns(columns: number) {
     this._m = columns;
@@ -43,15 +28,57 @@ export class MinesweeperBoardComponent {
   @Input()
   active: boolean;
 
-  @Output() flagged = new EventEmitter();
-  @Output() revealed = new EventEmitter();
+  @Output() onFlag = new EventEmitter();
+  @Output() onRevealed = new EventEmitter();
+
+  /* number of columns in the game */
+  private _n: number;
+
+  /* number of rows in the game */
+  private _m: number;
+
+  /* number of mines in the game */
+  private _mines: number;
+
+  /* the board to be displayed  Array[row][column]*/
+  private _board: Array<Array<MineCell>> = [];
+
+  /* number of mines revealed */
+  private _revealed: number;
+
+  /* true iff this game is lost */
+  private _lose: boolean;
+
+  constructor() {
+    this.resetBoard();
+  }
+
+  getBoard(): Array<Array<MineCell>> {
+    return this._board;
+  }
 
   resetBoard(): void {
-    this._board = new Array(this._m).fill(
-      new Array(this._n).fill({
+    this._board = new Array(this._n).fill(
+      new Array(this._m).fill({
           status: 0,
           display: ' '
         }));
+    this._revealed = 0;
+    this._lose = false;
+  }
+
+  private _reveal(row:number, column:number):void {
+    this.onRevealed.emit({
+      row:row,
+      column:column
+    });
+  }
+
+  private _flag(row:number, column:number):void {
+    this.onFlag.emit({
+      row:row,
+      column: column
+    });
   }
 
   disableContextMenu($event): void {
@@ -66,25 +93,16 @@ export class MinesweeperBoardComponent {
     this._board[row][column].display = display;
   }
 
-  _reveal(row:number, column:number):void {
-    this.revealed.emit({
-      row:row,
-      column:column
-    });
+  lose():void {
+    this._lose = true;
   }
 
-  _flag(row:number, column:number):void {
-    this.flagged.emit({
-      row:row,
-      column: column
-    });
+  hasLoss(): boolean {
+    return this._lose;
   }
 
-  constructor() {
-    this.resetBoard();
-  }
-
-  ngOnInit() {
+  hasWon(): boolean {
+    return (this._n * this._m - this._revealed) === this._mines;
   }
 }
 

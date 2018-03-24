@@ -1,0 +1,110 @@
+.container {
+  padding-top: 180px;
+}
+
+.btn {
+  background-color: rgb(238, 110, 115);
+  z-index: 0;
+}
+
+.btn-flat {
+  z-index: 0;
+  padding: 0 9px;
+  color: white;
+  margin: 1px 1px;
+}
+
+#top-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  /* Credit: https://pixabay.com/en/the-speaker-grill-texture-2184439/ */
+  background: url("/assets/top-nav-bg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 150px;
+  width: 850px;
+  padding-top: 50px;
+  box-shadow: 0 10px 35px 0 black !important;
+}
+
+@media only screen and (max-width: 849px) {
+  #top-nav {
+    width: 100%;
+  }
+}
+
+.btn, .btn-large {
+  background-color: rgb(238, 110, 115);
+}
+
+label.active {
+  color: rgb(238, 110, 115) !important;
+}
+
+input {
+  color: white;
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="number"]:focus {
+  border-bottom-color: rgb(238, 110, 115) !important;
+  box-shadow: 0 1px 0 0 rgb(246, 178, 181) !important;
+}
+
+chat {
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+#play-btn {
+  font-size: 2rem;
+}
+
+#create-game-container {
+  position: absolute;
+  width: 300px;
+  /* margin-left: calc((85% - 300px) / 2); */
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  padding: 50px;
+  box-shadow: 0 10px 35px 0 black;
+  background-color: rgb(47, 49, 54);
+}
+
+.top-nav-btn {
+  color: white;
+  font-size: 2rem;
+}
+
+.larger {
+  font-size: 3rem;
+}
+
+.counter {
+  position: absolute;
+  color: white;
+  padding-top: 6px;
+}
+
+.lobby-entry {
+  color: white;
+  font-size: 2rem;
+  padding: 12px 12px 0 12px;
+  border-bottom: 1px solid rgb(47, 49, 54);
+}
+
+.lobby-entry:hover {
+  background-color: rgb(54, 57, 62);
+}
+
+.create-time {
+  font-size: small;
+}
+
+.spectate-btn {
+  margin-top: 15px;
+  background-color: rgb(47, 49, 54);
+}

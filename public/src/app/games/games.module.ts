@@ -1,19 +1,34 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { MinesweeperBoardComponent } from './minesweeper/minesweeper-board.component';
+import { FormsModule } from '@angular/forms';
 
+import { MinesweeperBoardComponent } from './minesweeper/minesweeper-board.component';
+import { MinesweeperComponent } from './minesweeper/minesweeper.component';
+import { GameComponent } from './game.component';
+import { LobbyComponent } from './lobby.component';
+
+import { APIService } from '../services/api.service';
+import { MinesweeperService } from './minesweeper/minesweeper.service';
+import { GameService } from './game.service';
 
 @NgModule({
   declarations: [
-    MinesweeperBoardComponent
+    MinesweeperBoardComponent,
+    MinesweeperComponent,
+    GameComponent,
+    LobbyComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   exports: [
-    MinesweeperBoardComponent
+    GameComponent
   ],
   providers: [
+    MinesweeperService,
+    APIService,
+    GameService
   ]
 })
 

@@ -1,15 +1,15 @@
 
 <div id="minesweeper-container">
   <div
-    *ngFor="let row of _board; let i = index"
+    *ngFor="let row of getBoard(); let i = index"
     (contextmenu)="disableContextMenu($event)">
     <a
       *ngFor="let cell of row; let j = index"
       class="btn-flat"
       [class.wave-effect]="active && cell.status == 0"
       [class.revealed]="cell.status==1"
-      [class.failed]="false"
-      [class.winned]="false"
+      [class.failed]="hasLoss()"
+      [class.winned]="hasWon()"
       (click)="_reveal(i, j)"
       (contextmenu)="_flag(i, j)">
       <i

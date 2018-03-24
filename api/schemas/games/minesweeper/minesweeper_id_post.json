@@ -1,20 +1,21 @@
 {
-  "id": "rooms-get",
+  "id": "minesweeper-id-patch",
   "type": "object",
   "properties": {
-    "limit": {
+    "x": {
       "type": "integer",
       "minimum": 0
     },
-    "offset": {
+    "y": {
       "type": "integer",
       "minimum": 0
     },
-    "staleness": {
+    "move": {
       "type": "integer",
-      "minimum": 0
+      "minimum": 0,
+      "maximum": 1
     }
   },
   "additionalProperties": false,
-  "required": [ "limit" ]
+  "required": [ "x", "y", "move" ]
 }
