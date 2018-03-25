@@ -7,16 +7,37 @@ import { Component, OnInit, ElementRef, Input, ViewChild  } from '@angular/core'
   styleUrls: ['./shooter-game.component.css']
 })
 export class ShooterGameComponent {
-  @ViewChild('shooter') shooterRef;
-  /* The canvas element */
-  canvas;
-  ctx;
+  /* icon source used */
+  @Input() playerIconSrc: string;
+  @Input() projectileIconSrc: string;
+  @Input() enemyIconSrc: string;
 
   /* The height of the game */
   @Input() height: number;
 
   /* The height of the game */
   @Input() width: number;
+
+
+  @Input()
+  config = {
+    speed: {
+      player: 8,
+      enemy: 1,
+      shots: 4
+    },
+    respawn: 1,
+    invincible: 1000,
+    hpLoss: 10,
+    maxEnemy: 10,
+    enemyHP: 1,
+    playerHP: 100000
+  };
+
+  @ViewChild('shooter') shooterRef;
+  /* The canvas element */
+  canvas;
+  ctx;
 
   /* Keys for keypress */
   KEYS = {
@@ -34,20 +55,6 @@ export class ShooterGameComponent {
       LEFT: 65,
     };
 
-  config = {
-    speed: {
-      player: 8,
-      enemy: 1,
-      shots: 4
-    },
-    respawn: 1000,
-    invincible: 1000,
-    hpLoss: 10,
-    maxEnemy: 16,
-    enemyHP: 1,
-    playerHP: 100000
-  };
-
 
   /* The player character */
   player: Player;
@@ -58,14 +65,10 @@ export class ShooterGameComponent {
   /* The enemy objects */
   shots: Array<Projectile>;
 
-  /* icon source used */
-  @Input() playerIconSrc: string;
-  @Input() projectileIconSrc: string;
-  @Input() enemyIconSrc: string;
+  /* Player icons */
   playerIcon;
   enemyIcon;
   projectileIcon;
-
 
   /* Position of the canvas */
   x: number;
@@ -308,4 +311,18 @@ export interface Projectile {
   y?: number;
   x_change: number;
   y_change: number;
+}
+
+export interface ShooterConfig {
+  speed: {
+    player?: number,
+    enemy?: number,
+    shots?: number
+  },
+  respawn?: number,
+  invincible?: number,
+  hpLoss?: number,
+  maxEnemy?: number,
+  enemyHP?: number,
+  playerHP?: number
 }
