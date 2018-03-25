@@ -26,6 +26,8 @@ module.exports = function (router) {
    * @apiParam {Integer} n the length on x-axis
    * @apiParam {Integer} m the length on y-axis
    * @apiParam {Integer} mines the number of mines in the game
+   *
+   * @apiSuccess {Object} id the id of the game
    * @apiSuccessExample {json} Success Response
    *     HTTP/1.1 200 OK
    *     {
@@ -105,7 +107,8 @@ module.exports = function (router) {
     }
     return Game.aggregate([{
       $match: {
-        _id: mongoose.Types.ObjectId(req.params.id)
+        _id: mongoose.Types.ObjectId(req.params.id),
+        type: TYPE
       }
     },{
       $project: {

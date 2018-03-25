@@ -1,0 +1,13 @@
+{
+  "id": "minesweeper-post",
+  "type": "object",
+  "properties": {
+    "n": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10
+    }
+  },
+  "additionalProperties": false,
+  "required": [ "n", "m", "mines" ]
+}
