@@ -76,8 +76,9 @@ module.exports = function (router) {
    * @apiSuccess {String} id the id of the game
    * @apiSuccess {String} host the id of the host for the game
    * @apiSuccess {String} status the status of the game
-   * @apiSuccess {Integer} type The type of this game (always 1)
-   * @apiSuccess {Object} game The minesweeper game
+   * @apiSuccess {Integer} type The type of this game (always 2)
+   * @apiSuccess {Object} game The shooter game
+   * @apiSuccess {Object} game.difficulty The difficulty of the shooter game
    * @apiSuccessExample {json} Success Response
    *     HTTP/1.1 200 OK
    *     {
@@ -89,7 +90,7 @@ module.exports = function (router) {
    *         "game": {},
    *         "createdAt": "21-12-2017 15:30",
    *         "createdAt": "21-12-2017 15:30",
-   *         "type": 1,
+   *         "type": 2,
    *       }
    *     }
    * @apiUse NotFoundError
