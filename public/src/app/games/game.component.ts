@@ -24,6 +24,14 @@ export class GameComponent {
   chatOpen:boolean = false;
   missedMessages: number = 0;
 
+
+  /* for shooter game */
+  shooterConfig: ShooterConfig = {
+    height: 500,
+    width: 900,
+    difficulty: 1
+  }
+
   constructor(
     private _route:ActivatedRoute,
     private _gameAPI: GameService) {
@@ -52,4 +60,10 @@ export class GameComponent {
       this.missedMessages += 1;
     }
   }
+}
+
+interface ShooterConfig {
+  height?: number;
+  width?: number;
+  difficulty?: number;
 }

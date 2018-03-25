@@ -8,11 +8,15 @@
       <span class="counter">{{missedMessages}}</span>
     </a>
   </div>
-  <minesweeper
+  <!--<minesweeper
     *ngIf="type===GAME_TYPES.MINESWEEPER"
     [id]="id">
-  </minesweeper>
-  <!--<shooter></shooter>-->
+  </minesweeper>-->
+  <shooter
+    [height]="shooterConfig.height"
+    [width]="shooterConfig.width"
+    [difficulty]="shooterConfig.difficulty"
+    ></shooter>
 
   <chat
     #cht

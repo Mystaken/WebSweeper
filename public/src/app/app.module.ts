@@ -6,6 +6,7 @@ import { GamesModule } from './games/games.module';
 import { LoginModule } from './login/login.module';
 
 import { APIService } from './services/api.service';
+
 import { AppComponent } from './app.component';
 
 @NgModule({
