@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
+import { environment } from '../../environments/environment';
 
 import { MinesweeperBoardComponent } from './minesweeper/minesweeper-board.component';
 import { MinesweeperComponent } from './minesweeper/minesweeper.component';
@@ -11,6 +13,8 @@ import { APIService } from '../services/api.service';
 import { MinesweeperService } from './minesweeper/minesweeper.service';
 import { GameService } from './game.service';
 
+const config: SocketIoConfig = { url: environment.domain, options: {path: '/socket'} };
+
 @NgModule({
   declarations: [
     MinesweeperBoardComponent,
@@ -20,7 +24,8 @@ import { GameService } from './game.service';
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    SocketIoModule.forRoot(config)
   ],
   exports: [
     GameComponent

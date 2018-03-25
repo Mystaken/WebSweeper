@@ -1,9 +1,10 @@
 <minesweeper-board
+  #ms
   [rows]="rows"
   [columns]="columns"
   [mines]="mines"
   [active]="active"
-  (onReveal)="test($event)"
-  (onFlag)="test($event)">
+  (onRevealed)="onRevealed($event)"
+  (onFlagged)="onFlagged($event)">
     
   </minesweeper-board>

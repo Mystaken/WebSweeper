@@ -14,7 +14,7 @@ export class GameService {
     });
   }
 
-  getGame(id:String): Observable<any> {
+  getGame(id:string): Observable<any> {
     return this._api.get(`games/${id}/info`, {});
   }
 }

@@ -6,7 +6,7 @@ import 'rxjs/Rx';
 
 @Injectable()
 export class APIService {
-  private _apiUrl: string = environment.apiURL;
+  private _apiUrl: string = `${environment.domain}/api/`;
 
   constructor(private _http: Http) { }
 

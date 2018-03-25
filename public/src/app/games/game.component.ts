@@ -10,16 +10,20 @@ import { GameService } from './game.service';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent {
-  
-  private _id: String;
+  GAME_TYPES = constants.GAME_TYPES;
+  id: string;
   type: number;
 
   constructor(
     private _route:ActivatedRoute,
     private _gameAPI: GameService) {
-    this._id = this._route.snapshot.params['id'];
-    this._gameAPI.getGame(this._id).subscribe((res) => {
+    this.id = this._route.snapshot.params['id'];
+  }
+  
+  ngOnInit() {
+    this._gameAPI.getGame(this.id).subscribe((res) => {
       this.type=res.type;
+      console.log("Minesweeper?!?")
     });
   }
 }

@@ -126,7 +126,8 @@ module.exports = function (router) {
             date: "$updatedAt"
           }
         },
-        type: 1
+        type: 1,
+        game:1
       }
     }]).exec().then(function(games) {
       var game;
@@ -140,16 +141,18 @@ module.exports = function (router) {
         });
       }
       game = games[0];
-      game.game.gameState = game.game.gameState.map(function(cell) {
-        if (cell.status === 1) {
-          return cell;
-        } else {
-          return {
-            status: cell.status
-          };
-        }
-      });
-      return res.sendResponse();
+      if (game.game.gameState) {
+        game.game.gameState = game.game.gameState.map(function(cell) {
+          if (cell.status === 1) {
+            return cell;
+          } else {
+            return {
+              status: cell.status
+            };
+          }
+        });
+      }
+      return res.sendResponse(game);
     }).catch((err) => res.handleError(err));
   })
 
