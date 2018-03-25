@@ -8,18 +8,19 @@
       <span class="counter">{{missedMessages}}</span>
     </a>
   </div>
-
+  <!--
   <minesweeper
     *ngIf="type===GAME_TYPES.MINESWEEPER"
     [id]="id">
   </minesweeper>
-
+  -->
+  <shooter></shooter>
 
   <chat
     #cht
     [id]="id"
-    (onClose)="closeChat(e)"
-    (onNewMessage)="addMissedMessage(e)"
+    (onClose)="closeChat()"
+    (onNewMessage)="addMissedMessage($event)"
     [hidden]="!chatOpen">
   </chat>
 </div>

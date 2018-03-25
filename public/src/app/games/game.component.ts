@@ -47,7 +47,7 @@ export class GameComponent {
     this.missedMessages = 0;
   }
 
-  addMissedMessage() {
+  addMissedMessage(msg) {
     if (!this.chatOpen) {
       this.missedMessages += 1;
     }
