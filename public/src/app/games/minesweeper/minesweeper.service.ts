@@ -10,7 +10,7 @@ export class MinesweeperService {
     private _socket: Socket) {
   }
 
-  flag(id:String, row:number, column:number): Observable<any> {
+  flag(id:string, row:number, column:number): Observable<any> {
     return this._api.post(`games/minesweeper/${id}`, {
       x: column,
       y: row,
@@ -18,7 +18,7 @@ export class MinesweeperService {
     });
   }
 
-  reveal(id:String, row:number, column:number): Observable<any> {
+  reveal(id:string, row:number, column:number): Observable<any> {
     return this._api.post(`games/minesweeper/${id}`, {
       x: column,
       y: row,
@@ -30,11 +30,7 @@ export class MinesweeperService {
     return this._api.get(`games/minesweeper/${id}`, {});
   }
 
-  joinRoom(room) {
-    this._socket.emit('join chat room', room);
-  }
-
-  newMove(callback: Function) {
+  newMove(callback: (res: any) => any) {
     return this._socket.on('new minesweeper move', callback);
   }
 }

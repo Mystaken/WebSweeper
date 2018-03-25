@@ -257,7 +257,7 @@ module.exports = function (router) {
         moves: moves,
         status: resStatus
       };
-      io.sockets.emit('new minesweeper move', result);
+      io.sockets.to(g._id).emit('new minesweeper move', result);
       return res.sendResponse(result);
     }).catch((err) => res.handleError(err));
   });

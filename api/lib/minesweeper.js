@@ -26,7 +26,7 @@
  * - n {Integer}: the position on x-axis
  * - m {Integer}: the position on y-axis
  * - number {Integer} the number to be displayed (for # of mines around this cell; -1 is a mine)
- *                    Only for type =0
+ *                    Only for type = 1
  *
  * idx_in_array = position_x + position_y * n
  * position_x = Math.floor(idx_in_array / n)

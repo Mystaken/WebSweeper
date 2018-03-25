@@ -1,0 +1,33 @@
+<div id="chat-container">
+  <div id="close-btn">
+    <a class="btn-flat waves-effect">
+      <i class="material-icons" (click)="closeMessage()">close</i>
+    </a>
+  </div>
+  <div id="chat-stream">
+    <div class="msg" *ngFor="let msg of messages">
+      {{msg}}
+    </div>
+  </div>
+  <div id="msg-box">
+    <form
+      #chatForm="ngForm"
+      (ngSubmit)="sendMessage()">
+      <div id="msg-input">
+        <input
+          type="text"
+          name="message"
+          required
+          [(ngModel)]="newMessage">
+      </div>
+      <button
+        id="send-btn"
+        class="btn waves-effect"
+        type="submit"
+        name="action"
+        [disabled]="!chatForm.form.valid">
+          <i class="material-icons">send</i>
+      </button>
+    </form>
+  </div>
+</div>

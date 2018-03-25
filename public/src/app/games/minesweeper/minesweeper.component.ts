@@ -36,7 +36,18 @@ export class MinesweeperComponent {
       if (res.game.gameState) {
         this.setup(res.game.gameState);
       }
-    })
+      this._minesweeperAPI.newMove((res) => {
+        res.moves.forEach((move) => {
+          if (move.type === 0) {
+            this.ms.unflag(move.m, move.n);
+          } else if (move.type === 1) {
+            this.ms.reveal(move.m, move.n, move.number);
+          } else if (move.type === 2) {
+            this.ms.flag(move.m, move.n);
+          }
+        });
+      });
+    });
   }
 
   setup(gameState) {
@@ -67,7 +78,11 @@ export class MinesweeperComponent {
       .flag(this.id, cell.row, cell.column)
       .subscribe((res) => {
         if (res.moves.length) {
-          this.ms.flag(cell.row, cell.column);
+          if (res.moves[0].type === 0) {
+            this.ms.unflag(cell.row, cell.column);
+          } else {
+            this.ms.flag(cell.row, cell.column);
+          }
         }
       });
   }

@@ -1,6 +1,25 @@
 
 <div class="container">
-<minesweeper 
-  *ngIf="type===GAME_TYPES.MINESWEEPER"
-  [id]="id"></minesweeper>
+  <div class="col s2">
+    <a
+      class="waves-effect waves-light btn-flat"
+      (click)="toggleChat()">
+      <i class="material-icons top-nav-btn">message</i>
+      <span class="counter">{{missedMessages}}</span>
+    </a>
+  </div>
+
+  <minesweeper
+    *ngIf="type===GAME_TYPES.MINESWEEPER"
+    [id]="id">
+  </minesweeper>
+
+
+  <chat
+    #cht
+    [id]="id"
+    (onClose)="closeChat(e)"
+    (onNewMessage)="addMissedMessage(e)"
+    [hidden]="!chatOpen">
+  </chat>
 </div>

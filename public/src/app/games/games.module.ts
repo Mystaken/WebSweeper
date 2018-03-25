@@ -7,10 +7,12 @@ import { environment } from '../../environments/environment';
 import { MinesweeperBoardComponent } from './minesweeper/minesweeper-board.component';
 import { MinesweeperComponent } from './minesweeper/minesweeper.component';
 import { GameComponent } from './game.component';
+import { ChatComponent } from './chat/chat.component';
 import { LobbyComponent } from './lobby.component';
 
 import { APIService } from '../services/api.service';
 import { MinesweeperService } from './minesweeper/minesweeper.service';
+import { ChatService } from './chat/chat.service';
 import { GameService } from './game.service';
 
 const config: SocketIoConfig = { url: environment.domain, options: {path: '/socket'} };
@@ -20,7 +22,8 @@ const config: SocketIoConfig = { url: environment.domain, options: {path: '/sock
     MinesweeperBoardComponent,
     MinesweeperComponent,
     GameComponent,
-    LobbyComponent
+    LobbyComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,8 @@ const config: SocketIoConfig = { url: environment.domain, options: {path: '/sock
   providers: [
     MinesweeperService,
     APIService,
-    GameService
+    GameService,
+    ChatService
   ]
 })
 
