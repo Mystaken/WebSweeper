@@ -32,7 +32,7 @@ export class LobbyComponent {
   createMinesweeper() {
     this._gameAPI.createMinesweeper(
       this.minesweeper.rows,
-      this.minesweeper.columns, 
+      this.minesweeper.columns,
       this.minesweeper.mines).subscribe(res => {
         this._router.navigate([`/games/${res.id}`]);
       });
