@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoginService } from './login.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class LoginComponent {
   signUpEmail:String = '';
   isSignedUp: boolean = false;
 
-  constructor(private _loginAPI: LoginService) {
+  constructor(private _loginAPI: LoginService, private _router: Router) {
 
   }
 
@@ -28,6 +29,7 @@ export class LoginComponent {
   signIn():void {
     this._loginAPI.signIn(this.user, this.pass)
       .subscribe((res) => {
+        this._router.navigate(['/lobby']);
       });
   }
 

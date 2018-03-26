@@ -7,14 +7,18 @@ import { GameComponent } from './games/game.component';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: '/login',
+    pathMatch: 'full',
+  }, {
     path: 'login',
     pathMatch: 'full',
     component: LoginComponent,
-  },{
+  }, {
     path: 'games/:id',
     pathMatch: 'full',
     component: GameComponent,
-  },{
+  }, {
     path: 'lobby',
     pathMatch: 'full',
     component: LobbyComponent,
