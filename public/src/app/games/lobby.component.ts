@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { GameService } from './game.service';
 import { Router } from '@angular/router';
+import { APIService } from '../services/api.service';
 
 @Component({
   selector: 'lobby',
@@ -9,11 +10,15 @@ import { Router } from '@angular/router';
 })
 export class LobbyComponent {
   creatingGame: boolean = false;
+  rooms = [];
 
   minesweeper: MinesweeperGame;
 
-  constructor(private _gameAPI: GameService, private _router: Router) {
+  constructor(private _gameAPI: GameService,
+    private _api: APIService,
+    private _router: Router) {
     this.resetGameMenu();
+    this.getRooms();
   }
 
   createGame():void {
@@ -36,6 +41,13 @@ export class LobbyComponent {
       this.minesweeper.mines).subscribe(res => {
         this._router.navigate([`/games/${res.id}`]);
       });
+  }
+
+  getRooms() {
+    this._api.get('games/?limit=10&staleness=300', {}).subscribe((res) => {
+      this.rooms = res;
+      this.rooms.reverse();
+    });
   }
 }
 

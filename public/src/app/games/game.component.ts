@@ -33,7 +33,7 @@ export class GameComponent {
   }
 
   constructor(
-    private _route:ActivatedRoute,
+    private _route: ActivatedRoute,
     private _gameAPI: GameService) {
     this.id = this._route.snapshot.params['id'];
   }

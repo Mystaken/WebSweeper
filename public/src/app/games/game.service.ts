@@ -10,7 +10,7 @@ export class GameService {
     private _socket: Socket) {
   }
 
-  createMinesweeper(rows:number, columns:number, mines:number): Observable<any> {
+  createMinesweeper(rows: number, columns: number, mines: number): Observable<any> {
     return this._api.post('games/minesweeper/', {
       n: rows,
       m: columns,
@@ -18,7 +18,7 @@ export class GameService {
     });
   }
 
-  getGame(id:string): Observable<any> {
+  getGame(id: string): Observable<any> {
     return this._api.get(`games/${id}/info`, {});
   }
 
