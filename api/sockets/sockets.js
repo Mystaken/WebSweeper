@@ -1,6 +1,7 @@
 // jshint esversion: 6
 'use strict';
 const chat = require('./chat.js'),
+  webrtc   = require('./webrtc'),
   io = require('socket.io')({
     path: '/socket'
   });
@@ -23,12 +24,20 @@ module.exports = {
     });*/
 
     io.on('connection', function(socket) {
-      chat(io, socket);
       console.log('user connected');
+      socket.on('join room', function(room) {
+        socket.join(room);
+      });
 
       socket.on('disconnect', function(){
         console.log('user disconnected');
       });
+
+      socket.on('leave room', function(room) {
+        socket.leave(room);
+      });
+      chat(io, socket);
+      webrtc(io, socket);
     });
     this.io = io;
   }
