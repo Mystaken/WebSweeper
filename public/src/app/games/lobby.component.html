@@ -12,13 +12,31 @@
       class="waves-effect waves-light btn-flat"
       *ngIf="creatingGame"
       (click)="exitCreateGame()">
-      <i class="material-icons top-nav-btn larger">keyboard_arrow_up</i>
+      <i class="material-icons top-nav-btn larger">keyboard_arrow_left</i>
     </a>
   </div>
 </div>
 
 <div class="container">
-  <div id="create-game-container">
+  <div id="lobby-container" *ngIf="isLobby">
+    <div class="lobby-entry" *ngFor="let entry of rooms">
+      <div class="row">
+        <div class="col s1"></div>
+        <div class="col s9">
+          {{entry.username}}
+          <br>
+          <div class="create-time">Last active: {{entry.updatedAt}}</div>
+        </div>
+        <div class="col s2">
+          <a id="{{entry.id}}" class="waves-effect waves-light btn-flat spectate-btn" (click)="spectateGame($event)">
+            <i class="material-icons">remove_red_eye</i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="create-game-container" [hidden]="!creatingGame">
     <form #createGameForm="ngForm" (ngSubmit)="createMinesweeper()">
       <div class="row">
         <div class="input-field col s12">
