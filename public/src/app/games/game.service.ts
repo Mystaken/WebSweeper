@@ -22,7 +22,15 @@ export class GameService {
     return this._api.get(`games/${id}/info`, {});
   }
 
-  joinRoom(room: string) {
+  joinRoom(room: string): void {
     this._socket.emit('join room', room);
+  }
+
+  getAllGames(limit:number, staleness:number, offset?: number): Observable<any> {
+    return this._api.get(`games`, {
+      limit: limit,
+      staleness: staleness,
+      offset: offset
+    });
   }
 }

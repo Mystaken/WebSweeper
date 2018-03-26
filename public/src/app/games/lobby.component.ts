@@ -15,7 +15,6 @@ export class LobbyComponent {
   minesweeper: MinesweeperGame;
 
   constructor(private _gameAPI: GameService,
-    private _api: APIService,
     private _router: Router) {
     this.resetGameMenu();
     this.getRooms();
@@ -46,7 +45,7 @@ export class LobbyComponent {
   }
 
   getRooms() {
-    this._api.get('games/?limit=10&staleness=300', {}).subscribe((res) => {
+    this._gameAPI.getAllGames(10, 300).subscribe((res) => {
       this.rooms = res;
       this.rooms.reverse();
     },

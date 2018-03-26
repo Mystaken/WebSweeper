@@ -73,9 +73,11 @@ module.exports = function (router) {
     }
 
     matchQuery = {
+      /* can now include new games.
       status: {
         $nin: [ status.NEW ]
       }
+      */
     };
 
     if (req.query.staleness) {
