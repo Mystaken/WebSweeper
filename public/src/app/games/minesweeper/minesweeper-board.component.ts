@@ -119,8 +119,10 @@ export class MinesweeperBoardComponent {
 
   reveal(row:number, column:number, display:string): void {
     let cell = this._board[row][column];
+    cell.status = 1;
     cell.display = this.icons[display];
     this._revealed += 1;
+    console.log('n:', this._n, 'm:', this._m, 'revealed:', this._revealed, 'mines', this._mines);
   }
 
   lose():void {

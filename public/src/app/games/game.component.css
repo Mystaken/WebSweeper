@@ -23,7 +23,19 @@ chat {
   top: 0;
 }
 
-shooter {
+minesweeper, shooter {
   position: absolute;
   top: 100px;
+  left: 0;
+  right: 0;
+}
+
+.btn-left {
+  float: left;
+  margin-left: 10px;
+}
+
+.btn-right {
+  float: right;
+  margin-right: 10px;
 }

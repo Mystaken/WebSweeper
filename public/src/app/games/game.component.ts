@@ -1,6 +1,6 @@
 import { constants } from './../../environments/constants';
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GameService } from './game.service';
 
 
@@ -33,6 +33,7 @@ export class GameComponent {
   }
 
   constructor(
+    private _router: Router,
     private _route: ActivatedRoute,
     private _gameAPI: GameService) {
     this.id = this._route.snapshot.params['id'];
@@ -59,6 +60,10 @@ export class GameComponent {
     if (!this.chatOpen) {
       this.missedMessages += 1;
     }
+  }
+
+  backToLobby() {
+    this._router.navigate(['/lobby']);
   }
 }
 

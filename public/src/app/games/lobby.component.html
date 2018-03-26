@@ -1,24 +1,21 @@
-<div id="top-nav" class="row">
-  <div class="col s2"></div>
-  <div class="col s8 center">
-    <a
-      id="play-btn"
-      class="waves-effect waves-light btn-large"
-      *ngIf="!creatingGame"
-      (click)="createGame()">
-      PLAY!
-    </a>
-    <a
-      class="waves-effect waves-light btn-flat"
-      *ngIf="creatingGame"
-      (click)="exitCreateGame()">
-      <i class="material-icons top-nav-btn larger">keyboard_arrow_left</i>
-    </a>
-  </div>
+<div id="top-nav" class="row center">
+  <a
+    id="play-btn"
+    class="waves-effect waves-light btn-large"
+    *ngIf="!creatingGame"
+    (click)="createGame()">
+    PLAY!
+  </a>
+  <a
+    class="waves-effect waves-light btn-flat btn-left"
+    *ngIf="creatingGame"
+    (click)="exitCreateGame()">
+    <i class="material-icons top-nav-btn larger">arrow_back</i>
+  </a>
 </div>
 
 <div class="container">
-  <div id="lobby-container" *ngIf="isLobby">
+  <div id="lobby-container" [hidden]="creatingGame">
     <div class="lobby-entry" *ngFor="let entry of rooms">
       <div class="row">
         <div class="col s1"></div>
