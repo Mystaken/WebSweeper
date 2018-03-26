@@ -57,7 +57,7 @@ export class LobbyComponent {
 }
 
 interface MinesweeperGame {
-  rows:number;
-  columns:number;
+  rows?:number;
+  columns?:number;
   mines?:number;
 }
