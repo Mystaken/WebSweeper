@@ -37,6 +37,7 @@ export class MinesweeperComponent {
         this.setup(res.game.gameState);
       }
       this._minesweeperAPI.newMove((res) => {
+        if (res.status == 1) this.ms.lose();
         res.moves.forEach((move) => {
           if (move.type === 0) {
             this.ms.unflag(move.m, move.n);
