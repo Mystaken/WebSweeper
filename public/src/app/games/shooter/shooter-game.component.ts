@@ -24,7 +24,7 @@ export class ShooterGameComponent {
     speed: {
       player: 8,
       enemy: 1,
-      shots: 4
+      shots: 10
     },
     respawn: 1,
     invincible: 1000,
@@ -78,7 +78,6 @@ export class ShooterGameComponent {
 
   pause: Boolean = false;
 
-  @Input() isSpectating: boolean;
   constructor(private _el: ElementRef) {
     this.playerIcon = new Image();
     this.enemyIcon = new Image();
@@ -191,6 +190,11 @@ export class ShooterGameComponent {
     }
     return false;
   }
+
+  getCanvas(): any {
+    return this.canvas || this.shooterRef.nativeElement;
+    }
+
   draw() {
     this.movePlayer();
     this.fireShots();

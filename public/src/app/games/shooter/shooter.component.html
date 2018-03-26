@@ -1,11 +1,17 @@
 <div id="wrapper">
+  <video
+    #stream
+    *ngIf="!isHost"
+    autoplay>
+  </video>
   <shooter-game
+    #shooter
+    *ngIf="isHost"
     [height]="height"
     [width]="width"
     [projectileIconSrc]="'assets/shooter/shot.png'"
     [enemyIconSrc]="'assets/shooter/enemy.png'"
     [playerIconSrc]="'assets/shooter/player.png'"
-    [isSpectating]="spectating"
     >
   </shooter-game>
 </div>
