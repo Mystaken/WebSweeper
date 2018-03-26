@@ -14,6 +14,8 @@ export class LobbyComponent {
 
   minesweeper: MinesweeperGame;
 
+  shooter: ShooterGame;
+
   constructor(private _gameAPI: GameService,
     private _router: Router) {
     this.resetGameMenu();
@@ -30,6 +32,7 @@ export class LobbyComponent {
 
   resetGameMenu():void {
     this.minesweeper = { rows: null, columns: null, mines: null };
+    this.shooter = { difficulty: null };
   }
 
   createMinesweeper() {
@@ -37,6 +40,16 @@ export class LobbyComponent {
       this.minesweeper.rows,
       this.minesweeper.columns,
       this.minesweeper.mines).subscribe(res => {
+        this._router.navigate([`/games/${res.id}`]);
+      },
+      (err) => {
+        Materialize.toast(err.data[0].code, 4000);
+      });
+  }
+
+  createShooter() {
+    this._gameAPI.createShooter(this.shooter.difficulty)
+      .subscribe(res => {
         this._router.navigate([`/games/${res.id}`]);
       },
       (err) => {
@@ -59,4 +72,8 @@ interface MinesweeperGame {
   rows?:number;
   columns?:number;
   mines?:number;
+}
+
+interface ShooterGame {
+  difficulty?:number;
 }

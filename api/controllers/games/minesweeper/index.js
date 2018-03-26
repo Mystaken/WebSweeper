@@ -216,7 +216,7 @@ module.exports = function (router) {
 
     return Game.findById(req.params.id).exec().then(function(game) {
       // game does not exist
-      if (!game) {
+      if (!game || game.type !== TYPE) {
         return Promise.reject({
           status: 404,
           data: [{

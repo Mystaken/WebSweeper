@@ -14,6 +14,7 @@ import { ShooterGameComponent } from './shooter/shooter-game.component';
 
 import { PeerService } from '../services/peer.service';
 import { APIService } from '../services/api.service';
+import { UserService } from '../services/user.service';
 import { MinesweeperService } from './minesweeper/minesweeper.service';
 import { ShooterService } from './shooter/shooter.service';
 import { ChatService } from './chat/chat.service';
@@ -40,12 +41,13 @@ const config: SocketIoConfig = { url: environment.domain, options: {path: '/sock
     GameComponent
   ],
   providers: [
+    APIService,
+    PeerService,
+    UserService,
     MinesweeperService,
     ShooterService,
-    APIService,
     GameService,
-    ChatService,
-    PeerService
+    ChatService
   ]
 })
 

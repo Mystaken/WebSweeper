@@ -1,4 +1,5 @@
 import { Component, OnInit, ElementRef, Input, ViewChild  } from '@angular/core';
+import { ShooterConfig } from './shooter-difficulty';
 
 
 @Component({
@@ -315,18 +316,4 @@ export interface Projectile {
   y?: number;
   x_change: number;
   y_change: number;
-}
-
-export interface ShooterConfig {
-  speed: {
-    player?: number,
-    enemy?: number,
-    shots?: number
-  },
-  respawn?: number,
-  invincible?: number,
-  hpLoss?: number,
-  maxEnemy?: number,
-  enemyHP?: number,
-  playerHP?: number
 }

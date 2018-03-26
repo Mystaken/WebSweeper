@@ -18,6 +18,12 @@ export class GameService {
     });
   }
 
+  createShooter(difficulty: number): Observable<any> {
+    return this._api.post('games/shooter/', {
+      difficulty: difficulty
+    });
+  }
+
   getGame(id: string): Observable<any> {
     return this._api.get(`games/${id}/info`, {});
   }

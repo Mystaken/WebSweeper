@@ -21,7 +21,7 @@ module.exports = {
         var path;
         if (err.code === 'OBJECT_ADDITIONAL_PROPERTIES') {
           path = err.params[0].map(function(param){
-            return param;
+            return '#/' + param;
           });
         } else if (err.code === 'OBJECT_MISSING_REQUIRED_PROPERTY') {
           path = [ '#/' + err.params[0] ];

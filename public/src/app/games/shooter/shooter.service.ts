@@ -12,6 +12,14 @@ export class ShooterService {
     private _peer: PeerService) {
   }
 
+  getGame(id:string): Observable<any> {
+    return this._api.get(`games/shooter/${id}`, {});
+  }
+
+  setHost(id: string): Observable<any> {
+    return this._api.put(`games/shooter/${id}/host`, {});
+  }
+
   sendPeers(): any {
     this._peer.getID((id) => this._socket.emit('create peer', id));
   }

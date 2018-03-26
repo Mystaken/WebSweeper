@@ -1,7 +1,11 @@
 import { Component, OnInit, ElementRef, Input, ViewChild  } from '@angular/core';
 import { ShooterService } from './shooter.service';
 import { ActivatedRoute } from '@angular/router';
+import { difficulty, ShooterConfig } from './shooter-difficulty';
 import { ShooterGameComponent } from './shooter-game.component';
+import { UserService } from '../../services/user.service';
+import { Observable } from 'rxjs/Rx';
+
 @Component({
   selector: 'shooter',
   templateUrl: './shooter.component.html',
@@ -10,28 +14,54 @@ import { ShooterGameComponent } from './shooter-game.component';
 export class ShooterComponent {
   @Input() height: number = 500;
   @Input() width: number = 900;
-  @Input() difficulty: number = 0;
   @ViewChild('shooter') shooterRef: ShooterGameComponent;
   @ViewChild('stream') streamRef;
 
-  isHost: boolean = true;
+  config: ShooterConfig = difficulty[3];
+  id: string;
+  isHost: boolean;
+
   constructor(
     private _route:ActivatedRoute,
-    private _shooterAPI: ShooterService) {
-    if (this._route.snapshot.params['id'] != '5ab7fd3bc7b6f11c955e98db') {
-      this.isHost = false;
-    }
+    private _shooterAPI: ShooterService,
+    private _user: UserService) {
+    this.id = this._route.snapshot.params['id'];
   }
   ngOnInit() {
-    if (this.isHost) {
-      this._shooterAPI.onNewPeer((id) => {
-        this._shooterAPI.streamCanvas(id, this.shooterRef.getCanvas().captureStream());
+    Observable.forkJoin([
+      this._shooterAPI.getGame(this.id),
+      this._user.getProfile()
+      ]).subscribe(results => {
+        let game = results[0];
+        let user = results[1];
+        if (!game) { return; }
+        if (game.host === user.id) {
+          return this._shooterAPI.setHost(this.id)
+            .subscribe((success) => {
+              console.log(success);
+              if (!success) {
+                this.setHost();
+              } else {
+                this.setSpectator();
+              }
+            });
+        }
+        this.setSpectator();
       });
-    } else {
-      this._shooterAPI.onAnswer((stream) => {
-        this.streamRef.nativeElement.srcObject = stream;
-      });
-      this._shooterAPI.sendPeers();
-    }
+  }
+
+  private setHost():void {
+    this.isHost = true;
+    this._shooterAPI.onNewPeer((id) => {
+      this._shooterAPI.streamCanvas(id, this.shooterRef.getCanvas().captureStream());
+    });
+  }
+
+  private setSpectator():void {
+    this.isHost = false;
+    this._shooterAPI.onAnswer((stream) => {
+      this.streamRef.nativeElement.srcObject = stream;
+    });
+    this._shooterAPI.sendPeers();
   }
  }

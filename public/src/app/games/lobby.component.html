@@ -25,7 +25,10 @@
           <div class="create-time">Last active: {{entry.updatedAt}}</div>
         </div>
         <div class="col s2">
-          <a href="/games/{{entry.id}}" class="waves-effect waves-light btn-flat spectate-btn" (click)="spectateGame($event)">
+          <a
+            href="/games/{{entry.id}}"
+            class="waves-effect waves-light btn-flat spectate-btn"
+            (click)="spectateGame($event)">
             <i class="material-icons">remove_red_eye</i>
           </a>
         </div>
@@ -42,27 +45,70 @@
     </div>
     <div class="card-content">
       <div id="minesweeper-tab">
-        <form #createGameForm="ngForm" (ngSubmit)="createMinesweeper()">
+        <form #minesweeperForm="ngForm" (ngSubmit)="createMinesweeper()">
           <div class="row">
             <div class="input-field col s12">
-              <input id="row" type="number" name="row" required [(ngModel)]="minesweeper.rows">
+              <input
+                id="row"
+                type="number"
+                name="row"
+                required
+                [(ngModel)]="minesweeper.rows">
               <label for="row">Number of rows</label>
             </div>
             <div class="input-field col s12">
-              <input id="col" type="number" name="col" required [(ngModel)]="minesweeper.columns">
+              <input
+                id="col"
+                type="number"
+                name="col"
+                [(ngModel)]="minesweeper.columns"
+                required>
               <label for="col">Number of columns</label>
             </div>
             <div class="input-field col s12">
-              <input id="mines" type="number" name="mines" required [(ngModel)]="minesweeper.mines">
+              <input
+                id="mines"
+                type="number"
+                name="mines"
+                [(ngModel)]="minesweeper.mines"
+                required>
               <label for="mines">Number of mines</label>
             </div>
           </div>
           <div class="row center">
-            <button type="submit" class="waves-effect waves-light btn" [disabled]="!createGameForm.form.valid">Create game</button>
+            <button
+              type="submit"
+              class="waves-effect waves-light btn"
+              [disabled]="!minesweeperForm.form.valid">
+              Create game</button>
           </div>
         </form>
       </div>
       <div id="shooter-tab">
+        <form #shooterForm="ngForm" (ngSubmit)="createShooter()">
+          <div class="row">
+            <div class="input-field col s12">
+              <input
+                id="difficulty"
+                type="number"
+                min="0"
+                max="10"
+                name="difficulty"
+                [(ngModel)]="shooter.difficulty"
+                required>
+              <label for="row">Difficulty</label>
+            </div>
+             Difficulty: (0 = CASUAL LUL, 10 = Normal)
+          </div>
+          <div class="row center">
+            <button
+              type="submit"
+              class="waves-effect waves-light btn"
+              [disabled]="!shooterForm.form.valid">
+              Create game
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

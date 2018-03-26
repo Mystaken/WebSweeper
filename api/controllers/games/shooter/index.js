@@ -7,6 +7,7 @@ const Game    = require('../../../models/gameModel'),
   error       = require('../../../config/error.json'),
   status      = require('../../../config/status.json').games,
 
+  mongoose    = require('mongoose'),
 
   shooterPostSchema = require('../../../schemas/games/shooter/shooter_post.json'),
   TYPE = 2;
@@ -52,7 +53,7 @@ module.exports = function (router) {
         type: TYPE,
         status: status.NEW,
         game: {
-          difficulty: req.body.n
+          difficulty: req.body.difficulty
         }
       }).save().then(function(game) {
         return res.sendResponse({
@@ -63,6 +64,64 @@ module.exports = function (router) {
     return res.invalidVerb();
   });
 
+
+  /**
+   * @api {POST} api/games/shooter/:id/host Set Host
+   * @apiGroup Shooter
+   * @apiName GetShooter
+   * @apiPermission user signed in
+   * @apiDescription Sets the host for this game
+   * @apiParam {String} id the id of the game.
+   *
+   * @apiSuccess {Boolean} success true iff successfully set.
+   * @apiSuccessExample {json} Success Response
+   *     HTTP/1.1 200 OK
+   *     {
+   *       status: 200,
+   *       data: true
+   *     }
+   * @apiUse NotFoundError
+  */
+  router.route('/:id/host').put(middlewares.authenticate(), function(req, res, next) {
+    if (!mongoose.validID(req.params.id)) {
+      return res.requestError(404, [{
+          code: error.NOT_FOUND,
+          fields: [ '#/id' ]
+        }]);
+    }
+    return Game.findById(req.params.id).exec().then(function(game) {
+      if (!game || game.type !== TYPE) {
+        return Promise.reject({
+          status: 404,
+          data: [{
+            code: error.NOT_FOUND,
+            fields: [ '#/id' ]
+          }]
+        });
+      }
+
+      // can only modify if host
+      if (!game.host.equals(req.user.id)) {
+        return Promise.reject({
+          status: 403,
+          data: [{
+            code: error.FORBIDDEN,
+            fields: [ '#/id' ]
+          }]
+        });
+      }
+      if (game.game.hasHost) {
+        return res.sendResponse(true);
+      }
+      game.game.hasHost = true;
+      game.markModified('game');
+      return game.save().then(function() {
+        return res.sendResponse(false);
+      }).catch((err) => res.handleError(err));
+    }).catch((err) => res.handleError(err));
+  }).all(function (req, res, next) {
+    return res.invalidVerb();
+  });
 
   /**
    * @api {GET} api/games/shooter/:id Get Shooter Game

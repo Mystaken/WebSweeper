@@ -222,12 +222,10 @@ module.exports = function (router) {
       });
     }).catch((err) => res.handleError(err));
 
-  }).all(function (req, res, next) {
-    return res.invalidVerb();
-  });
+  })
 
   /**
-   * @api {GET} api/users/:id Get User Info
+   * @api {GET} api/users Get User Info
    * @apiName GetUser
    * @apiGroup User
    * @apiPermission none
@@ -257,9 +255,11 @@ module.exports = function (router) {
    * @apiUse NotFoundError
    * @apiUse ExtraFieldsError
   */
-  router.route('/:id').get(middlewares.authenticate(), function(req, res, next) {
-    return res.sendResponse(req.session.user);
-  })
+  .get(middlewares.authenticate(), function(req, res, next) {
+    return res.sendResponse(req.user);
+  }).all(function (req, res, next) {
+    return res.invalidVerb();
+  });
 
   /**
    * @api {PATCH} api/users/:id Update User Info
@@ -296,7 +296,7 @@ module.exports = function (router) {
    * @apiUse NotFoundError
    * @apiUse ExtraFieldsError
   */
-  .patch(function(req, res, next) {
+  router.route('/:id').patch(function(req, res, next) {
     return res.requestError(501, { code: error.NOT_IMPLEMENTED });
   }).all(function (req, res, next) {
     return res.invalidVerb();

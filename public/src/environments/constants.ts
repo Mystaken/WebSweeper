@@ -5,6 +5,7 @@
 
 export const constants = {
   GAME_TYPES: {
-    MINESWEEPER: 1
+    MINESWEEPER: 1,
+    SHOOTER: 2
   }
 };

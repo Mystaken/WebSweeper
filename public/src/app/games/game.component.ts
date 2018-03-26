@@ -26,10 +26,9 @@ export class GameComponent {
 
 
   /* for shooter game */
-  shooterConfig: ShooterConfig = {
+  shooterConfig = {
     height: 500,
     width: 900,
-    difficulty: 1
   }
 
   constructor(
@@ -68,10 +67,4 @@ export class GameComponent {
   backToLobby() {
     this._router.navigate(['/lobby']);
   }
-}
-
-interface ShooterConfig {
-  height?: number;
-  width?: number;
-  difficulty?: number;
 }

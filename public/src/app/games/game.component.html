@@ -17,11 +17,11 @@
     *ngIf="type===GAME_TYPES.MINESWEEPER"
     [id]="id">
   </minesweeper>
-  <!-- <shooter
+  <shooter
+    *ngIf="type===GAME_TYPES.SHOOTER"
     [height]="shooterConfig.height"
     [width]="shooterConfig.width"
-    [difficulty]="shooterConfig.difficulty"
-    ></shooter> -->
+    ></shooter>
 
   <chat
     #cht

@@ -2,12 +2,12 @@
   "id": "minesweeper-post",
   "type": "object",
   "properties": {
-    "n": {
+    "difficulty": {
       "type": "integer",
       "minimum": 0,
       "maximum": 10
     }
   },
   "additionalProperties": false,
-  "required": [ "n", "m", "mines" ]
+  "required": [ "difficulty" ]
 }

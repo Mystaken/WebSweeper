@@ -20,7 +20,9 @@ export class APIService {
     }
   }
 
-  get(route:string, params: object): Observable<any> {
+  get(route:string, params?: object): Observable<any> {
+    params = params || {};
+
     let requestOpts: URLSearchParams = new URLSearchParams();
     Object.keys(params).forEach(key => {
       requestOpts.set(key, params[key]);
@@ -35,7 +37,7 @@ export class APIService {
         .catch(this._parseError);
   }
 
-  put(route:string, params: object): Observable<any> {
+  put(route:string, params?: object): Observable<any> {
     params = params || {};
 
 
@@ -44,7 +46,7 @@ export class APIService {
         .catch(this._parseError);
   }
 
-  post(route:string, params: object): Observable<any> {
+  post(route:string, params?: object): Observable<any> {
     params = params || {};
 
     return this._http.post(this._apiUrl + route, params)
@@ -52,7 +54,9 @@ export class APIService {
         .catch(this._parseError);
   }
 
-  delete(route:string, params: object): Observable<any> {
+  delete(route:string, params?: object): Observable<any> {
+    params = params || {};
+
     let requestOpts: URLSearchParams = new URLSearchParams();
     Object.keys(params).forEach(key => {
       requestOpts.set(key, params[key]);
