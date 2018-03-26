@@ -25,11 +25,10 @@ export class ShooterComponent {
   ngOnInit() {
     if (this.isHost) {
       this._shooterAPI.onNewPeer((id) => {
-        this._shooterAPI.streamCanvas(id, this.shooterRef.getCanvas().captureStream())
+        this._shooterAPI.streamCanvas(id, this.shooterRef.getCanvas().captureStream());
       });
     } else {
       this._shooterAPI.onAnswer((stream) => {
-        console.log(this.streamRef.nativeElement, stream);
         this.streamRef.nativeElement.srcObject = stream;
       });
       this._shooterAPI.sendPeers();
