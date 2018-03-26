@@ -107,8 +107,10 @@ export class MinesweeperBoardComponent {
 
   flag(row:number, column:number): void {
     let cell = this._board[row][column];
-    cell.status = 2;
-    cell.display = this.icons.flag;
+    if (!this._lose) {
+      cell.status = 2;
+      cell.display = this.icons.flag;
+    }
   }
 
   unflag(row:number, column:number): void {
@@ -119,10 +121,11 @@ export class MinesweeperBoardComponent {
 
   reveal(row:number, column:number, display:string): void {
     let cell = this._board[row][column];
-    cell.status = 1;
-    cell.display = this.icons[display];
-    this._revealed += 1;
-    console.log('n:', this._n, 'm:', this._m, 'revealed:', this._revealed, 'mines', this._mines);
+    if (cell.status !== 1 && !this._lose) {
+      cell.status = 1;
+      cell.display = this.icons[display];
+      this._revealed += 1;
+    }
   }
 
   lose():void {

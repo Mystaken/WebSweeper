@@ -69,7 +69,10 @@ export class MinesweeperComponent {
     this._minesweeperAPI
       .reveal(this.id, cell.row, cell.column)
       .subscribe((res) => {
-        res.moves.forEach(function(move) {
+        if (res.status === 1) {
+          return this.ms.lose();
+        }
+        return res.moves.forEach(function(move) {
           this.ms.reveal(move.m, move.n, move.number.toString());
         }, this);
       },
