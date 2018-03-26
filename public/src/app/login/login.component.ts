@@ -23,6 +23,9 @@ export class LoginComponent {
     this._loginAPI.signUp(this.signUpUser, this.signUpPassword, this.signUpEmail)
       .subscribe((res) => {
         this.isSignedUp = true;
+      },
+      (err) => {
+        Materialize.toast(err.data[0].code, 4000);
       });
   }
 
@@ -30,6 +33,9 @@ export class LoginComponent {
     this._loginAPI.signIn(this.user, this.pass)
       .subscribe((res) => {
         this._router.navigate(['/lobby']);
+      },
+      (err) => {
+        Materialize.toast(err.data[0].code, 4000);
       });
   }
 

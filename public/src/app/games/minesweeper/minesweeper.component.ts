@@ -47,6 +47,9 @@ export class MinesweeperComponent {
           }
         });
       });
+    },
+    (err) => {
+      Materialize.toast(err.data[0].code, 4000);
     });
   }
 
@@ -69,6 +72,9 @@ export class MinesweeperComponent {
         res.moves.forEach(function(move) {
           this.ms.reveal(move.m, move.n, move.number.toString());
         }, this);
+      },
+      (err) => {
+        Materialize.toast(err.data[0].code, 4000);
       });
   }
 
@@ -84,6 +90,9 @@ export class MinesweeperComponent {
             this.ms.flag(cell.row, cell.column);
           }
         }
+      },
+      (err) => {
+        Materialize.toast(err.data[0].code, 4000);
       });
   }
 }

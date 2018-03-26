@@ -31,7 +31,6 @@ export class LobbyComponent {
 
   resetGameMenu():void {
     this.minesweeper = { rows: null, columns: null, mines: null };
-
   }
 
   createMinesweeper() {
@@ -40,6 +39,9 @@ export class LobbyComponent {
       this.minesweeper.columns,
       this.minesweeper.mines).subscribe(res => {
         this._router.navigate([`/games/${res.id}`]);
+      },
+      (err) => {
+        Materialize.toast(err.data[0].code, 4000);
       });
   }
 
@@ -47,6 +49,9 @@ export class LobbyComponent {
     this._api.get('games/?limit=10&staleness=300', {}).subscribe((res) => {
       this.rooms = res;
       this.rooms.reverse();
+    },
+    (err) => {
+      Materialize.toast(err.data[0].code, 4000);
     });
   }
 }
