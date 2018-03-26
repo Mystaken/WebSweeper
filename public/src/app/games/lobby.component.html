@@ -25,7 +25,7 @@
           <div class="create-time">Last active: {{entry.updatedAt}}</div>
         </div>
         <div class="col s2">
-          <a id="{{entry.id}}" class="waves-effect waves-light btn-flat spectate-btn" (click)="spectateGame($event)">
+          <a href="/games/{{entry.id}}" class="waves-effect waves-light btn-flat spectate-btn" (click)="spectateGame($event)">
             <i class="material-icons">remove_red_eye</i>
           </a>
         </div>
