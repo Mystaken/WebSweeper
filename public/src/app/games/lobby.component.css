@@ -62,16 +62,8 @@ chat {
   font-size: 2rem;
 }
 
-#create-game-container {
-  position: absolute;
-  width: 300px;
-  /* margin-left: calc((85% - 300px) / 2); */
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  padding: 50px;
-  box-shadow: 0 10px 35px 0 black;
-  background-color: rgb(47, 49, 54);
+#minesweeper-form-container {
+  width: 250px;
 }
 
 .top-nav-btn {
@@ -117,4 +109,36 @@ chat {
 .btn-right {
   float: right;
   margin-right: 10px;
+}
+
+.btn {
+  background-color: rgb(238, 110, 115);
+}
+
+.card {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 500px;
+}
+
+.card-content {
+  background-color: rgb(47, 49, 54);
+  color: white;
+}
+
+.tabs {
+  background-color: rgb(54, 57, 62);
+  color: white;
+}
+
+label.active {
+  color: rgb(238, 110, 115) !important;
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+  border-bottom-color: rgb(238, 110, 115) !important;
+  box-shadow: 0 1px 0 0 rgb(246, 178, 181) !important;
 }

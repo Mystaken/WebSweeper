@@ -33,25 +33,37 @@
     </div>
   </div>
 
-  <div id="create-game-container" [hidden]="!creatingGame">
-    <form #createGameForm="ngForm" (ngSubmit)="createMinesweeper()">
-      <div class="row">
-        <div class="input-field col s12">
-          <input id="row" type="number" name="row" required [(ngModel)]="minesweeper.rows">
-          <label for="row">Number of rows</label>
-        </div>
-        <div class="input-field col s12">
-          <input id="col" type="number" name="col" required [(ngModel)]="minesweeper.columns">
-          <label for="col">Number of columns</label>
-        </div>
-        <div class="input-field col s12">
-          <input id="mines" type="number" name="mines" required [(ngModel)]="minesweeper.mines">
-          <label for="mines">Number of mines</label>
-        </div>
+  <div class="card" [hidden]="!creatingGame">
+    <div class="card-tabs">
+      <ul class="tabs tabs-fixed-width">
+        <li class="tab"><a class="active" href="#minesweeper-tab">Minesweeper</a></li>
+        <li class="tab"><a href="#shooter-tab">Shooter</a></li>
+      </ul>
+    </div>
+    <div class="card-content">
+      <div id="minesweeper-tab">
+        <form #createGameForm="ngForm" (ngSubmit)="createMinesweeper()">
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="row" type="number" name="row" required [(ngModel)]="minesweeper.rows">
+              <label for="row">Number of rows</label>
+            </div>
+            <div class="input-field col s12">
+              <input id="col" type="number" name="col" required [(ngModel)]="minesweeper.columns">
+              <label for="col">Number of columns</label>
+            </div>
+            <div class="input-field col s12">
+              <input id="mines" type="number" name="mines" required [(ngModel)]="minesweeper.mines">
+              <label for="mines">Number of mines</label>
+            </div>
+          </div>
+          <div class="row center">
+            <button type="submit" class="waves-effect waves-light btn" [disabled]="!createGameForm.form.valid">Create game</button>
+          </div>
+        </form>
       </div>
-      <div class="row center">
-        <button type="submit" class="waves-effect waves-light btn" [disabled]="!createGameForm.form.valid">Create game</button>
+      <div id="shooter-tab">
       </div>
-    </form>
+    </div>
   </div>
 </div>
