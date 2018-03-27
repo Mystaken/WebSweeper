@@ -12,11 +12,14 @@ export class UserService {
 
   getProfile():Observable<UserProfile> {
     if (this._profile) {
-      return new Observable((observer) => {
+      return Observable.create((observer) => {
         observer.next(this._profile);
       });
-    } else {
-      return this._api.get('users');
+    } else  {
+      return this._api.get('users').map((res) => {
+        this._profile = res;
+        return res;
+      });
     }
   }
 
