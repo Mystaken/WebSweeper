@@ -46,7 +46,7 @@
         "name": "kraken-js/middleware/multipart",
         "arguments": [
           {
-            "uploadDir": "/upload",
+            "uploadDir": "upload",
             "keepExtensions": true,
             "hash": "sha1",
             "multiples": true

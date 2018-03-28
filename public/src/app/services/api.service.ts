@@ -70,4 +70,19 @@ export class APIService {
         .map(res => res.json().data)
         .catch(this._parseError);
   }
+
+  upload(route:string, files:{[name:string]: File;}, params?:object):Observable<any> {
+    let form:FormData = new FormData();
+    params = params || {};
+
+    Object.keys(files).forEach(fileName => {
+      form.append(fileName, files[fileName]);
+    });
+    Object.keys(params).forEach(key => {
+      form.append(key, params[key]);
+    })
+    return this._http.post(`${this._apiUrl}/${route}`, form)
+        .map(res => res.json().data)
+        .catch(this._parseError);
+  }
 }

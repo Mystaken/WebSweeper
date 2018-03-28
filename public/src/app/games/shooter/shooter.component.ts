@@ -3,7 +3,7 @@ import { ShooterService } from './shooter.service';
 import { ActivatedRoute } from '@angular/router';
 import { difficulty, ShooterConfig } from './shooter-difficulty';
 import { ShooterGameComponent } from './shooter-game.component';
-import { UserService } from '../../services/user.service';
+import { UserService, UserProfile } from '../../services/user.service';
 import { Observable } from 'rxjs/Rx';
 
 @Component({
@@ -32,8 +32,8 @@ export class ShooterComponent {
       this._shooterAPI.getGame(this.id),
       this._user.getProfile()
       ]).subscribe(results => {
-        let game = results[0];
-        let user = results[1];
+        let game:any = results[0];
+        let user:UserProfile = results[1];
         if (!game) { return; }
         if (game.host === user.id) {
           return this._shooterAPI.setHost(this.id)

@@ -5,6 +5,17 @@ body, html {
 }
 
 
+#footer {
+  /* Fallback for web browsers that don't support RGBa */
+  background-color: transparent !important;
+  /* RGBa with 0.6 opacity */
+  background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+#app-container {
+  height: 100%;
+}
+
 #pageloader-wrapper {
   display: flex;
   flex-direction: column;

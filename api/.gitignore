@@ -1,5 +1,8 @@
 /node_modules
-/upload
 mailgun.json
 /doc
 .build
+upload/*
+!upload/avatar
+upload/avatar/*.png
+!.gitkeep

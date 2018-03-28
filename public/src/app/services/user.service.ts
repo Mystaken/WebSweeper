@@ -26,6 +26,13 @@ export class UserService {
   clearProfile():void {
     this._profile = undefined;
   }
+
+  uploadAvatar(avatar: File):Observable<any> {
+    return this.getProfile()
+      .flatMap((profile) => this._api.upload(`users/${profile.id}/avatar`, {
+        'avatar': avatar
+      }));
+  }
 }
 
 export interface UserProfile {

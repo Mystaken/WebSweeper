@@ -13,6 +13,7 @@ const User    = require('../../models/userModel'),
   bcrypt    = require('bcrypt'),
   path      = require('path'),
   pug       = require('pug'),
+  sharp     = require('sharp'),
 
   SALT_LEN   = 10,
   EMAIL_PATH = path.join(__dirname, '../../views/users/verification.pug'),
@@ -358,5 +359,32 @@ module.exports = function (router) {
 
   router.route('/:id/avatar').get(function(req, res, next) {
     return res.sendResponse(1);
+  })
+
+  /**
+   * @api {POST} api/users/:id/verification/resend/ Upload Avatar
+   * @apiGroup User
+   * @apiName UploadAvatar
+   * @apiPermission user signed in must match the id
+   * @apiDescription Uploads avatar for user.
+   *
+   * @apiParam {id} the id of this user
+   * 
+  */
+  .post(middlewares.authenticate(), function(req, res, next) {
+    console.log(req.user.id, req.params.id);
+    if (!req.user.id.equals(req.params.id)) {
+      return res.requestError(401, [{
+        code: error.ACCESS_DENIED,
+        fields: [ '#/id' ]
+      }]);
+    }
+    console.log(req.files.avatar);
+    return sharp(req.files.avatar.path)
+      .png()
+      .toFile(`upload/avatar/${req.params.id}.png`)
+      .then(() => res.sendResponse(1));
+  }).all(function (req, res, next) {
+    return res.invalidVerb();
   });
 };
