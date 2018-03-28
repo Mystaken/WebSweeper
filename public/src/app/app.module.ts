@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 
 import { RoutingModule } from './routing.module';
-import { GamesModule } from './games/games.module';
+import { GameModule } from './games/game.module';
 import { LoginModule } from './login/login.module';
 
 import { APIService } from './services/api.service';
@@ -16,7 +16,7 @@ import { AppComponent } from './app.component';
   imports: [
     HttpModule,
     RoutingModule,
-    GamesModule,
+    GameModule,
     LoginModule
   ],
   providers: [],

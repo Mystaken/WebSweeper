@@ -51,4 +51,4 @@ const config: SocketIoConfig = { url: environment.domain, options: {path: '/sock
   ]
 })
 
-export class GamesModule { }
+export class GameModule { }
