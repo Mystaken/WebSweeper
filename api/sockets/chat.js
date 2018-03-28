@@ -9,6 +9,9 @@ module.exports = function(io, socket) {
    *    - message
    */
   socket.on('chat message', function(msg) {
-    io.sockets.in(msg.room).emit('listen message', msg);
+    io.sockets.in(msg.room).emit('listen message', {
+      user: socket.request.session.user,
+      message: msg.message
+    });
   });
 }

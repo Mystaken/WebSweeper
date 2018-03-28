@@ -28,6 +28,7 @@ export class ChatComponent {
 
   sendMessage():void {
     this._chatAPI.sendMessage(this.id, this.newMessage);
+    this.newMessage = "";
   }
 
   clear(): void {

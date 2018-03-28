@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { APIService } from '../../services/api.service';
+import { UserProfile } from '../../services/user.service';
 import { Observable } from 'rxjs/Rx';
 import { Socket } from 'ng-socket-io';
 
@@ -15,7 +16,7 @@ export class ChatService {
   }
 
 
-  getMessage(callback: (res: any) => any) {
+  getMessage(callback: (res: {user?: UserProfile; message: string}) => any) {
     return this._socket.on('listen message', callback);
   }
 }

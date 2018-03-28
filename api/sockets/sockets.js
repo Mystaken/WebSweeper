@@ -24,7 +24,6 @@ module.exports = {
     });*/
 
     io.on('connection', function(socket) {
-      console.log(socket.request.session);
       socket.on('join room', function(room) {
         socket.join(room);
       });
