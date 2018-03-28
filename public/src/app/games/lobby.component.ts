@@ -63,6 +63,7 @@ export class LobbyComponent {
       this.rooms.reverse();
     },
     (err) => {
+      console.log(err);
       Materialize.toast(err.data[0].code, 4000);
     });
   }

@@ -35,6 +35,7 @@ export class LoginComponent {
         this._router.navigate(['/lobby']);
       },
       (err) => {
+        console.log(err);
         Materialize.toast(err.data[0].code, 4000);
       });
   }

@@ -1,2 +1,24 @@
-<input #avatarUpload type="file">
-<button (click)="uploadAvatar()">test</button>
+<div id="close-btn">
+  <a class="btn-flat waves-effect">
+    <i class="material-icons">close</i>
+  </a>
+</div>
+<div id="profile-container">
+  <div>
+    <label for="avatar-upload">Update Avatar:</label>
+    <input #avatarUpload id="avatar-upload" type="file">
+    <a class="waves-effect btn" (click)="uploadAvatar()">Upload</a>
+  </div>
+  <form #updateProfileForm="ngForm"> <!--(ngSubmit)="">-->
+    <div class="input-field col s12">
+      <input id="username" type="text" class="validate" name="username" required [(ngModel)]="username">
+      <label for="username">Update username</label>
+    </div>
+    <div class="input-field col s12">
+      <input id="password" type="password" class="validate" name="password" required [(ngModel)]="password">
+      <label for="password">Update password</label>
+    </div>
+    <div class="row center">
+      <button type="submit" class="waves-effect waves-light btn" [disabled]="!updateProfileForm.form.valid">Sign Up</button>
+    </div>
+</form>
