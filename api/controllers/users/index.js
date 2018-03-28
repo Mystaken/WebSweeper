@@ -14,12 +14,21 @@ const User    = require('../../models/userModel'),
   path      = require('path'),
   pug       = require('pug'),
   sharp     = require('sharp'),
+  fs        = require('fs-extra'),
 
   SALT_LEN   = 10,
   EMAIL_PATH = path.join(__dirname, '../../views/users/verification.pug'),
   SIGNUP_SUCCESS = path.join(__dirname, '../../views/users/signup_success.pug'),
   SIGNUP_FAIL    = path.join(__dirname, '../../views/users/signup_fail.html'),
   VERIFICATION_ROUTE = `${config.app.DOMAIN}/api/users/verification`,
+  AVATAR = {
+    SIZE: {
+      LENGTH: 64,
+      WIDTH: 64
+    },
+    DIRECTORY: path.join(__dirname, '../../upload/avatar/'),
+    DEFAULT:  path.join(__dirname, '../../assets/images/default_avatar.png')
+  },
 
   usersPostSchema      = require('../../schemas/users/users_post.json'),
   usersLoginPostSchema = require('../../schemas/users/users_login_post.json');
@@ -357,33 +366,77 @@ module.exports = function (router) {
 
 
 
-  router.route('/:id/avatar').get(function(req, res, next) {
-    return res.sendResponse(1);
-  })
 
   /**
-   * @api {POST} api/users/:id/verification/resend/ Upload Avatar
+   * @api {GET} api/users/:id/avatar/ Get Avatar Image
    * @apiGroup User
-   * @apiName UploadAvatar
+   * @apiName GetAvatar
    * @apiPermission user signed in must match the id
-   * @apiDescription Uploads avatar for user.
+   * @apiDescription Get the user's Avatar image
    *
    * @apiParam {id} the id of this user
-   * 
+   * @apiUse InvalidLoginError
+   *
   */
-  .post(middlewares.authenticate(), function(req, res, next) {
-    console.log(req.user.id, req.params.id);
+  router.route('/:id/avatar').get(middlewares.authenticate(), function(req, res, next) {
     if (!req.user.id.equals(req.params.id)) {
       return res.requestError(401, [{
         code: error.ACCESS_DENIED,
         fields: [ '#/id' ]
       }]);
     }
-    console.log(req.files.avatar);
+    return User.findById(req.params.id).exec()
+      .then(function(profile) {
+        if (!profile) {
+          return Promise.reject({
+            status: 401,
+            data: [{
+              code: error.ACCESS_DENIED,
+              fields: [ '#/id' ]
+            }]
+          });
+        } else if (profile.avatar) {
+          return res.sendFile(profile.avatar);
+        } else {
+          return res.sendFile(`${AVATAR.DEFAULT}`);
+        }
+      }).catch((err) => res.handleError(err));
+  })
+
+  /**
+   * @api {POST} api/users/:id/avatar/ Upload Avatar
+   * @apiGroup User
+   * @apiName UploadAvatar
+   * @apiPermission user signed in must match the id
+   * @apiDescription Uploads avatar for user.
+   *
+   * @apiParam {id} the id of this user
+   * @apiUse InvalidLoginError
+   *
+  */
+  .post(middlewares.authenticate(), function(req, res, next) {
+    var avatarLoc = `${AVATAR.DIRECTORY}/${req.params.id}.png`;
+    if (!req.user.id.equals(req.params.id)) {
+      return res.requestError(401, [{
+        code: error.ACCESS_DENIED,
+        fields: [ '#/id' ]
+      }]);
+    }
     return sharp(req.files.avatar.path)
+      .resize(AVATAR.SIZE.LENGTH, AVATAR.SIZE.WIDTH)
       .png()
-      .toFile(`upload/avatar/${req.params.id}.png`)
-      .then(() => res.sendResponse(1));
+      .toFile(avatarLoc)
+      .then(() => {
+        return User.findByIdAndUpdate(req.params.id, {
+          $set: {
+            avatar: avatarLoc
+          }
+        }).exec();
+      }).then(function() {
+        return fs.remove(req.files.avatar.path);
+      }).then(function() {
+        return res.sendResponse();
+      }).catch((err) => res.handleError(err));
   }).all(function (req, res, next) {
     return res.invalidVerb();
   });

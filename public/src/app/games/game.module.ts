@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 import { environment } from '../../environments/environment';
@@ -35,6 +36,7 @@ const config: SocketIoConfig = { url: environment.domain, options: {path: '/sock
   imports: [
     BrowserModule,
     FormsModule,
+    RouterModule,
     SocketIoModule.forRoot(config)
   ],
   exports: [

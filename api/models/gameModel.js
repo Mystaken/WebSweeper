@@ -27,6 +27,9 @@ const gameSchema = mongoose.Schema({
   type: {
     type: Number,
     require: true
+  },
+  avatar: {
+    type:String
   }
 },{
   timestamps: true

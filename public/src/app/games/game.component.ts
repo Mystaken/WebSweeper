@@ -63,8 +63,4 @@ export class GameComponent {
       this.missedMessages += 1;
     }
   }
-
-  backToLobby() {
-    this._router.navigate(['/lobby']);
-  }
 }
