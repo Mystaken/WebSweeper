@@ -13,15 +13,17 @@
     </a>
   </div>
 
-  <minesweeper
-    *ngIf="type===GAME_TYPES.MINESWEEPER"
-    [id]="id">
-  </minesweeper>
-  <shooter
-    *ngIf="type===GAME_TYPES.SHOOTER"
-    [height]="shooterConfig.height"
-    [width]="shooterConfig.width"
-    ></shooter>
+  <div id="game-container">
+    <minesweeper
+      *ngIf="type===GAME_TYPES.MINESWEEPER"
+      [id]="id">
+    </minesweeper>
+    <shooter
+      *ngIf="type===GAME_TYPES.SHOOTER"
+      [height]="shooterConfig.height"
+      [width]="shooterConfig.width"
+      ></shooter>
+  </div>
 
   <chat
     #cht

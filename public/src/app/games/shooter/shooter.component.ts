@@ -17,7 +17,7 @@ export class ShooterComponent {
   @ViewChild('shooter') shooterRef: ShooterGameComponent;
   @ViewChild('stream') streamRef;
 
-  config: ShooterConfig = difficulty[3];
+  config: ShooterConfig = difficulty[0];
   id: string;
   isHost: boolean;
 
@@ -38,7 +38,6 @@ export class ShooterComponent {
         if (game.host === user.id) {
           return this._shooterAPI.setHost(this.id)
             .subscribe((success) => {
-              console.log(success);
               if (!success) {
                 this.setHost();
               } else {

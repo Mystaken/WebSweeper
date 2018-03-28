@@ -106,8 +106,8 @@ export class ShooterGameComponent {
       this.shots.push({
         x: this.player.x,
         y: this.player.y,
-        x_change: (this.player.shoot.x - this.x - this.player.x) / scale,
-        y_change: -(this.player.shoot.y - this.y - this.player.y) / scale
+        x_change: (this.player.shoot.x - this.player.x - this.x) / Math.max(scale, 0.01),
+        y_change: -(this.player.shoot.y - this.y - this.player.y) / Math.max(scale, 0.01)
       });
       this.player.shoot = undefined;
     }
@@ -197,6 +197,9 @@ export class ShooterGameComponent {
     }
 
   draw() {
+    let position = this.canvas.getBoundingClientRect();
+    this.x = position.x;
+    this.y = position.y;
     this.movePlayer();
     this.fireShots();
     this.handleAI();
@@ -263,7 +266,6 @@ export class ShooterGameComponent {
     this.enemyIcon.src = this.enemyIconSrc;
     this.canvas = this.shooterRef.nativeElement;
     this.ctx = this.canvas.getContext('2d');
-    let position = this.canvas.getBoundingClientRect();
     this.enemies = [];
     this.player = {
       x: 200,
@@ -275,6 +277,7 @@ export class ShooterGameComponent {
       invincible: +new Date()
     };
     this.shots = [];
+    let position = this.canvas.getBoundingClientRect();
     this.x = position.x;
     this.y = position.y;
     this.lastNewAI = +new Date();

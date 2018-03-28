@@ -39,3 +39,8 @@ minesweeper, shooter {
   float: right;
   margin-right: 10px;
 }
+
+
+#game-container {
+  text-align: center;
+}

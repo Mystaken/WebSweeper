@@ -27,10 +27,6 @@
   color: red !important;
 }
 
-#minesweeper-container {
-  text-align: center;
-}
-
 .message {
   color: white;
   margin-top: 1rem;
