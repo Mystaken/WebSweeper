@@ -211,7 +211,8 @@ module.exports = function (router) {
         password: hashPass,
         email: req.body.email,
         status: status.PENDING,
-        lastLogin: new Date()
+        lastLogin: new Date(),
+        avatar: AVATAR.DEFAULT
       }).save();
     }).then(function(user) {
       // generate email to send
