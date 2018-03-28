@@ -354,4 +354,9 @@ module.exports = function (router) {
     return res.invalidVerb();
   });
 
+
+
+  router.route('/:id/avatar').get(function(req, res, next) {
+    return res.sendResponse(1);
+  });
 };

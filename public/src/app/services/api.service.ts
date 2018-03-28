@@ -6,7 +6,7 @@ import 'rxjs/Rx';
 
 @Injectable()
 export class APIService {
-  private _apiUrl: string = `${environment.domain}/api/`;
+  private _apiUrl: string = `${environment.domain}/api`;
 
   constructor(private _http: Http) { }
 
@@ -32,7 +32,7 @@ export class APIService {
 
     requestOptions.params = requestOpts;
 
-    return this._http.get(this._apiUrl + route, requestOptions)
+    return this._http.get(`${this._apiUrl}/${route}`, requestOptions)
         .map(res => res.json().data)
         .catch(this._parseError);
   }
@@ -41,7 +41,7 @@ export class APIService {
     params = params || {};
 
 
-    return this._http.put(this._apiUrl + route, params)
+    return this._http.put(`${this._apiUrl}/${route}`, params)
         .map(res => res.json().data)
         .catch(this._parseError);
   }
@@ -49,7 +49,7 @@ export class APIService {
   post(route:string, params?: object): Observable<any> {
     params = params || {};
 
-    return this._http.post(this._apiUrl + route, params)
+    return this._http.post(`${this._apiUrl}/${route}`, params)
         .map(res => res.json().data)
         .catch(this._parseError);
   }
@@ -66,7 +66,7 @@ export class APIService {
 
     requestOptions.params = requestOpts;
 
-    return this._http.delete(this._apiUrl + route, requestOptions)
+    return this._http.delete(`${this._apiUrl}/${route}`, requestOptions)
         .map(res => res.json().data)
         .catch(this._parseError);
   }
