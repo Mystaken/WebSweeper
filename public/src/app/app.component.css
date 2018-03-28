@@ -20,15 +20,6 @@
   background-image: url("/assets/background.png");
 }
 
-user-card {
-  position: absolute;
-  background-color: rgb(47, 49, 54);
-  top: 140px;
-  right: calc(50% - 400px);
-  z-index: 10;
-  box-shadow: 0 10px 35px 0 black;
-}
-
 @media only screen and (max-width: 849px) {
   user-card {
     right: 0;

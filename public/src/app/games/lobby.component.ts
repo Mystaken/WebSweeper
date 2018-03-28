@@ -10,6 +10,7 @@ import { APIService } from '../services/api.service';
 })
 export class LobbyComponent {
   creatingGame: boolean = false;
+  profileOpen: boolean = false;
   rooms = [];
 
   minesweeper: MinesweeperGame;
@@ -66,6 +67,10 @@ export class LobbyComponent {
       console.log(err);
       Materialize.toast(err.data[0].code, 4000);
     });
+  }
+
+  toggleProfile() {
+    this.profileOpen = !this.profileOpen;
   }
 }
 

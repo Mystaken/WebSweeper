@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
 import { UserService } from '../services/user.service';
 @Component({
   selector: 'user-card',
@@ -6,7 +6,12 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./user-card.component.css']
 })
 export class UserCardComponent {
+  username: string = '';
+  password: string = '';
+
   @ViewChild('avatarUpload') avatarUpload
+  @Output() onClose = new EventEmitter()
+
   constructor(private _userAPI: UserService) {}
 
   uploadAvatar() {
@@ -16,5 +21,9 @@ export class UserCardComponent {
     }
     console.log(avatar);
     return this._userAPI.uploadAvatar(avatar).subscribe((res) => console.log(res));
+  }
+
+  toggleProfile() {
+    this.onClose.emit('close');
   }
 }

@@ -12,6 +12,7 @@ import { ChatComponent } from './chat/chat.component';
 import { LobbyComponent } from './lobby.component';
 import { ShooterComponent } from './shooter/shooter.component';
 import { ShooterGameComponent } from './shooter/shooter-game.component';
+import { UserModule } from '../users/user.module';
 
 import { PeerService } from '../services/peer.service';
 import { APIService } from '../services/api.service';
@@ -37,7 +38,8 @@ const config: SocketIoConfig = { url: environment.domain, options: {path: '/sock
     BrowserModule,
     FormsModule,
     RouterModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
+    UserModule,
   ],
   exports: [
     GameComponent
