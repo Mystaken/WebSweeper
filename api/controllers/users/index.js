@@ -23,8 +23,8 @@ const User    = require('../../models/userModel'),
   VERIFICATION_ROUTE = `${config.app.DOMAIN}/api/users/verification`,
   AVATAR = {
     SIZE: {
-      LENGTH: 64,
-      WIDTH: 64
+      LENGTH: 128,
+      WIDTH: 128
     },
     DIRECTORY: path.join(__dirname, '../../upload/avatar/'),
     DEFAULT:  path.join(__dirname, '../../assets/images/default_avatar.png')
@@ -375,23 +375,17 @@ module.exports = function (router) {
    * @apiDescription Get the user's Avatar image
    *
    * @apiParam {id} the id of this user
-   * @apiUse InvalidLoginError
+   * @apiUse NotFoundError
    *
   */
   router.route('/:id/avatar').get(middlewares.authenticate(), function(req, res, next) {
-    if (!req.user.id.equals(req.params.id)) {
-      return res.requestError(401, [{
-        code: error.ACCESS_DENIED,
-        fields: [ '#/id' ]
-      }]);
-    }
     return User.findById(req.params.id).exec()
       .then(function(profile) {
         if (!profile) {
           return Promise.reject({
             status: 401,
             data: [{
-              code: error.ACCESS_DENIED,
+              code: error.NOT_FOUND,
               fields: [ '#/id' ]
             }]
           });
