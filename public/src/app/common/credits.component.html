@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row hang-down">
+    <div class="col s1 m2">
+
+    </div>
+    <div class="col s10 m8">
+      <div class="card">
+        <div class="card-content">
+          <h3>Credits</h3>
+          <div class="divider"></div>
+          <div materialize class="card-tabs">
+            <ul class="tabs tabs-fixed-width">
+              <li class="tab" *ngFor="let topic of credits; let i = index;">
+                <a class="active" (click)="curr=i">{{topic.name}}</a>
+              </li>
+            </ul>
+          </div>
+          <div class="collection">
+            <a
+              class="collection-item"
+              *ngFor="let credit of credits[curr].credits"
+              [href]="credit.link"
+              target="_blank">
+              {{credit.title}}
+              <div class="description">{{credit.description}}</div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col s1 m2"></div>
+  </div>
+</div>

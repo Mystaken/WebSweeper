@@ -1,14 +1,20 @@
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { BrowserModule } from '@angular/platform-browser';
+
 import { InvalidLinkComponent } from './invalid-link.component';
+import { CreditsComponent } from './credits.component';
 
 @NgModule({
   declarations: [
-    InvalidLinkComponent
+    InvalidLinkComponent,
+    CreditsComponent,
   ],
-  imports: [],
+  imports: [
+    BrowserModule
+  ],
   exports: [
-    InvalidLinkComponent
+    InvalidLinkComponent,
+    CreditsComponent
   ],
   providers: [],
   bootstrap: []

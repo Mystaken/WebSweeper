@@ -1,0 +1,7 @@
+.description {
+  color: grey;
+}
+
+.card-tabs .tab {
+  cursor: pointer;
+}
