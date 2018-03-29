@@ -291,47 +291,6 @@ module.exports = function (router) {
     return res.invalidVerb();
   });
 
-  /**
-   * @api {PATCH} api/users/:id Update User Info
-   * @apiName UpdateUser
-   * @apiGroup User
-   * @apiPermission must be same as login user
-   * @apiDescription Update this user's information and return it's updated information.
-   *
-   * @apiParam {String} id the id of user
-   * @apiParam {String} username (Optional) the new username of user
-   * @apiParam {String} email (Optional) the new email of user
-   * @apiParamExample {json} Sample Request
-   *     {
-   *       "username": "websweeperchanged",
-   *       "email": "newexample@mail.com"
-   *     }
-   * @apiSuccess {String}  username Username of the user.
-   * @apiSuccess {String}  email Email of the user
-   * @apiSuccess {Date} create_at  The date this user was created (DD-MM-YYYY HH:MM).
-   * @apiSuccess {Date} updatedAt  The date this user was last updated (DD-MM-YYYY HH:MM).
-   *
-   *
-   * @apiSuccessExample {json} Success Response
-   *     HTTP/1.1 200 OK
-   *     {
-   *       status: 200,
-   *       data: {
-   *         "username": "websweeperchanged",
-   *         "email": "newexample@mail.com",
-   *         "createdAt": "21-12-2017 15:30",
-   *         "updatedAt": "21-12-2017 15:30"
-   *       }
-   *     }
-   * @apiUse NotFoundError
-   * @apiUse ExtraFieldsError
-  */
-  router.route('/:id').patch(function(req, res, next) {
-    return res.requestError(501, { code: error.NOT_IMPLEMENTED });
-  }).all(function (req, res, next) {
-    return res.invalidVerb();
-  });
-
 
   /**
    * @api {POST} api/users/verification/:ticket Verify User
@@ -362,24 +321,6 @@ module.exports = function (router) {
       return res.send(htmlContent);
     }).catch((err) => res.handleError(err));
 
-  }).all(function (req, res, next) {
-    return res.invalidVerb();
-  });
-
-  /**
-   * @api {POST} api/users/:username/verification/resend/ Resend verification link
-   * @apiGroup Auth
-   * @apiName ResendLink
-   * @apiPermission none
-   * @apiDescription Re-sends the verification link to the given user's email.
-   *
-   * @apiParam {String} username the username to be resent
-   *
-   * @apiUse ExtraFieldsError
-   * @apiUse NotFoundError
-  */
-  router.route('/:username/verification/resend').post(function(req, res, next) {
-    return res.requestError(501, { code: error.NOT_IMPLEMENTED });
   }).all(function (req, res, next) {
     return res.invalidVerb();
   });
