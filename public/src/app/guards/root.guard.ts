@@ -5,9 +5,8 @@ import {
   Router
 } from '@angular/router';
 
-
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class RootGuard implements CanActivate {
   constructor(
     private _userAPI: UserService,
     private _router: Router) {}
@@ -16,8 +15,10 @@ export class AuthGuard implements CanActivate {
       .map((res) => {
         if (!res) {
           this._router.navigate(['/login']);
+        } else {
+          this._router.navigate(['/lobby']);
         }
-        return res;
+        return true;
       });
   }
 }

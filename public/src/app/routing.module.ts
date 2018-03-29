@@ -6,7 +6,7 @@ import { LobbyComponent } from './games/lobby.component';
 import { GameComponent } from './games/game.component';
 import { InvalidLinkComponent } from './common/invalid-link.component';
 import { CreditsComponent } from './common/credits.component';
-
+import { RootGuard } from './guards/root.guard';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
@@ -28,6 +28,10 @@ const routes: Routes = [
     path: 'credits',
     pathMatch: 'full',
     component: CreditsComponent
+  },{
+    path: '/',
+    pathMatch: 'full',
+    canActivate: [ RootGuard ]
   },{
     path: '**',
     component: InvalidLinkComponent
