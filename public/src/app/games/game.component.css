@@ -13,6 +13,12 @@
   box-shadow: 0 10px 35px 0 black !important;
 }
 
+@media only screen and (max-width: 849px) {
+  #top-nav {
+    width: 100%;
+  }
+}
+
 #top-nav a {
   color: white;
 }
@@ -28,6 +34,10 @@ minesweeper, shooter {
   top: 100px;
   left: 0;
   right: 0;
+}
+
+.btn-flat {
+  z-index: 0;
 }
 
 .btn-left {

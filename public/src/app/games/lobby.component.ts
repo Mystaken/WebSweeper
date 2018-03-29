@@ -10,8 +10,8 @@ import { APIService } from '../services/api.service';
 })
 export class LobbyComponent {
   creatingGame: boolean = false;
-  profileOpen: boolean = false;
   rooms = [];
+  selection: string;
 
   minesweeper: MinesweeperGame;
 
@@ -40,36 +40,42 @@ export class LobbyComponent {
     this._gameAPI.createMinesweeper(
       this.minesweeper.rows,
       this.minesweeper.columns,
-      this.minesweeper.mines).subscribe(res => {
-        this._router.navigate([`/games/${res.id}`]);
-      },
-      (err) => {
-        Materialize.toast(err.data[0].code, 4000);
-      });
+      this.minesweeper.mines).subscribe(
+        (res) => {
+          this._router.navigate([`/games/${res.id}`]);
+        },
+        (err) => {
+          Materialize.toast(err.data[0].code, 4000);
+        },
+      );
   }
 
   createShooter() {
     this._gameAPI.createShooter(this.shooter.difficulty)
-      .subscribe(res => {
-        this._router.navigate([`/games/${res.id}`]);
-      },
-      (err) => {
-        Materialize.toast(err.data[0].code, 4000);
-      });
+      .subscribe(
+        (res) => {
+          this._router.navigate([`/games/${res.id}`]);
+        },
+        (err) => {
+          Materialize.toast(err.data[0].code, 4000);
+        },
+      );
   }
 
   getRooms() {
-    this._gameAPI.getAllGames(10, 300).subscribe((res) => {
-      this.rooms = res;
-      this.rooms.reverse();
-    },
-    (err) => {
-      Materialize.toast(err.data[0].code, 4000);
-    });
+    this._gameAPI.getAllGames(10, 300).subscribe(
+      (res) => {
+        this.rooms = res;
+        this.rooms.reverse();
+      },
+      (err) => {
+        Materialize.toast(err.data[0].code, 4000);
+      }
+    );
   }
 
-  toggleProfile() {
-    this.profileOpen = !this.profileOpen;
+  onSelectionChange(selection) {
+    this.selection = selection;
   }
 }
 

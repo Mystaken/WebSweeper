@@ -72,7 +72,7 @@ chat {
 }
 
 #back-btn {
-  margin-top: 5px;
+  margin-top: 4px;
   font-size: 3rem;
 }
 
@@ -144,19 +144,7 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
   box-shadow: 0 1px 0 0 rgb(246, 178, 181) !important;
 }
 
-#avatar {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  float: right;
-  margin-right: 20px;
-}
-
-user-card {
-  position: absolute;
-  background-color: rgb(47, 49, 54);
-  top: 140px;
-  right: calc(50% - 400px);
-  z-index: 10;
-  box-shadow: 0 10px 35px 0 black;
+input[type="radio"]:checked + label::after {
+  background-color: rgb(238, 110, 115);
+  border-color: rgb(238, 110, 115);
 }

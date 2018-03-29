@@ -39,13 +39,15 @@ export class GameComponent {
   }
 
   ngOnInit() {
-    this._gameAPI.getGame(this.id).subscribe((res) => {
-      this.type=res.type;
-      this._gameAPI.joinRoom(this.id);
-    },
-    (err) => {
-      Materialize.toast(err.data[0].code, 4000);
-    });
+    return this._gameAPI.getGame(this.id).subscribe(
+      (res) => {
+        this.type=res.type;
+        this._gameAPI.joinRoom(this.id);
+      },
+      (err) => {
+        Materialize.toast(err.data[0].code, 4000);
+      },
+    );
   }
 
   toggleChat() {

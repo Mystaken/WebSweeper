@@ -54,6 +54,14 @@ export class APIService {
         .catch(this._parseError);
   }
 
+  patch(route:string, params?: object): Observable<any> {
+    params = params || {};
+
+    return this._http.patch(`${this._apiUrl}/${route}`, params)
+        .map(res => res.json().data)
+        .catch(this._parseError);
+  }
+
   delete(route:string, params?: object): Observable<any> {
     params = params || {};
 

@@ -26,6 +26,37 @@ form {
   margin: 1px 1px;
 }
 
+#close-btn {
+  position: absolute;
+  text-align: left;
+}
+
 #profile-container {
-  padding: 25px;
+  margin: 40px 25px 25px 25px;
+}
+
+#user-card-container {
+  position: absolute;
+  background-color: rgb(47, 49, 54);
+  top: 130px;
+  right: calc(50% - 400px);
+  z-index: 10;
+  box-shadow: 0 10px 35px 0 black;
+}
+
+@media only screen and (max-width: 849px) {
+  #user-card-container {
+    right: 0;
+  }
+}
+
+#avatar {
+  position: relative;
+  top: -5px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  float: right;
+  margin-right: 20px;
+  cursor: pointer;
 }

@@ -1,24 +1,41 @@
-<div id="close-btn">
-  <a class="btn-flat waves-effect" (click)="toggleProfile()">
-    <i class="material-icons">close</i>
-  </a>
-</div>
-<div id="profile-container">
-  <div>
-    <label for="avatar-upload">Update Avatar:</label>
-    <input #avatarUpload id="avatar-upload" type="file">
-    <a class="waves-effect btn" (click)="uploadAvatar()">Upload</a>
+<img id="avatar" src="{{avatar}}" (click)="toggleProfile()">
+<div id="user-card-container" [hidden]="!isProfileOpen">
+  <div id="close-btn">
+    <a class="btn-flat waves-effect" (click)="toggleProfile()">
+      <i class="material-icons">close</i>
+    </a>
   </div>
-  <form #updateProfileForm="ngForm"> <!--(ngSubmit)="">-->
-    <div class="input-field col s12">
-      <input id="username" type="text" class="validate" name="username" required [(ngModel)]="username">
-      <label for="username">Update username</label>
+  <div id="profile-container">
+    <div>
+      <form #updateAvatarForm="ngForm">
+        <div class="file-field input-field">
+          <div class="btn">
+            <span>Select avatar</span>
+            <input #avatarUpload id="avatar-upload" type="file" required>
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text" required>
+          </div>
+        </div>
+        <button class="waves-effect btn" (click)="uploadAvatar()" [disabled]="!updateAvatarForm.form.valid">Upload</button>
+      </form>
     </div>
-    <div class="input-field col s12">
-      <input id="password" type="password" class="validate" name="password" required [(ngModel)]="password">
-      <label for="password">Update password</label>
-    </div>
-    <div class="row center">
-      <button type="submit" class="waves-effect waves-light btn" [disabled]="!updateProfileForm.form.valid">Sign Up</button>
-    </div>
-</form>
+    <form #updateProfileForm="ngForm">
+      <div class="input-field col s12">
+        <input id="username" type="text" class="validate" name="username" value="123" required [(ngModel)]="username">
+      </div>
+      <div class="input-field col s12">
+        <input id="email" type="email" class="validate" name="email" required [(ngModel)]="email">
+      </div>
+      <div class="row center">
+        <button
+          type="submit"
+          class="waves-effect waves-light btn"
+          [disabled]="!updateProfileForm.form.valid"
+          (click)="updateProfile()">
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

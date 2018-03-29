@@ -28,30 +28,32 @@ export class MinesweeperComponent {
     private _ref: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this._minesweeperAPI.getBoard(this.id).subscribe(res => {
-      this.rows = res.game.n;
-      this.columns = res.game.m;
-      this.mines = res.game.mines;
-      this._ref.detectChanges();
-      if (res.game.gameState) {
-        this.setup(res.game.gameState);
-      }
-      this._minesweeperAPI.newMove((res) => {
-        if (res.status == 1) this.ms.lose();
-        res.moves.forEach((move) => {
-          if (move.type === 0) {
-            this.ms.unflag(move.m, move.n);
-          } else if (move.type === 1) {
-            this.ms.reveal(move.m, move.n, move.number);
-          } else if (move.type === 2) {
-            this.ms.flag(move.m, move.n);
-          }
+    this._minesweeperAPI.getBoard(this.id).subscribe(
+      (res) => {
+        this.rows = res.game.n;
+        this.columns = res.game.m;
+        this.mines = res.game.mines;
+        this._ref.detectChanges();
+        if (res.game.gameState) {
+          this.setup(res.game.gameState);
+        }
+        this._minesweeperAPI.newMove((res) => {
+          if (res.status == 1) this.ms.lose();
+          res.moves.forEach((move) => {
+            if (move.type === 0) {
+              this.ms.unflag(move.m, move.n);
+            } else if (move.type === 1) {
+              this.ms.reveal(move.m, move.n, move.number);
+            } else if (move.type === 2) {
+              this.ms.flag(move.m, move.n);
+            }
+          });
         });
-      });
-    },
-    (err) => {
-      Materialize.toast(err.data[0].code, 4000);
-    });
+      },
+      (err) => {
+        Materialize.toast(err.data[0].code, 4000);
+      }
+    );
   }
 
   setup(gameState) {
@@ -69,34 +71,38 @@ export class MinesweeperComponent {
   onRevealed(cell) {
     this._minesweeperAPI
       .reveal(this.id, cell.row, cell.column)
-      .subscribe((res) => {
-        if (res.status === 1) {
-          return this.ms.lose();
-        }
-        return res.moves.forEach(function(move) {
-          this.ms.reveal(move.m, move.n, move.number.toString());
-        }, this);
-      },
-      (err) => {
-        Materialize.toast(err.data[0].code, 4000);
-      });
+      .subscribe(
+        (res) => {
+          if (res.status === 1) {
+            return this.ms.lose();
+          }
+          return res.moves.forEach(function(move) {
+            this.ms.reveal(move.m, move.n, move.number.toString());
+          }, this);
+        },
+        (err) => {
+          Materialize.toast(err.data[0].code, 4000);
+        },
+      );
   }
 
 
   onFlagged(cell) {
     this._minesweeperAPI
       .flag(this.id, cell.row, cell.column)
-      .subscribe((res) => {
-        if (res.moves.length) {
-          if (res.moves[0].type === 0) {
-            this.ms.unflag(cell.row, cell.column);
-          } else {
-            this.ms.flag(cell.row, cell.column);
+      .subscribe(
+        (res) => {
+          if (res.moves.length) {
+            if (res.moves[0].type === 0) {
+              this.ms.unflag(cell.row, cell.column);
+            } else {
+              this.ms.flag(cell.row, cell.column);
+            }
           }
+        },
+        (err) => {
+          Materialize.toast(err.data[0].code, 4000);
         }
-      },
-      (err) => {
-        Materialize.toast(err.data[0].code, 4000);
-      });
+      );
   }
 }

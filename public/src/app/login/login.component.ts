@@ -21,22 +21,26 @@ export class LoginComponent {
 
   signUp():void {
     this._loginAPI.signUp(this.signUpUser, this.signUpPassword, this.signUpEmail)
-      .subscribe((res) => {
-        this.isSignedUp = true;
-      },
-      (err) => {
-        Materialize.toast(err.data[0].code, 4000);
-      });
+      .subscribe(
+        (res) => {
+          this.isSignedUp = true;
+        },
+        (err) => {
+          Materialize.toast(err.data[0].code, 4000);
+        },
+      );
   }
 
   signIn():void {
     this._loginAPI.signIn(this.user, this.pass)
-      .subscribe((res) => {
-        this._router.navigate(['/lobby']);
-      },
-      (err) => {
-        Materialize.toast(err.data[0].code, 4000);
-      });
+      .subscribe(
+        (res) => {
+          this._router.navigate(['/lobby']);
+        },
+        (err) => {
+          Materialize.toast(err.data[0].code, 4000);
+        },
+      );
   }
 
   resetSignUp():void {

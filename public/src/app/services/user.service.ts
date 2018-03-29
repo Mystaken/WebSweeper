@@ -33,6 +33,14 @@ export class UserService {
         'avatar': avatar
       }));
   }
+
+  updateProfile(username, email):Observable<any> {
+    return this.getProfile()
+      .flatMap((profile) => this._api.patch(`users/${profile.id}`, {
+        'username': username,
+        'email': email,
+      }));
+  }
 }
 
 export interface UserProfile {
