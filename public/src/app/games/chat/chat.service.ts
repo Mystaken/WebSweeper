@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { APIService } from '../../services/api.service';
-import { UserProfile } from '../../services/user.service';
+import { UserProfile } from '../../users/user.service';
 import { Observable } from 'rxjs/Rx';
 import { Socket } from 'ng-socket-io';
 

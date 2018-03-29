@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/Rx';
-import { APIService } from './api.service';
+import { APIService } from '../services/api.service';
 
 
 @Injectable()
@@ -40,6 +40,22 @@ export class UserService {
         'username': username,
         'email': email,
       }));
+  }
+
+  signUp(username: String, password: String, email: String): Observable<any> {
+    return this._api.post('users/', {
+      username: username,
+      email: email,
+      password: password
+    });
+  }
+
+
+  signIn(username: String, password: String): Observable<any> {
+    return this._api.post('users/login', {
+      username: username,
+      password: password
+    });
   }
 }
 

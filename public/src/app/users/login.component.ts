@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginService } from './login.service';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'login',
@@ -15,12 +15,12 @@ export class LoginComponent {
   signUpEmail:String = '';
   isSignedUp: boolean = false;
 
-  constructor(private _loginAPI: LoginService, private _router: Router) {
+  constructor(private _userAPI: UserService, private _router: Router) {
 
   }
 
   signUp():void {
-    this._loginAPI.signUp(this.signUpUser, this.signUpPassword, this.signUpEmail)
+    this._userAPI.signUp(this.signUpUser, this.signUpPassword, this.signUpEmail)
       .subscribe(
         (res) => {
           this.isSignedUp = true;
@@ -32,7 +32,7 @@ export class LoginComponent {
   }
 
   signIn():void {
-    this._loginAPI.signIn(this.user, this.pass)
+    this._userAPI.signIn(this.user, this.pass)
       .subscribe(
         (res) => {
           this._router.navigate(['/lobby']);

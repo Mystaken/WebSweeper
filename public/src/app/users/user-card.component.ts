@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { UserService } from '../services/user.service';
+import { UserService } from '../users/user.service';
 @Component({
   selector: 'user-card',
   templateUrl: './user-card.component.html',

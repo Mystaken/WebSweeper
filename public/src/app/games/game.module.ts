@@ -17,7 +17,7 @@ import { UserModule } from '../users/user.module';
 
 import { PeerService } from '../services/peer.service';
 import { APIService } from '../services/api.service';
-import { UserService } from '../services/user.service';
+import { UserService } from '../users/user.service';
 import { MinesweeperService } from './minesweeper/minesweeper.service';
 import { ShooterService } from './shooter/shooter.service';
 import { ChatService } from './chat/chat.service';

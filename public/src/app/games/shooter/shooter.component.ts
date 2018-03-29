@@ -3,7 +3,7 @@ import { ShooterService } from './shooter.service';
 import { ActivatedRoute } from '@angular/router';
 import { difficulty, ShooterConfig } from './shooter-difficulty';
 import { ShooterGameComponent } from './shooter-game.component';
-import { UserService, UserProfile } from '../../services/user.service';
+import { UserService, UserProfile } from '../../users/user.service';
 import { Observable } from 'rxjs/Rx';
 
 @Component({

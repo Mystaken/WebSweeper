@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChatService } from './chat.service';
-import { UserProfile } from '../../services/user.service';
+import { UserProfile } from '../../users/user.service';
 
 @Component({
   selector: 'chat',

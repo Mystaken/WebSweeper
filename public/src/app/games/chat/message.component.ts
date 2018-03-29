@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UserProfile } from '../../services/user.service';
+import { UserProfile } from '../../users/user.service';
 import { environment } from '../../../environments/environment';
 @Component({
   selector: 'message',

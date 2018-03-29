@@ -3,20 +3,23 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
 import { APIService } from '../services/api.service';
-import { UserService } from '../services/user.service';
+import { UserService } from './user.service';
 
 import { UserCardComponent } from './user-card.component';
+import { LoginComponent } from './login.component';
 
 @NgModule({
   declarations: [
-    UserCardComponent
+    UserCardComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     FormsModule
   ],
   exports: [
-    UserCardComponent
+    UserCardComponent,
+    LoginComponent
   ],
   providers: [
     UserService,
