@@ -142,7 +142,7 @@ var config = require('../config/config.json');
 /**
  * @apiDefine InvalidLoginError
  *
- * @apiError InvalidLogin Fields are below min length
+ * @apiError InvalidLogin Not logged in our log in fields not valid
  *
  * @apiErrorExample {json} InvalidLogin
  *     HTTP/1.1 401 Access Denied

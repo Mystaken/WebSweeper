@@ -137,6 +137,22 @@ module.exports = function (router) {
   });
 
   /**
+   * @api {POST} api/users/logout User Logout
+   * @apiGroup User
+   * @apiName UserLogout
+   * @apiPermission none
+   * @apiDescription Signs user out.
+   *
+   * @apiUse InvalidLoginError
+  */
+  router.route('/logout').post(middlewares.authenticate(), function(req, res, next) {
+    req.session.destroy();
+    res.sendResponse();
+  }).all(function (req, res, next) {
+    return res.invalidVerb();
+  });
+
+  /**
    * @api {POST} api/users/ Create User
    * @apiGroup User
    * @apiName PostUser
@@ -363,9 +379,6 @@ module.exports = function (router) {
   }).all(function (req, res, next) {
     return res.invalidVerb();
   });
-
-
-
 
   /**
    * @api {GET} api/users/:id/avatar/ Get Avatar Image
