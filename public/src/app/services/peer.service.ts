@@ -34,7 +34,6 @@ export class PeerService {
   }
 
   call = (id:string, stream: MediaStream): any => {
-    console.log(id, stream);
     return this._peer.call(id, stream)
   }
 

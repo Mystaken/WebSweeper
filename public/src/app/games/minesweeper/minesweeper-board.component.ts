@@ -139,10 +139,6 @@ export class MinesweeperBoardComponent {
   hasWon(): boolean {
     return (this._n * this._m - this._revealed) === this._mines;
   }
-
-  test(): void {
-    console.log(this._m, this._n);
-  }
 }
 
 interface MineCell {
