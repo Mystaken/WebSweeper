@@ -3,10 +3,13 @@ import { HttpModule } from '@angular/http';
 
 import { RoutingModule } from './routing.module';
 import { GameModule } from './games/game.module';
+import { CommonModule } from './common/common.module';
 
 import { APIService } from './services/api.service';
 
 import { AppComponent } from './app.component';
+
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -16,8 +19,11 @@ import { AppComponent } from './app.component';
     HttpModule,
     RoutingModule,
     GameModule,
+    CommonModule
   ],
-  providers: [],
+  providers: [
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

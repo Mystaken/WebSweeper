@@ -4,20 +4,28 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './users/login.component';
 import { LobbyComponent } from './games/lobby.component';
 import { GameComponent } from './games/game.component';
+import { InvalidLinkComponent } from './common/invalid-link.component';
+
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
     path: 'login',
     pathMatch: 'full',
-    component: LoginComponent,
-  }, {
+    component: LoginComponent
+  },{
     path: 'games/:id',
     pathMatch: 'full',
     component: GameComponent,
-  }, {
+    canActivate: [ AuthGuard ]
+  },{
     path: 'lobby',
     pathMatch: 'full',
     component: LobbyComponent,
+    canActivate: [ AuthGuard ]
+  },{
+    path: '**',
+    component: InvalidLinkComponent
   }
 ];
 

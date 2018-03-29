@@ -1,0 +1,8 @@
+.hang-down {
+  transform: translateY(10vh);
+}
+
+.card-content {
+  background-color: rgb(47, 49, 54);
+  color: white;
+}
