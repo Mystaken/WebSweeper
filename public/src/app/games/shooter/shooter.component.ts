@@ -28,12 +28,8 @@ export class ShooterComponent {
     this.id = this._route.snapshot.params['id'];
   }
   ngOnInit() {
-    Observable.forkJoin([
-      this._shooterAPI.getGame(this.id),
-      this._user.getProfile()
-      ]).subscribe(results => {
-        let game:any = results[0];
-        let user:UserProfile = results[1];
+    this._shooterAPI.getGame(this.id).subscribe((game) => {
+      this._user.getProfile().subscribe((user) => {
         if (!game) { return; }
         if (game.host === user.id) {
           return this._shooterAPI.setHost(this.id)
@@ -46,7 +42,8 @@ export class ShooterComponent {
             });
         }
         this.setSpectator();
-      });
+      })
+    });
   }
 
   private setHost():void {

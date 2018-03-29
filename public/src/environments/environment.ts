@@ -6,5 +6,9 @@
 export const environment = {
   production: false,
   domain: 'http://localhost:3000',
-  peerKey: 'w8oadckfnqj8aor'
+  peerConfig: {
+    host: 'localhost',
+    port: 3000,
+    path:  '/peer'
+  }
 };

@@ -11,6 +11,7 @@ const express  = require('express'),
   app          = express(),
   server       = require('http').Server(app),
   expressSess  = require('express-session'),
+  ExpressPeerServer = require('peer').ExpressPeerServer,
 
   config    = require('./config/config.json'),
   sockets   = require('./sockets/sockets'),
@@ -37,6 +38,7 @@ app.use(bodyParser.json())
   .use(cookieParser())
   .use(kraken(spec.onconfig))
   .use(session)
+  .use('/peer', ExpressPeerServer(server, {}))
   .use('/api/doc', express.static('doc'))
   .use(express.static('.build'))
   .use(cors())

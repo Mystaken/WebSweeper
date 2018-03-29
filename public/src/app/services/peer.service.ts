@@ -8,13 +8,13 @@ export class PeerService {
   private _conn: Array<any> = [];
 
   constructor() {
-    this._peer = new Peer({key: environment.peerKey});
-    this._peer.on('open', (id) => {
-      this._id;
-    });
+    this._peer = new Peer(environment.peerConfig);
   }
 
   getID = (cb: (id: string) => any):void => {
+    if (this._peer.id) {
+      cb(this._peer.id);
+    }
     this._peer.on('open', cb);
   }
 
