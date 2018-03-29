@@ -71,7 +71,8 @@ chat {
   font-size: 2rem;
 }
 
-.larger {
+#back-btn {
+  margin-top: 5px;
   font-size: 3rem;
 }
 
@@ -144,12 +145,8 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 }
 
 #avatar {
-  /* Credit: https://stackoverflow.com/a/26681130 */
-  background-image: url('http://img2.wikia.nocookie.net/__cb20140120061808/creepypasta/images/e/e2/Anime-Girl-With-Silver-Hair-And-Purple-Eyes-HD-Wallpaper.jpg');
   width: 64px;
   height: 64px;
-  background-size: cover;
-  background-position: top center;
   border-radius: 50%;
   float: right;
   margin-right: 20px;
