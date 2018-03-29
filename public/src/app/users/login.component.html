@@ -6,14 +6,16 @@
         <div class="card-content">
           <h4>WebSweeper</h4>
         </div>
-        <div class="card-tabs">
+        <div materialize class="card-tabs">
           <ul class="tabs tabs-fixed-width">
-            <li class="tab"><a class="active" href="#sign-in-tab" (click)="resetSignUp()">Sign in</a></li>
-            <li class="tab"><a class="active" href="#sign-up-tab">Sign up</a></li>
+            <li class="tab">
+              <a class="active" (click)="resetSignUp();inSignIn=false">Sign in</a>
+            </li>
+            <li class="tab"><a class="active" (click)="inSignIn=false">Sign up</a></li>
           </ul>
         </div>
         <div class="card-content">
-          <div id="sign-in-tab">
+          <div *ngIf="inSignIn">
             <form #signInForm="ngForm" (ngSubmit)="signIn()">
               <div class="row">
                 <div class="input-field col s12">
@@ -30,7 +32,7 @@
               </div>
             </form>
           </div>
-          <div id="sign-up-tab">
+          <div *ngIf="!inSignIn">
             <form #signUpForm="ngForm" (ngSubmit)="signUp()" *ngIf="!isSignedUp">
               <div class="row">
                 <div class="input-field col s12">

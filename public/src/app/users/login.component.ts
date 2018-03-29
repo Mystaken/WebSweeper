@@ -13,6 +13,7 @@ export class LoginComponent {
   signUpUser:String = '';
   signUpPassword:String = '';
   signUpEmail:String = '';
+  inSignIn: boolean = true;
   isSignedUp: boolean = false;
 
   constructor(private _userAPI: UserService, private _router: Router) {
