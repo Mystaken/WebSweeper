@@ -146,8 +146,12 @@ module.exports = function (router) {
    * @apiUse InvalidLoginError
   */
   router.route('/logout').post(middlewares.authenticate(), function(req, res, next) {
-    req.session.destroy();
-    res.sendResponse();
+    return req.session.destroy(function (err) {
+      if (err) {
+        return res.handleError(err);
+      }
+      return res.sendResponse();
+    });
   }).all(function (req, res, next) {
     return res.invalidVerb();
   });
