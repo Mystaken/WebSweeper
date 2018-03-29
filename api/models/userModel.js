@@ -30,6 +30,9 @@ const userSchema = mongoose.Schema({
   lastLogin: {
     type: Date,
     required: true
+  },
+  avatar: {
+    type: String
   }
 },{
   timestamps: true

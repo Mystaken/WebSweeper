@@ -15,13 +15,12 @@ module.exports = {
     });
 
     //check if authenicated
-    /*
     io.use(function(socket, next) {
-      if (!socket.request.session.user_id) {
+      if (!socket.request.session.user) {
         return next(new Error('authentication error'));
       }
       return next();
-    });*/
+    });
 
     io.on('connection', function(socket) {
       socket.on('join room', function(room) {

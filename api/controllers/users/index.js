@@ -211,8 +211,7 @@ module.exports = function (router) {
         password: hashPass,
         email: req.body.email,
         status: status.PENDING,
-        lastLogin: new Date(),
-        avatar: AVATAR.DEFAULT
+        lastLogin: new Date()
       }).save();
     }).then(function(user) {
       // generate email to send
@@ -419,17 +418,15 @@ module.exports = function (router) {
     }
     return sharp(req.files.avatar.path)
       .resize(AVATAR.SIZE.LENGTH, AVATAR.SIZE.WIDTH)
+      .background('white')
+      .flatten()
       .png()
       .toFile(avatarLoc)
       .then(() => {
         return User.findByIdAndUpdate(req.params.id, {
-          $set: {
-            avatar: avatarLoc
-          }
+          avatar: avatarLoc
         }).exec();
-      }).then(function() {
-        return fs.remove(req.files.avatar.path);
-      }).then(function() {
+      }).then(function(g) {
         return res.sendResponse();
       }).catch((err) => res.handleError(err));
   }).all(function (req, res, next) {

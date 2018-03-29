@@ -5,9 +5,10 @@
     </a>
   </div>
   <div id="chat-stream">
-    <div class="msg" *ngFor="let msg of messages">
-      {{msg}}
-    </div>
+    <message *ngFor="let message of messages"
+      [message]="message.message"
+      [user]="message.user">
+    </message>
   </div>
   <div id="msg-box">
     <form

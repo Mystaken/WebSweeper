@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChatService } from './chat.service';
+import { UserProfile } from '../../services/user.service';
 
 @Component({
   selector: 'chat',
@@ -9,10 +10,10 @@ import { ChatService } from './chat.service';
 })
 export class ChatComponent {
   @Input() id: string;
-  @Output() onNewMessage:EventEmitter<string> = new EventEmitter();
+  @Output() onNewMessage:EventEmitter<{ user: UserProfile, message: string}> = new EventEmitter();
   @Output() onClose: EventEmitter<boolean> = new EventEmitter();
 
-  messages: Array<string> = [];
+  messages: Array<{ user: UserProfile, message: string}> = [];
 
   newMessage: string;
   private _isOpen: boolean = true;
@@ -21,8 +22,8 @@ export class ChatComponent {
 
   ngOnInit() {
     this._chatAPI.getMessage((res) => {
-      this.messages.push(res.message);
-      this.onNewMessage.emit(res.message);
+      this.messages.push(res);
+      this.onNewMessage.emit(res);
     });
   }
 

@@ -16,7 +16,7 @@ export class ChatService {
   }
 
 
-  getMessage(callback: (res: {user?: UserProfile; message: string}) => any) {
+  getMessage(callback: (res: {user: UserProfile; message: string}) => any) {
     return this._socket.on('listen message', callback);
   }
 }

@@ -9,6 +9,7 @@ import { MinesweeperBoardComponent } from './minesweeper/minesweeper-board.compo
 import { MinesweeperComponent } from './minesweeper/minesweeper.component';
 import { GameComponent } from './game.component';
 import { ChatComponent } from './chat/chat.component';
+import { MessageComponent } from './chat/message.component';
 import { LobbyComponent } from './lobby.component';
 import { ShooterComponent } from './shooter/shooter.component';
 import { ShooterGameComponent } from './shooter/shooter-game.component';
@@ -32,7 +33,8 @@ const config: SocketIoConfig = { url: environment.domain, options: {path: '/sock
     LobbyComponent,
     ChatComponent,
     ShooterComponent,
-    ShooterGameComponent
+    ShooterGameComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +44,8 @@ const config: SocketIoConfig = { url: environment.domain, options: {path: '/sock
     UserModule,
   ],
   exports: [
-    GameComponent
+    GameComponent,
+    MessageComponent
   ],
   providers: [
     APIService,

@@ -5,3 +5,4 @@ interface NodeModule {
 }
 declare var Peer: any;
 declare var Materialize: any;
+declare var ColorHash: any;

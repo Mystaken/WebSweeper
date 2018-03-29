@@ -26,6 +26,7 @@
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",
+        "../node_modules/color-hash/dist/color-hash.js",
         "../vendor/materialize/js/materialize.min.js",
         "../vendor/peer.min.js"
       ],
