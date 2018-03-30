@@ -28,7 +28,7 @@ export class GameComponent {
   /* for shooter game */
   shooterConfig = {
     height: 500,
-    width: 900,
+    width: 800,
   }
 
   constructor(
