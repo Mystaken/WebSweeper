@@ -27,8 +27,14 @@ export class UserService {
 
   isLoggedIn(): Observable<boolean> {
     return this.getProfile()
-      .map((profile) => profile === undefined)
-      .catch((res) =>  Observable.of(false));
+      .flatMap((profile) => {
+        if (profile) {
+          return Observable.of(true);
+        } else {
+          return Observable.of(false);
+        }
+      })
+      .catch((res) => Observable.of(false));
   }
 
   uploadAvatar(avatar: File):Observable<any> {
@@ -59,9 +65,9 @@ export class UserService {
     return this._api.post('users/login', {
       username: username,
       password: password
-    }).map((profile) => {
+    }).flatMap((profile) => {
       this._profile = profile;
-      return profile;
+      return Observable.of(profile);
     });
   }
 

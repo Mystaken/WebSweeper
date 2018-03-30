@@ -51,6 +51,7 @@ export class LoginComponent {
       this.signUpEmail = "";
       this.isSignedUp = false;
     }
+    this.inSignIn=true;
   }
 
 }
