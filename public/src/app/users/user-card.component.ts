@@ -53,18 +53,6 @@ export class UserCardComponent {
     );
   }
 
-  updateProfile() {
-    return this._userAPI.updateProfile(this.username, this.email).subscribe(
-      (res) => {
-        Materialize.toast('Profile updated', 4000);
-        this.closeProfile();
-      },
-      (err) => {
-        Materialize.toast(err.data[0].code, 4000);
-      },
-    );
-  }
-
   toggleProfile() {
     this.isProfileOpen = !this.isProfileOpen;
   }

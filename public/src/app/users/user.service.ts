@@ -44,14 +44,6 @@ export class UserService {
       }));
   }
 
-  updateProfile(username, email):Observable<UserProfile> {
-    return this.getProfile()
-      .flatMap((profile) => this._api.patch(`users/${profile.id}`, {
-        'username': username,
-        'email': email,
-      }));
-  }
-
   signUp(username: String, password: String, email: String): Observable<{username:string, email:string}> {
     return this._api.post('users/', {
       username: username,

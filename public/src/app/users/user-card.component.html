@@ -20,22 +20,5 @@
         <button class="waves-effect btn" (click)="uploadAvatar()" [disabled]="!updateAvatarForm.form.valid">Upload</button>
       </form>
     </div>
-    <form #updateProfileForm="ngForm">
-      <div class="input-field col s12">
-        <input id="username" type="text" class="validate" name="username" value="123" required [(ngModel)]="username">
-      </div>
-      <div class="input-field col s12">
-        <input id="email" type="email" class="validate" name="email" required [(ngModel)]="email">
-      </div>
-      <div class="row center">
-        <button
-          type="submit"
-          class="waves-effect waves-light btn"
-          [disabled]="!updateProfileForm.form.valid"
-          (click)="updateProfile()">
-          Update
-        </button>
-      </div>
-    </form>
   </div>
 </div>

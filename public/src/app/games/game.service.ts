@@ -39,8 +39,4 @@ export class GameService {
       offset: offset
     });
   }
-
-  logout(): Observable<any> {
-    return this._api.post('api/users/logout');
-  }
 }
