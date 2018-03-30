@@ -60,3 +60,8 @@ form {
   margin-right: 20px;
   cursor: pointer;
 }
+
+.file-path-wrapper {
+  display: table-caption;
+  transform: translateY(-1000px);
+}

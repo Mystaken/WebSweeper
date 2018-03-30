@@ -12,12 +12,6 @@
     (click)="exitCreateGame()">
     <i id="back-btn" class="material-icons top-nav-btn">arrow_back</i>
   </a>
-  <a
-    class="waves-effect waves-light btn-flat btn-left"
-    *ngIf="!creatingGame"
-    (click)="logout()">
-    <i id="logout-btn" class="material-icons top-nav-btn">exit_to_app</i>
-  </a>
   <user-card></user-card>
 </div>
 
@@ -26,7 +20,10 @@
     <div class="lobby-entry" *ngFor="let entry of rooms">
       <div class="row">
         <div class="col s1"></div>
-        <div class="col s9">
+        <div class="col s1">
+          <img class="avatar" src="api/users/{{entry.id}}/avatar">
+        </div>
+        <div class="col s8">
           {{entry.username}}
           <br>
           <div class="create-time">Last active: {{entry.updatedAt}}</div>

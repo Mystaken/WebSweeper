@@ -71,8 +71,12 @@ chat {
   font-size: 2rem;
 }
 
-#back-btn, #logout-btn {
+#back-btn {
   margin-top: 4px;
+  font-size: 3rem;
+}
+
+#logout-btn {
   font-size: 3rem;
 }
 
@@ -147,4 +151,15 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 input[type="radio"]:checked + label::after {
   background-color: rgb(238, 110, 115);
   border-color: rgb(238, 110, 115);
+}
+
+#avatar {
+  position: relative;
+  top: -5px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  float: right;
+  margin-right: 20px;
+  cursor: pointer;
 }

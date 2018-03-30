@@ -1,10 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
 import { UserService } from '../users/user.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'user-card',
   templateUrl: './user-card.component.html',
   styleUrls: ['./user-card.component.css']
 })
+
 export class UserCardComponent {
   isProfileOpen: boolean = false;
 
@@ -16,7 +19,8 @@ export class UserCardComponent {
 
   @ViewChild('avatarUpload') avatarUpload
 
-  constructor(private _userAPI: UserService) {}
+  constructor(private _userAPI: UserService,
+  private _router: Router) {}
 
   ngOnInit() {
     this._userAPI.getProfile().subscribe(
@@ -59,5 +63,16 @@ export class UserCardComponent {
 
   closeProfile() {
     this.isProfileOpen = false;
+  }
+
+  signOut() {
+    this._userAPI.signOut().subscribe(
+      (res) => {
+        this._router.navigate(['/login']);
+      },
+      (err) => {
+        Materialize.toast(err.data[0].code, 4000);
+      },
+    );
   }
 }

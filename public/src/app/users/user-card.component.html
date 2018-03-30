@@ -10,14 +10,14 @@
       <form #updateAvatarForm="ngForm">
         <div class="file-field input-field">
           <div class="btn">
-            <span>Select avatar</span>
-            <input #avatarUpload id="avatar-upload" type="file" required>
+            <span>Change avatar</span>
+            <input #avatarUpload id="avatar-upload" type="file" (change)="uploadAvatar()">
           </div>
           <div class="file-path-wrapper">
-            <input class="file-path validate" type="text" required>
+            <input class="file-path validate" type="text">
           </div>
         </div>
-        <button class="waves-effect btn" (click)="uploadAvatar()" [disabled]="!updateAvatarForm.form.valid">Upload</button>
+        <button class="waves-effect btn" (click)="signOut()">Sign out</button>
       </form>
     </div>
   </div>

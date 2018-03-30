@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { GameService } from './game.service';
-import { UserService } from '../users/user.service';
 import { Router } from '@angular/router';
 import { APIService } from '../services/api.service';
 
@@ -19,7 +18,6 @@ export class LobbyComponent {
   shooter: ShooterGame;
 
   constructor(private _gameAPI: GameService,
-    private _userAPI: UserService,
     private _router: Router,) {
     this.resetGameMenu();
     this.getRooms();
@@ -78,17 +76,6 @@ export class LobbyComponent {
 
   onSelectionChange(selection) {
     this.selection = selection;
-  }
-
-  logout() {
-    this._userAPI.signOut().subscribe(
-      (res) => {
-        this._router.navigate(['/login']);
-      },
-      (err) => {
-        Materialize.toast(err.data[0].code, 4000);
-      },
-    );
   }
 }
 
