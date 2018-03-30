@@ -146,7 +146,7 @@ export const difficulty: { [difficulty: number]: ShooterConfig } = {
   10: {
     speed: {
       player: 8,
-      enemy: 5,
+      enemy: 8,
       shots: 10
     },
     respawn: 100,

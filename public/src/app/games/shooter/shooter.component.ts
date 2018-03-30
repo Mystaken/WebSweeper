@@ -42,7 +42,8 @@ export class ShooterComponent {
             });
         }
         this.setSpectator();
-      })
+      });
+      this.config = difficulty[game.game.difficulty];
     });
   }
 

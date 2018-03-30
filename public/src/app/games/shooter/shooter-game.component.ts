@@ -19,7 +19,6 @@ export class ShooterGameComponent {
   /* The height of the game */
   @Input() width: number;
 
-
   @Input()
   config = {
     speed: {
@@ -78,6 +77,8 @@ export class ShooterGameComponent {
   lastNewAI: number;
 
   pause: Boolean = false;
+
+  score: number = 0;
 
   constructor(private _el: ElementRef) {
     this.playerIcon = new Image();
@@ -174,6 +175,9 @@ export class ShooterGameComponent {
           this.enemies[i].x, this.enemies[i].y, this.enemyIcon)) {
         this.player.invincible = currTime;
         this.player.HP -= this.config.hpLoss;
+        if (this.player.HP < 0) {
+          this.player.HP = 0;
+        }
         this.enemies.splice(i, 1);
       } else {
         for (let j=this.shots.length-1;j>=0;j--) {
@@ -183,6 +187,7 @@ export class ShooterGameComponent {
             this.shots.splice(j, 1);
             if (this.enemies[i].HP <= 0) {
               this.enemies.splice(i, 1);
+              this.score += 1;
               break;
             }
           }
@@ -198,12 +203,19 @@ export class ShooterGameComponent {
 
   draw() {
     let position = this.canvas.getBoundingClientRect();
-    this.x = position.x;
-    this.y = position.y;
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    let scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+    this.x = position.x - scrollTop;
+    this.y = position.y - scrollLeft;
     this.movePlayer();
     this.fireShots();
     this.handleAI();
     this.ctx.clearRect(0, 0, this.width, this.height);
+    this.handleHits();
+    this.ctx.fillStyle = "white";
+    this.ctx.font = "40px Arial";
+    this.ctx.fillText(`HP: ${this.player.HP}`, 5, 40);
+    this.ctx.fillText(`Score: ${this.score}`, 5, 80);
     for (let i=0;i<this.enemies.length;i++) {
       this.ctx.drawImage(this.enemyIcon, this.enemies[i].x, this.enemies[i].y);
     }
@@ -211,7 +223,6 @@ export class ShooterGameComponent {
       this.ctx.drawImage(this.projectileIcon, this.shots[i].x, this.shots[i].y);
     }
     this.ctx.drawImage(this.playerIcon, this.player.x, this.player.y);
-    this.handleHits();
     if (this.player.HP<=0) {
       return;
     }
