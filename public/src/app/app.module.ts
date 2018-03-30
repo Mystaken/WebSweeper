@@ -10,6 +10,7 @@ import { APIService } from './services/api.service';
 import { AppComponent } from './app.component';
 
 import { AuthGuard } from './guards/auth.guard';
+import { RootGuard } from './guards/root.guard';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AuthGuard } from './guards/auth.guard';
     CommonModule
   ],
   providers: [
-    AuthGuard
+    AuthGuard,
+    RootGuard
   ],
   bootstrap: [AppComponent]
 })

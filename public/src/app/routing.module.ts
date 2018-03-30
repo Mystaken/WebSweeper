@@ -29,8 +29,9 @@ const routes: Routes = [
     pathMatch: 'full',
     component: CreditsComponent
   },{
-    path: '/',
+    path: '',
     pathMatch: 'full',
+    component: InvalidLinkComponent,
     canActivate: [ RootGuard ]
   },{
     path: '**',

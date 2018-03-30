@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-html, body {
+html, body, app {
   height: 100%;
   width: 100%;
 }
@@ -14,6 +14,13 @@ html, body {
 
 #app-container {
   min-height: 100%;
+  width: 100%;
+}
+
+#pageloader-container {
+  position: absolute;
+  width: 100%;
+  top: 50%;
 }
 
 #pageloader-wrapper {
@@ -23,6 +30,7 @@ html, body {
   width: 100%;
   height: 100%;
 }
+
 #pageloader-wrapper .preloader-wrapper {
   margin: auto;
 }
