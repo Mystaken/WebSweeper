@@ -96,12 +96,13 @@ chat {
   background-color: rgb(54, 57, 62);
 }
 
-.create-time {
+.info {
   font-size: small;
+  color: #666;
 }
 
 .spectate-btn {
-  margin-top: 15px;
+  top: 22px;
   background-color: rgb(47, 49, 54);
 }
 
@@ -154,9 +155,9 @@ input[type="radio"]:checked + label::after {
 
 .avatar {
   position: relative;
-  top: 7px;
-  width: 32px;
-  height: 32px;
+  top: 12px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   float: right;
 }
