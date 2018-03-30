@@ -152,13 +152,11 @@ input[type="radio"]:checked + label::after {
   border-color: rgb(238, 110, 115);
 }
 
-#avatar {
+.avatar {
   position: relative;
-  top: -5px;
-  width: 64px;
-  height: 64px;
+  top: 7px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   float: right;
-  margin-right: 20px;
-  cursor: pointer;
 }
