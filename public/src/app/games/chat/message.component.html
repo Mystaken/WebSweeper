@@ -1,16 +1,16 @@
 
 <div class="message-container">
   <div class="avatar-wrapper">
-    <img 
+    <img
       class="avatar"
       [src]="getUserAvatar()">
   </div>
   <div class="content">
-    <a 
+    <a
       class="username"
       [style.color]="getUserColor()">
-      {{user.username}}</a>
-    <span 
+      {{user.username}}: </a>
+    <span
       class="message"
       [style.color]="messageColor">
       {{message}}

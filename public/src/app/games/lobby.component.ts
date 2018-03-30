@@ -1,3 +1,4 @@
+import { constants } from './../../environments/constants';
 import { Component } from '@angular/core';
 import { GameService } from './game.service';
 import { Router } from '@angular/router';
@@ -76,6 +77,16 @@ export class LobbyComponent {
 
   onSelectionChange(selection) {
     this.selection = selection;
+  }
+
+  getGame(type:number):string {
+    if (type === constants.GAME_TYPES.MINESWEEPER) {
+      return 'Minesweeper';
+    } else if (type === constants.GAME_TYPES.SHOOTER) {
+      return 'Shooter';
+    } else {
+      return '';
+    }
   }
 }
 

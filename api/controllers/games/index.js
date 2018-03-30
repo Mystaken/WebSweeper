@@ -35,7 +35,8 @@ module.exports = function (router) {
    * @apiSuccess {String} games.id the id of the lobby
    * @apiSuccess {Date} games.createAt the create date of the lobby
    * @apiSuccess {Date} games.updatedAt the date the lobby was last updated
-   * @apiSuccess {Date} game.username the username of the host
+   * @apiSuccess {String} game.username the username of the host
+   * @apiSuccess {Integer} game.type the type of the game
    * @apiSuccessExample {json} Success Response
    *     HTTP/1.1 200 OK
    *     {
@@ -105,7 +106,8 @@ module.exports = function (router) {
               format: "%Y-%m-%d %H:%M:%S",
               date: "$updatedAt"
             }
-          }
+          },
+          type: 1
         }
       }])
       .sort({
