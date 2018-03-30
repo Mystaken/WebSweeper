@@ -12,6 +12,12 @@
     (click)="exitCreateGame()">
     <i id="back-btn" class="material-icons top-nav-btn">arrow_back</i>
   </a>
+  <a
+    class="waves-effect waves-light btn-flat btn-left"
+    *ngIf="!creatingGame"
+    (click)="logout()">
+    <i id="logout-btn" class="material-icons top-nav-btn">exit_to_app</i>
+  </a>
   <user-card></user-card>
 </div>
 

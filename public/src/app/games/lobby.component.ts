@@ -77,6 +77,17 @@ export class LobbyComponent {
   onSelectionChange(selection) {
     this.selection = selection;
   }
+
+  logout() {
+    this._gameAPI.logout().subscribe(
+      (res) => {
+        this._router.navigate(['/login']);
+      },
+      (err) => {
+        Materialize.toast(err.data[0].code, 4000);
+      }
+    );
+  }
 }
 
 interface MinesweeperGame {
