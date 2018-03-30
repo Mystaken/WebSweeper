@@ -1,12 +1,13 @@
 <div id="top-nav" class="row center">
   <a
     id="play-btn"
-    class="waves-effect waves-light btn-large"
+    class="waves-effect waves-light btn-large hide-on-small-only"
     *ngIf="!creatingGame"
     (click)="createGame()">
     PLAY!
   </a>
   <a
+    id="back-btn-wrapper"
     class="waves-effect waves-light btn-flat btn-left"
     *ngIf="creatingGame"
     (click)="exitCreateGame()">

@@ -71,12 +71,11 @@ chat {
   font-size: 2rem;
 }
 
-#back-btn {
-  margin-top: 4px;
-  font-size: 3rem;
+#back-btn-wrapper {
+  margin-top: 10px;
 }
 
-#logout-btn {
+#back-btn {
   font-size: 3rem;
 }
 
