@@ -49,7 +49,7 @@ spec.configure({
   version: VERSION
   }).then(function() {
     return server.listen(PORT, function() {
-      logger.info(config.app.name + ' started at PORT: ' + PORT);
+      logger.info(`${config.app.name} started at PORT: ${config.app.DOMAIN}/${PORT}`);
     });
   }).catch(function(err) {
     logger.fatal(err);
