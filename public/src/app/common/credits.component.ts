@@ -119,10 +119,6 @@ export class CreditsComponent {
       title: 'top nav image',
       description: 'image used for styling a top nav',
       link: 'https://pixabay.com/en/the-speaker-grill-texture-2184439/'
-    },{
-      title: 'shooter backgournd',
-      description: 'image used for the background of the shooter game',
-      link: 'https://www.desktopbackground.org/p/2011/06/18/220899_simple-space-hd-wallpapers_2560x1600_h.png/'
     }]
   }]
 }
