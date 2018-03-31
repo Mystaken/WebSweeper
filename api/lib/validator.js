@@ -1,8 +1,8 @@
 'use strict';
-var Promise = require('bluebird'),
-  ZSchema   = require('z-schema'),
-  moment    = require('moment'),
-  opt       = {},
+const ZSchema = require('z-schema'),
+  moment      = require('moment');
+
+var opt = {},
   validator;
 
 
