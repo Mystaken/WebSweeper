@@ -9,7 +9,7 @@
           <h3>Credits</h3>
           <div class="divider"></div>
           <div materialize class="card-tabs">
-            <ul class="tabs tabs-fixed-width">
+            <ul materialize="tabs" class="tabs tabs-fixed-width">
               <li class="tab" *ngFor="let topic of credits; let i = index;">
                 <a class="active" (click)="curr=i">{{topic.name}}</a>
               </li>
