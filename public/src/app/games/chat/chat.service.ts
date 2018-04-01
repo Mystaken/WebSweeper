@@ -15,7 +15,6 @@ export class ChatService {
     return this._socket.emit('chat message', {room: room, message: message});
   }
 
-
   getMessage(callback: (res: {user: UserProfile; message: string}) => any) {
     return this._socket.on('listen message', callback);
   }

@@ -50,17 +50,17 @@ export class GameComponent {
     );
   }
 
-  toggleChat() {
+  toggleChat():void {
     this.chatOpen = !this.chatOpen;
     this.missedMessages = 0;
   }
 
-  closeChat() {
+  closeChat():void {
     this.chatOpen = false;
     this.missedMessages = 0;
   }
 
-  addMissedMessage(msg) {
+  addMissedMessage(msg):void {
     if (!this.chatOpen) {
       this.missedMessages += 1;
     }

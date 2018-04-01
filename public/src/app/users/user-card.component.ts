@@ -36,16 +36,16 @@ export class UserCardComponent {
     );
   }
 
-  refreshAvatar() {
+  refreshAvatar():void {
     this.avatar = `api/users/${this.id}/avatar?timestamp=${+new Date()}`;
   }
 
-  uploadAvatar() {
+  uploadAvatar():void {
     let avatar:File = this.avatarUpload.nativeElement.files[0];
     if (!avatar) {
       return;
     }
-    return this._userAPI.uploadAvatar(avatar).subscribe(
+    this._userAPI.uploadAvatar(avatar).subscribe(
       (res) => {
         Materialize.toast('Avatar uploaded', 4000);
         this.refreshAvatar();
@@ -57,15 +57,15 @@ export class UserCardComponent {
     );
   }
 
-  toggleProfile() {
+  toggleProfile():void {
     this.isProfileOpen = !this.isProfileOpen;
   }
 
-  closeProfile() {
+  closeProfile():void {
     this.isProfileOpen = false;
   }
 
-  signOut() {
+  signOut():void {
     this._userAPI.signOut().subscribe(
       (res) => {
         this._router.navigate(['/login']);

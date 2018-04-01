@@ -37,7 +37,7 @@ export class LobbyComponent {
     this.shooter = { difficulty: null };
   }
 
-  createMinesweeper() {
+  createMinesweeper():void {
     this._gameAPI.createMinesweeper(
       this.minesweeper.rows,
       this.minesweeper.columns,
@@ -51,7 +51,7 @@ export class LobbyComponent {
       );
   }
 
-  createShooter() {
+  createShooter():void {
     this._gameAPI.createShooter(this.shooter.difficulty)
       .subscribe(
         (res) => {
@@ -63,7 +63,7 @@ export class LobbyComponent {
       );
   }
 
-  getRooms() {
+  getRooms():void {
     this._gameAPI.getAllGames(10, 300).subscribe(
       (res) => {
         this.rooms = res;
@@ -75,7 +75,7 @@ export class LobbyComponent {
     );
   }
 
-  onSelectionChange(selection) {
+  onSelectionChange(selection):void {
     this.selection = selection;
   }
 

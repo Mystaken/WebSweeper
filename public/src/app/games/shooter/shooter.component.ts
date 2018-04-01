@@ -27,6 +27,7 @@ export class ShooterComponent {
     private _user: UserService) {
     this.id = this._route.snapshot.params['id'];
   }
+
   ngOnInit() {
     this._shooterAPI.getGame(this.id).subscribe((game) => {
       this._user.getProfile().subscribe((user) => {

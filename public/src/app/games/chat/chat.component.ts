@@ -32,11 +32,11 @@ export class ChatComponent {
     this.newMessage = "";
   }
 
-  clear(): void {
+  clear():void {
     this.messages = [];
   }
 
-  closeMessage() {
+  closeMessage():void {
     this.onClose.emit(true);
   }
 }
