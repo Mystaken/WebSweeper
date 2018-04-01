@@ -1,4 +1,7 @@
 # Web Sweeper
+
+https://websweeper.me
+
 Web Sweeper was online gaming platform that allows other people to come in and watch and commentate (similar to twitch.tv). Users can either create a room and begin a game or got spectate other users playing games. There are currently 2 games available: Minesweeper and a shooting game.
 
 ## Table of Contents
@@ -123,13 +126,13 @@ node app.js
 
 ## API Route Documentation
 
-The API Route is generate from [apiDoc](http://apidocjs.com/) . To generate this separately,  run `gulp doc` and the documentation will be in `doc/index.html`.
+The API Route is generate from [apiDoc](http://apidocjs.com/) . To generate this separately,  run `gulp doc` in `api` and the documentation will be in `doc/index.html`.
 
-You can also visit https://web-sweeper.herokuapp.com/api/doc/ or `${api.domain}/api/doc` once your server is deployed.
+You can also visit https://websweeper.me/api/doc/ or `${api.domain}/api/doc` once your server is deployed.
 
 
 ## Web Technology Used and Credits
-Please visit https://web-sweeper.herokuapp.com/credits or `${api.domain}/credits` once your server is deployed.
+Please visit https://websweeper.me/credits or `${api.domain}/credits` once your server is deployed.
 
 ## Project Team Members
 Team Name: Web Sweeper (yes, it's the same as project name.)
