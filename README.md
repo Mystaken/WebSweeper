@@ -1,20 +1,37 @@
-
-
-# Web Sweeper
-
-Web Sweeper is an online Minesweeper game that allows other people to come in and watch and commentate (similar to Twitch chat). Users can either create a room and begin a game or go spectate and commentate other people playing the game. Users can also upload emotes for spectators to use when commentating in their game rooms and also change the game themes by uploading bomb icons, background images, etc. Each user will also have their personal profile that they can edit.
+Web Sweeper was online gaming platform that allows other people to come in and watch and commentate (similar to twitch.tv). Users can either create a room and begin a game or got spectate other users playing games. There are currently 2 games available: Minesweeper and a shooting game.
 
 ## Table of Contents
+- [Features](#features)
 - [Code Overview](#code-overview)
    - [Dependencies](#dependencies)
    - [Code Structure](#code-structure)
    - [Build and Deploy](#build-and-deploy)
 - [API Route Documentation](#api-route-documentation)
-- [Web Technology Used](#web-technology-used)
-  - [Front End Technology](#front-end-technology)
-  - [Back End Technology](#back-end-technology)
-  - [Other Credits](#other-credits)
+- [Web Technology Used & Credits](#web-technology-used-and-credits)
 - [Project Team Members](#project-team-members)
+
+
+## Features
+### Minesweeper
+A classic minesweeper game that allows users to customize the size of the game board and the number of mines.
+
+<img src="" alt="Image for Minesweeper"/>
+
+### Shooter
+A classic 2D arcade-style shooting game that allows users to pick the difficulty of the game.
+
+<img src="" alt="Image for shooter"/> 
+
+### Spectating
+Users are able to see a list of people who are currently playing and spectate them. Spectators can communicate with other spectators and the user playing the game with the chat.
+
+<img src="" alt="Image of users communicating with each other in spectate mode"/> 
+
+### Profile customization
+Users are able to customize their avatars.
+
+<img src="" alt="Image showing different avatars"/> 
+
 
 ## Code Overview
 
@@ -32,18 +49,25 @@ In addition, you will also need a [Mailgun](https://www.mailgun.com/) account. T
 ### Code Structure
 
  - `api/`  - the code for the back-end server
-   - `app.js` - the entry point to our application. This file defines the Express server, sets up connection to MongoDB, and configures the server.
-   - `controllers/` - contains the route definitions. This is automatically required by KrakenJS
-   - `models/` - contains the Mongoose models and schemas.
+   - `app.js` - the entry point to our application. This file defines the Express server, sets up connection to MongoDB, and configures the server
+   - `assets` - static images and files that are not served served directly, but used by some api routes
+   - `controllers/` - contains the route definitions. This is handled by KrakenJS. Please refer to our [API Route Documentation](#api-route-documentation) for details.
+   - `models/` - contains the Mongoose models and schemas
    - `config/` - contains the configurations for our application
    - `sockets/` - contains the code that sets up the sockets
    - `lib/` - contains general libraies for our application
-   - `views/` - contains non-statically served files. Mostly `.pug` files.
-   - `schemas/`- contains all the schemas used by [z-schema](https://github.com/zaggino/z-schema) to validate the HTTP request.
+   - `templates/` - contains non-statically served files. Mostly `.pug` files.
+   - `schemas/`- contains all the schemas used by [z-schema](https://github.com/zaggino/z-schema) to validate the HTTP request
    - `gulpfile.js`- configures all the gulp tasks for api
  - `public/` - the code for the front-end Angular application. Most of this was auto-generated from [Angular CLI](https://cli.angular.io/)
    - `vendor/`- contains third party libaries used
-   - `src/`- contains the source code for the application
+   - `src/app/`- contains the source code for the application
+     - `app.module.ts`- The root module. Responsible for setting up routing and other general tasks for other modules
+     - `services/` - Contains services that are used by most other components (eg. `api.service`)
+     - `users/` - Contains components related to users. (Login/Profile)
+     - `common/`- Contains common components for credits and invalid url
+     - `games/` - Contains all components/services for the game and lobby
+     - `guards/`- used for `routing.module.ts` to check user privilege
    - `gulpfile.js`- configures all the gulp tasks for front-end
 
 ### Building and Deploy
@@ -66,13 +90,16 @@ npm install
 cd ../api
 npm install
 ```
+
 #### Fix configurations
-There are two configurations you may need to set for the API
-First, make a copy of the `mailgun.json` and add your Mailgun configurations to the json.
+
+There are a few configurations you may need to set for the API
+Make a copy of the `mailgun.json` and add your Mailgun configurations to the json.
 ```
 cp config/mailgun.json.template config/mailgun.json
 ```
-Second, change `mongo.server` in the `config/config.json` file to go to your own Mongo server.
+Change `mongo.server` in the `/api/config/config.json` file to go to your own MongoDB server.
+Update `app.DOMAIN` and `app.PORT` in the `/api/config/config.json`to your desired configuration. Similarly, update the environment in the front-end at `/public/src/environments/environment.prod.ts`
 
 #### Build Application
 
@@ -93,61 +120,16 @@ This will:
 node app.js
 ```
 
+
 ## API Route Documentation
 
 The API Route is generate from [apiDoc](http://apidocjs.com/) . To generate this separately,  run `gulp doc` and the documentation will be in `doc/index.html`.
-You can also visit `${api.domain}/api/doc` once the server is deployed.
 
-## Web Technology Used
-Credits to the technologies used.
-### Front End Technology
+You can also visit https://web-sweeper.herokuapp.com/api/doc/ or `${api.domain}/api/doc` once your server is deployed.
 
-- [Angular](https://angular.io/)
 
-Front end framework to speed up development cycle.
-- [Angular CLI](https://cli.angular.io/)
-
-Used to generate and build our Angular applications
-- [Materialize](http://materializecss.com/)
-
-Some components utilise CSS from this CSS library
-- [Animate.css](https://daneden.github.io/animate.css/)
-
-Used for some quick-and-easy animation
-
-### Back End Technology
-- [Express.js](https://expressjs.com/)
-
-The framework that speeds up development
-- [krakenjs](http://krakenjs.com/)
-
-An extension to Express.js we use. This is used primarily to give our project structure.
-- [Socket.IO](https://socket.io/)
-
-Both the chat and the game utilize this to update all users in a game room.
-- [Pug](https://pugjs.org)
-
-Known previously as Jade. Used to create flexible HTML. The main use case at the moment is creating verification emails.
-- [mailgun-js](https://github.com/bojand/mailgun-js)
-
-Used to send verification emails
-- [z-schema](https://github.com/zaggino/z-schema)
-
-Used to do quick and clean validation on the request body/query to check for errors before sending to database
-- [mongoose](http://mongoosejs.com/)
-
-Used to communicate with MongoDB
-- [bcrypt](https://github.com/kelektiv/node.bcrypt.js)
-
-Hashing is done here. Currently used when hashing user's password and creating application versions.
-- [sanitizer](https://github.com/theSmaw/Caja-HTML-Sanitizer)
-
-Routes with strings in the request are sanitised to strip any HTML tags.
-
-### Other Credits
-- Pictures
-   - https://pixabay.com/en/retro-perspective-grid-tron-synth-1548260/
-   - https://pixabay.com/en/the-speaker-grill-texture-2184439/
+## Web Technology Used and Credits
+Please visit https://web-sweeper.herokuapp.com/credits or `${api.domain}/credits` once your server is deployed.
 
 ## Project Team Members
 Team Name: Web Sweeper (yes, it's the same as project name.)
