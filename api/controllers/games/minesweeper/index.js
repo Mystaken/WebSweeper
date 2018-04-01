@@ -17,7 +17,7 @@ const Game    = require('../../../models/gameModel'),
 module.exports = function (router) {
 
   /**
-   * @api {POST} api/games/minesweeper Create Game
+   * @api {POST} api/games/minesweeper/ Create Game
    * @apiGroup MineSweeper
    * @apiName CreateGame
    * @apiPermission user signed in
@@ -69,7 +69,7 @@ module.exports = function (router) {
   });
 
   /**
-   * @api {GET} api/games/minesweeper/:id Get MineSweeper Game
+   * @api {GET} api/games/minesweeper/:id/ Get MineSweeper Game
    * @apiGroup MineSweeper
    * @apiName GetMineSweeper
    * @apiPermission user signed in
@@ -160,7 +160,7 @@ module.exports = function (router) {
   })
 
   /**
-   * @api {POST} api/games/minesweeper/:id Update MineSweeper Game
+   * @api {POST} api/games/minesweeper/:id/ Update MineSweeper Game
    * @apiGroup MineSweeper
    * @apiName PostMineSweeper
    * @apiPermission user signed in

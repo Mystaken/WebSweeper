@@ -1,1 +1,0 @@
-This template is made by [jodacame](https://github.com/jodacame)- https://github.com/jodacame/apidocjs-template-dark-Slate-Inspiration-

@@ -37,7 +37,7 @@ const User    = require('../../models/userModel'),
 module.exports = function (router) {
 
   /**
-   * @api {POST} api/users/login User Login
+   * @api {POST} api/users/login/ User Login
    * @apiGroup User
    * @apiName UserLogin
    * @apiPermission none
@@ -137,10 +137,10 @@ module.exports = function (router) {
   });
 
   /**
-   * @api {POST} api/users/logout User Logout
+   * @api {POST} api/users/logout/ User Logout
    * @apiGroup User
    * @apiName UserLogout
-   * @apiPermission none
+   * @apiPermission user signed in
    * @apiDescription Signs user out.
    *
    * @apiUse InvalidLoginError
@@ -255,10 +255,10 @@ module.exports = function (router) {
   })
 
   /**
-   * @api {GET} api/users Get User Info
+   * @api {GET} api/users/ Get User Info
    * @apiName GetUser
    * @apiGroup User
-   * @apiPermission none
+   * @apiPermission user signed in
    * @apiDescription Return this user's information.
    *
    * @apiParam {String} id the id of the user

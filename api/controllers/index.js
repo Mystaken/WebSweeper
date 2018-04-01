@@ -116,7 +116,7 @@ var config = require('../config/config.json');
  *       status: 400,
  *       data: [
  *          {
- *           "code": "MINIMUM",
+ *           "code": "MAXIMUM",
  *           "fields": [ "#/size" ]
  *         }
  *       ]
@@ -127,13 +127,13 @@ var config = require('../config/config.json');
  *
  * @apiError Min Fields are below min size
  *
- * @apiErrorExample {json} Max
+ * @apiErrorExample {json} Min
  *     HTTP/1.1 400 Bad Request
  *     {
  *       status: 400,
  *       data: [
  *          {
- *           "code": "MAXIMUM",
+ *           "code": "MINIMUM",
  *           "fields": [ "#/size" ]
  *         }
  *       ]

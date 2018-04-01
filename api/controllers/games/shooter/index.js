@@ -15,7 +15,7 @@ const Game    = require('../../../models/gameModel'),
 
 module.exports = function (router) {
   /**
-   * @api {POST} api/games/shooter Create Game
+   * @api {POST} api/games/shooter/ Create Game
    * @apiGroup Shooter
    * @apiName CreateGame
    * @apiPermission user signed in
@@ -66,7 +66,7 @@ module.exports = function (router) {
 
 
   /**
-   * @api {POST} api/games/shooter/:id/host Set Host
+   * @api {POST} api/games/shooter/:id/host/ Set Host
    * @apiGroup Shooter
    * @apiName GetShooter
    * @apiPermission user signed in
@@ -124,7 +124,7 @@ module.exports = function (router) {
   });
 
   /**
-   * @api {GET} api/games/shooter/:id Get Shooter Game
+   * @api {GET} api/games/shooter/:id/ Get Shooter Game
    * @apiGroup Shooter
    * @apiName GetShooter
    * @apiPermission user signed in
