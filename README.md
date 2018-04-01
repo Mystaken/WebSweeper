@@ -71,7 +71,7 @@ In addition, you will also need a [Mailgun](https://www.mailgun.com/) account. T
      - `guards/`- used for `routing.module.ts` to check user privilege
    - `gulpfile.js`- configures all the gulp tasks for front-end
 
-### Building and Deploy
+### Build and Deploy
 
 Once you have all the dependencies, we can clone and build the application
 
