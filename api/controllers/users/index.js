@@ -381,10 +381,13 @@ module.exports = function (router) {
         .flatten()
         .png()
         .toFile(avatarLoc).catch(function(err) {
-          return res.requestError(400, [{
-            code: error.INVALID_TYPE,
-            fields: [ '#/avatar' ]
-          }]);
+          return Promise.reject({
+            status: 401,
+            data: [{
+              code: error.INVALID_TYPE,
+              fields: [ '#/avatar' ]
+            }]
+          });
         })
       }).then(() => {
         return User.findByIdAndUpdate(req.params.id, {
