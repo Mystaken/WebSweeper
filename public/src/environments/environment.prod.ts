@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
-  domain: 'https://web-sweeper.herokuapp.com',
+  domain: 'https://www.websweeper.me',
   peerConfig: {
-    host: 'web-sweeper.herokuapp.com',
+    host: 'www.websweeper.me',
     port: 443,
     path:  '/peer'
   }
