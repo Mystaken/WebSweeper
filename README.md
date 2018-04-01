@@ -16,22 +16,21 @@ Web Sweeper was online gaming platform that allows other people to come in and w
 ### Minesweeper
 A classic minesweeper game that allows users to customize the size of the game board and the number of mines.
 
-<img src="" alt="Image for Minesweeper"/>
+<img src="readme_imgs/minesweeper.png" alt="Image for Minesweeper"/>
 
 ### Shooter
 A classic 2D arcade-style shooting game that allows users to pick the difficulty of the game.
 
-<img src="" alt="Image for shooter"/> 
+<img src="readme_imgs/shooter.png" alt="Image for shooter"/> 
 
 ### Spectating
 Users are able to see a list of people who are currently playing and spectate them. Spectators can communicate with other spectators and the user playing the game with the chat.
 
-<img src="" alt="Image of users communicating with each other in spectate mode"/> 
+<img src="readme_imgs/menu.png" alt="Image of users communicating with each other in spectate mode"/> 
 
 ### Profile customization
 Users are able to customize their avatars.
 
-<img src="" alt="Image showing different avatars"/> 
 
 
 ## Code Overview
