@@ -224,6 +224,10 @@ export class ShooterGameComponent {
     }
     this.ctx.drawImage(this.playerIcon, this.player.x, this.player.y);
     if (this.player.HP<=0) {
+      this.ctx.fillStyle = "red";
+      this.ctx.font = "40px Arial";
+      this.ctx.textAlign = "center";
+      this.ctx.fillText(`Score: ${this.score}`, this.width/2, this.height/2);
       return;
     }
     if (this.pause) {
