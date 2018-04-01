@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   constructor() {
+    document.getElementById('footer').removeAttribute('hidden');
   }
 }
