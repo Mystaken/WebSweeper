@@ -21,7 +21,8 @@ gulp.task('doc', function(done){
     src: 'controllers/',
     dest: 'doc/',
     config: './config/',
-    silent: true
+    silent: true,
+    template: "templates/apidoc"
   }, done);
 });
 

@@ -17,9 +17,9 @@ const User    = require('../../models/userModel'),
   fs        = require('fs-extra'),
 
   SALT_LEN   = 10,
-  EMAIL_PATH = path.join(__dirname, '../../views/users/verification.pug'),
-  SIGNUP_SUCCESS = path.join(__dirname, '../../views/users/signup_success.pug'),
-  SIGNUP_FAIL    = path.join(__dirname, '../../views/users/signup_fail.html'),
+  EMAIL_PATH = path.join(__dirname, '../../templates/users/verification.pug'),
+  SIGNUP_SUCCESS = path.join(__dirname, '../../templates/users/signup_success.pug'),
+  SIGNUP_FAIL    = path.join(__dirname, '../../templates/users/signup_fail.html'),
   VERIFICATION_ROUTE = `${config.app.DOMAIN}/api/users/verification`,
   AVATAR = {
     SIZE: {
