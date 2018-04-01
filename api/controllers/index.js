@@ -156,6 +156,23 @@ var config = require('../config/config.json');
  *       ]
  *     }
  */
+/**
+ * @apiDefine InvalidTypeError
+ *
+ * @apiError InvalidType The type of the input is not valid
+ *
+ * @apiErrorExample {json} InvalidType
+ *     HTTP/1.1 401 Bad Request
+ *     {
+ *       status: 400,
+ *       data: [
+ *          {
+ *           "code": "INVALID_TYPE",
+ *           "fields": [ "#/data" ]
+ *         }
+ *       ]
+ *     }
+ */
 
 module.exports = function (router) {
   router.route('/').get(function (req, res, next) {

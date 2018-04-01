@@ -364,7 +364,7 @@ module.exports = function (router) {
    *
    * @apiParam {id} the id of this user
    * @apiUse InvalidLoginError
-   *
+   * @apiUse InvalidTypeError
   */
   .post(middlewares.authenticate(), function(req, res, next) {
     var avatarLoc = `${AVATAR.DIRECTORY}/${req.params.id}.png`;
@@ -374,13 +374,19 @@ module.exports = function (router) {
         fields: [ '#/id' ]
       }]);
     }
-    return sharp(req.files.avatar.path)
-      .resize(AVATAR.SIZE.LENGTH, AVATAR.SIZE.WIDTH)
-      .background('white')
-      .flatten()
-      .png()
-      .toFile(avatarLoc)
-      .then(() => {
+    return Promise.resolve().then(function() {
+        return sharp(req.files.avatar.path)
+        .resize(AVATAR.SIZE.LENGTH, AVATAR.SIZE.WIDTH)
+        .background('white')
+        .flatten()
+        .png()
+        .toFile(avatarLoc).catch(function(err) {
+          return res.requestError(400, [{
+            code: error.INVALID_TYPE,
+            fields: [ '#/avatar' ]
+          }]);
+        })
+      }).then(() => {
         return User.findByIdAndUpdate(req.params.id, {
           avatar: avatarLoc
         }).exec();
