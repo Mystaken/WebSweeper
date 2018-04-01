@@ -1,5 +1,5 @@
 <img id="avatar" src="{{avatar}}" (click)="toggleProfile()">
-<div id="user-card-container" [hidden]="!isProfileOpen">
+<div id="user-card-container" class="animated fadeIn" [hidden]="!isProfileOpen">
   <div id="close-btn">
     <a class="btn-flat waves-effect" (click)="toggleProfile()">
       <i class="material-icons">close</i>
