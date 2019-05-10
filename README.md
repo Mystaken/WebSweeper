@@ -4,7 +4,7 @@ Project URL: https://websweeper.me
 
 Demo video: https://youtu.be/dBb-xPG75hE
 
-Web Sweeper was online gaming platform that allows other people to come in and watch and commentate (similar to twitch.tv). Users can either create a room and begin a game or got spectate other users playing games. There are currently 2 games available: Minesweeper and a shooting game.
+Web Sweeper was online gaming platform that allows other people to come in and watch and commentate (similar to twitch.tv). Users can either create a room and begin a game or go to spectate other users playing games. There are currently 2 games available: Minesweeper and a shooting game.
 
 ## Table of Contents
 - [Features](#features)
